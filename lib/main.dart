@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'dart:convert';
 
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:qr_mobile_vision/qr_camera.dart';
+import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'Product.dart';
 
 void main() => runApp(MyApp());
 
@@ -30,76 +31,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var barcodeRes = 'No result';
 
-  Future<void> scanBarcode() async {
-    String barcode;
-    try {
-      barcode = await FlutterBarcodeScanner.scanBarcode(
-          '#555555', 'cancelButtonText', false, ScanMode.BARCODE);
-      print(barcode);
-    } on PlatformException {
-      barcode = "Failed to scan";
-    }
-
-    setState(() {
-      barcodeRes = barcode;
-    });
-  }
-
-  Widget scanNewBarcode() {
-    String barcode;
-
-    return AlertDialog(
-      content: SizedBox(
-        width: 300,
-        height: 600,
-        child: QrCamera(
-          qrCodeCallback: (barcode) {
-            setState(() {
-              barcodeRes = barcode;
-            });
-          },
-        ),
-      ),
-    );
+  Future<Product> getProduct($barcode) async {
+    final response =
+        await http.get('http://192.168.42.160:8000/api/product/'+$barcode);
+    return Product.fromJson(jsonDecode(response.body));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Barcode of Scanned Item:',
-            ),
-            Text(
-              '$barcodeRes',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: Row(
-        children: <Widget>[
-          FloatingActionButton(
-              onPressed: () => scanBarcode(),
-              tooltip: 'Scan',
-              child: Icon(Icons.scanner)),
-          FloatingActionButton(
-              onPressed: () => scanNewBarcode(),
-              tooltip: 'Scan',
-              child: Icon(
-                Icons.scanner,
-                color: Colors.cyan,
-              )),
-        ],
-      ),
-    );
+    Text('Yeet');
   }
 }
