@@ -4,16 +4,16 @@ import 'package:meta/meta.dart';
 class Product extends Equatable {
   final String barcode;
   final String name;
-  final double weight_g;
-  final double energy_100g;
-  final double carbohydrate_100g;
-  final double protein_100g;
-  final double fat_100g;
-  final double fiber_100g;
-  final double salt_100g;
-  final double sugars_100g;
-  final double saturates_100g;
-  final double sodium_100g;
+  final num weight_g;
+  final num energy_100g;
+  final num carbohydrate_100g;
+  final num protein_100g;
+  final num fat_100g;
+  final num fiber_100g;
+  final num salt_100g;
+  final num sugars_100g;
+  final num saturates_100g;
+  final num sodium_100g;
 
   Product(
       {@required this.barcode,

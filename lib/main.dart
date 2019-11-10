@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
-import 'Product.dart';
 
 void main() => runApp(MyApp());
 
@@ -32,11 +31,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  Future<Product> getProduct($barcode) async {
-    final response =
-        await http.get('http://192.168.42.160:8000/api/product/'+$barcode);
-    return Product.fromJson(jsonDecode(response.body));
-  }
+  // Future<Product> getProduct($barcode) async {
+  //   final response =
+  //       await http.get('http://192.168.42.160:8000/api/product/'+$barcode);
+  //   return Product.fromJson(jsonDecode(response.body));
+  // }
 
   @override
   Widget build(BuildContext context) {
