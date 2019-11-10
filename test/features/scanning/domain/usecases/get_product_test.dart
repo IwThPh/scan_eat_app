@@ -35,7 +35,7 @@ void main() {
     when(mockScanningRepository.getProduct(any))
         .thenAnswer((_) async => Right(tProduct));
     
-    final response = await usecase.execute(barcode: tBarcode);
+    final response = await usecase(Params(barcode: tBarcode));
 
     expect(response, Right(tProduct));
     verify(mockScanningRepository.getProduct(tBarcode));
