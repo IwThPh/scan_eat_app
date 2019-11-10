@@ -15,13 +15,14 @@ dependencies:
   shared_preferences: ^0.5.4+3
   dartz: ^0.8.8
   provider: ^3.1.0+1
-  mockito: ^4.1.1
+  data_connection_checker: ^0.3.4
 
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  mockito: ^4.1.1
 
 flutter:
   uses-material-design: true
