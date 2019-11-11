@@ -2,13 +2,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../../../../lib/core/device/network_info.dart';
-import '../../../../../lib/core/error/exception.dart';
-import '../../../../../lib/core/error/failure.dart';
-import '../../../../../lib/features/scanning/data/datasources/scanning_remote_data_source.dart';
-import '../../../../../lib/features/scanning/data/models/product_model.dart';
-import '../../../../../lib/features/scanning/data/repositories/scanning_repository_impl.dart';
-import '../../../../../lib/features/scanning/domain/entities/product.dart';
+import 'package:food_label_app/features/scanning/data/models/product_model.dart';
+import 'package:food_label_app/features/scanning/domain/entities/product.dart';
+import 'package:food_label_app/core/device/network_info.dart';
+import 'package:food_label_app/core/error/exception.dart';
+import 'package:food_label_app/core/error/failure.dart';
+import 'package:food_label_app/features/scanning/data/datasources/scanning_remote_data_source.dart';
+import 'package:food_label_app/features/scanning/data/repositories/scanning_repository_impl.dart';
+
+import '../../../../samples.dart';
 
 class MockRemoteDataSource extends Mock implements ScanningRemoteDataSource {}
 
@@ -29,21 +31,9 @@ void main() {
   });
 
   group('getProduct', () {
-    final tBarcode = "0000000000000";
-    final tProductModel = ProductModel(
-        barcode: tBarcode,
-        name: "Test Product",
-        carbohydrate_100g: 0,
-        energy_100g: 0,
-        fat_100g: 0,
-        fiber_100g: 0,
-        protein_100g: 0,
-        salt_100g: 0,
-        saturates_100g: 0,
-        sodium_100g: 0,
-        sugars_100g: 0,
-        weight_g: 0);
+    final ProductModel tProductModel = Samples.tProductModel;
     final Product tProduct = tProductModel;
+    final tBarcode = tProduct.barcode;
 
     test('Check device is online', () async {
       when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
