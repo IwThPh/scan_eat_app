@@ -20,7 +20,8 @@ class ScanningRemoteDataSourceImpl implements ScanningRemoteDataSource {
   @override
   Future<ProductModel> getProduct(String barcode) async {
     final response = await client.get(
-        'https://192.168.42.160:8000/api/product/$barcode',
+      //TODO: Change this to a app config variable.
+        'http://192.168.42.160:8000/api/product/$barcode',
         headers: {'Content-Type': 'application-json'});
 
     if (response.statusCode == 200) {
