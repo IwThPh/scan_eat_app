@@ -1,10 +1,11 @@
-import 'dart:convert';
+import 'di_container.dart' as di;
 
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:http/http.dart' as http;
 
-void main() => runApp(MyApp());
+void main() async {
+  await di.init();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
