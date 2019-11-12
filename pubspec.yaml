@@ -8,7 +8,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_barcode_scanner: ^0.1.7
   http: ^0.12.0+2
   equatable: ^0.6.1
   flutter_bloc: ^2.0.0
@@ -17,6 +16,8 @@ dependencies:
   provider: ^3.1.0+1
   data_connection_checker: ^0.3.4
   get_it: ^3.0.3
+  flutter_camera_ml_vision: ^2.2.4
+  firebase_ml_vision: ^0.9.3+3
 
   cupertino_icons: ^0.1.2
 
@@ -32,9 +33,9 @@ flutter:
   fonts:
     - family: Poppins
       fonts:
-        - asset: assets/fonts/Poppins-Regular.ttf
-        - asset: assets/fonts/Poppins-SemiBold.ttf
-        - asset: assets/fonts/Poppins-Bold.ttf
+        - asset: lib/assets/fonts/Poppins-Regular.ttf
+        - asset: lib/assets/fonts/Poppins-SemiBold.ttf
+        - asset: lib/assets/fonts/Poppins-Bold.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

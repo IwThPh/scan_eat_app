@@ -1,21 +1,21 @@
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_label_app/di_container.dart';
-import 'package:food_label_app/features/scanning/presentation/bloc/bloc.dart';
+import 'package:flutter_camera_ml_vision/flutter_camera_ml_vision.dart';
+
+import '../../../../assets/theme/app_theme.dart';
+import '../../../../di_container.dart';
+import '../bloc/bloc.dart';
 import '../widgets/widgets.dart';
 
-import 'package:flutter/material.dart';
-
 class ScanningPage extends StatelessWidget {
-  ScanningPage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  ScanningPage({
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
       body: BlocProvider(
         builder: (_) => sl<ScanningBloc>(),
         child: SingleChildScrollView(child: buildBody(context)),
@@ -26,17 +26,26 @@ class ScanningPage extends StatelessWidget {
   BlocProvider<ScanningBloc> buildBody(BuildContext context) {
     return BlocProvider(
       builder: (_) => sl<ScanningBloc>(),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+      child: Container(
+        color: Colours.primaryAccent,
+        padding: const EdgeInsets.all(23.0),
+        child: SafeArea(
           child: Column(
             children: <Widget>[
               Container(
-                height: MediaQuery.of(context).size.height / 5,
-                child: Placeholder(),
-              ),
-              SizedBox(
-                height: 10.0,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(32.0))),
+                  child: CameraMlVision<List<Barcode>>(
+                    detector:
+                        FirebaseVision.instance.barcodeDetector().detectInImage,
+                    onResult: (List<Barcode> barcodes) {
+                      Barcode result = barcodes.first;
+                      BlocProvider.of<ScanningBloc>(context).add(RetrieveProduct(result.toString()));
+                    },
+                  )),
+              Container(
+                child: ManualControls(),
               ),
               Container(
                 height: MediaQuery.of(context).size.height / 5,
@@ -60,16 +69,6 @@ class ScanningPage extends StatelessWidget {
                     }
                   },
                 ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height / 5,
-                child: ManualControls(),
-              ),
-              SizedBox(
-                height: 10.0,
               )
             ],
           ),
