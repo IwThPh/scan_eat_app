@@ -1,5 +1,6 @@
 import 'package:food_label_app/features/scanning/presentation/pages/scanning_page.dart';
 
+import 'assets/theme/app_theme.dart';
 import 'di_container.dart' as di;
 
 import 'package:flutter/material.dart';
@@ -13,11 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ScanEat',
-      theme: ThemeData(
-        primarySwatch: Colors.pink,
-      ),
-      home: ScanningPage(title: 'ScanEat'),
+      theme: AppTheme.theme,
+      home: ScanningPage(),
     );
   }
 }
