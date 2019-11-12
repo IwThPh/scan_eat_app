@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:food_label_app/features/scanning/domain/entities/product.dart';
-import 'package:food_label_app/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:food_label_app/features/scanning/domain/usecases/get_product.dart';
-import 'package:food_label_app/features/scanning/presentation/bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
 import './bloc.dart';
+import '../../../../core/error/failure.dart';
+import '../../domain/entities/product.dart';
+import '../../domain/usecases/get_product.dart';
+import 'bloc.dart';
 
 class ScanningBloc extends Bloc<ScanningEvent, ScanningState> {
   final GetProduct getProduct;

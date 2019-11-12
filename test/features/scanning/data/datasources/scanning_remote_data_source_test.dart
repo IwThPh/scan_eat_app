@@ -32,7 +32,7 @@ void main() {
       dataSource.getProduct(tBarcode);
 
       verify(mockHttpClient.get(
-          'https://192.168.42.160:8000/api/product/$tBarcode',
+          'http://192.168.42.160:8000/api/product/$tBarcode',
           headers: {'Content-Type': 'application-json'}));
     });
 
