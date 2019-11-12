@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food_label_app/features/scanning/domain/entities/product.dart';
+
+import '../../../../assets/theme/app_theme.dart';
+import '../../domain/entities/product.dart';
 
 class ProductDisplay extends StatelessWidget {
   final String message;
@@ -13,6 +15,8 @@ class ProductDisplay extends StatelessWidget {
     return Center(
       child: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Center(
               child: Text(
@@ -21,22 +25,42 @@ class ProductDisplay extends StatelessWidget {
                 style: TextStyle(fontSize: 16.0),
               ),
             ),
-            Row(
-              children: <Widget>[
-                ProductNutrient(
-                    name: 'Carb',
-                    value: product.carbohydrate_100g,
-                    weight: product.weight_g),
-                ProductNutrient(
-                    name: 'Protein',
-                    value: product.protein_100g,
-                    weight: product.weight_g),
-                ProductNutrient(
-                    name: 'Fat',
-                    value: product.fat_100g,
-                    weight: product.weight_g),
-              ],
-            ),
+            if (product != null)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+                children: <Widget>[
+                  ProductNutrient(
+                    name: 'Energy',
+                    fg: Colours.offWhite,
+                    bg: Colours.offBlack,
+                    value: product.energy_100g,
+                    weight: product.weight_g,
+                    unit: 'Kcal',
+                  ),
+                  ProductNutrient(
+                      name: 'Carb',
+                      fg: Colours.green,
+                      bg: Colours.greenAccent,
+                      value: product.carbohydrate_100g,
+                      weight: product.weight_g,
+                      unit: 'g'),
+                  ProductNutrient(
+                      name: 'Protein',
+                      fg: Colours.orange,
+                      bg: Colours.orangeAccent,
+                      value: product.protein_100g,
+                      weight: product.weight_g,
+                      unit: 'g'),
+                  ProductNutrient(
+                      name: 'Fat',
+                      fg: Colours.red,
+                      bg: Colours.redAccent,
+                      value: product.fat_100g,
+                      weight: product.weight_g,
+                      unit: 'g'),
+                ],
+              ),
             Center(
               child: Text(
                 product?.name ?? "",
@@ -55,24 +79,50 @@ class ProductNutrient extends StatelessWidget {
   final String name;
   final double value;
   final double weight;
+  final String unit;
+  final Color fg;
+  final Color bg;
 
   const ProductNutrient({
     Key key,
     @required this.name,
     @required this.value,
     @required this.weight,
+    @required this.unit,
+    @required this.fg,
+    @required this.bg,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(),
-      child: Column(
-        children: <Widget>[
-          Text(name),
-          Text(((value / 100) * weight).round().toString().trim() + 'g'),
-        ],
+    TextStyle bodyText = (fg == Colours.offWhite)
+        ? TextStyle(color: Colours.offBlack)
+        : TextStyle(color: Colours.offWhite);
+
+    return Stack(overflow: Overflow.visible, children: <Widget>[
+      Positioned.fill(
+        bottom: -2,
+        left: -2,
+        child: Container(
+          decoration: BoxDecoration(
+            color: bg,
+            borderRadius: BorderRadius.all(Radius.circular(18.0)),
+          ),
+        ),
       ),
-    );
+      Container(
+        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+        decoration: BoxDecoration(
+          color: fg,
+          borderRadius: BorderRadius.all(Radius.circular(18.0)),
+        ),
+        child: Column(
+          children: <Widget>[
+            Text(name, style: bodyText,),
+            Text(((value / 100) * weight).round().toString().trim() + unit, style: bodyText,),
+          ],
+        ),
+      ),
+    ]);
   }
 }
