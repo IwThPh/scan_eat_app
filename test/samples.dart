@@ -1,5 +1,5 @@
-import 'package:food_label_app/features/scanning/data/models/product_model.dart';
-import 'package:food_label_app/features/scanning/domain/entities/product.dart';
+import 'package:scaneat/features/scanning/data/models/product_model.dart';
+import 'package:scaneat/features/scanning/domain/entities/product.dart';
 
 class Samples {
   static final Product tProduct = Product(

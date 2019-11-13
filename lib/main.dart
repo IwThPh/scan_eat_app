@@ -1,4 +1,4 @@
-import 'package:food_label_app/features/scanning/presentation/pages/scanning_page.dart';
+import 'package:scaneat/features/scanning/presentation/pages/scanning_page.dart';
 
 import 'assets/theme/app_theme.dart';
 import 'di_container.dart' as di;

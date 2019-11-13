@@ -2,13 +2,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:mockito/mockito.dart';
 
-import 'package:food_label_app/features/scanning/data/models/product_model.dart';
-import 'package:food_label_app/features/scanning/domain/entities/product.dart';
-import 'package:food_label_app/core/device/network_info.dart';
-import 'package:food_label_app/core/error/exception.dart';
-import 'package:food_label_app/core/error/failure.dart';
-import 'package:food_label_app/features/scanning/data/datasources/scanning_remote_data_source.dart';
-import 'package:food_label_app/features/scanning/data/repositories/scanning_repository_impl.dart';
+import 'package:scaneat/features/scanning/data/models/product_model.dart';
+import 'package:scaneat/features/scanning/domain/entities/product.dart';
+import 'package:scaneat/core/device/network_info.dart';
+import 'package:scaneat/core/error/exception.dart';
+import 'package:scaneat/core/error/failure.dart';
+import 'package:scaneat/features/scanning/data/datasources/scanning_remote_data_source.dart';
+import 'package:scaneat/features/scanning/data/repositories/scanning_repository_impl.dart';
 
 import '../../../../samples.dart';
 

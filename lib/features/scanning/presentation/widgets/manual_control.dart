@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_label_app/features/scanning/presentation/bloc/bloc.dart';
+import 'package:scaneat/features/scanning/presentation/bloc/bloc.dart';
 
 class ManualControls extends StatefulWidget {
   @override

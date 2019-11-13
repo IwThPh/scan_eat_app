@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:food_label_app/features/scanning/domain/usecases/get_product.dart';
-import 'package:food_label_app/features/scanning/presentation/bloc/bloc.dart';
+import 'package:scaneat/features/scanning/domain/usecases/get_product.dart';
+import 'package:scaneat/features/scanning/presentation/bloc/bloc.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../../samples.dart';

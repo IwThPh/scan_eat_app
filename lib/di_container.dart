@@ -1,11 +1,11 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:http/http.dart' as http;
-import 'package:food_label_app/core/device/network_info.dart';
-import 'package:food_label_app/features/scanning/data/datasources/scanning_remote_data_source.dart';
-import 'package:food_label_app/features/scanning/data/repositories/scanning_repository_impl.dart';
-import 'package:food_label_app/features/scanning/domain/repositories/scanning_repository.dart';
-import 'package:food_label_app/features/scanning/domain/usecases/get_product.dart';
-import 'package:food_label_app/features/scanning/presentation/bloc/bloc.dart';
+import 'package:scaneat/core/device/network_info.dart';
+import 'package:scaneat/features/scanning/data/datasources/scanning_remote_data_source.dart';
+import 'package:scaneat/features/scanning/data/repositories/scanning_repository_impl.dart';
+import 'package:scaneat/features/scanning/domain/repositories/scanning_repository.dart';
+import 'package:scaneat/features/scanning/domain/usecases/get_product.dart';
+import 'package:scaneat/features/scanning/presentation/bloc/bloc.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
