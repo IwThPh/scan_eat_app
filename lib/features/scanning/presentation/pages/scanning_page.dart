@@ -29,21 +29,27 @@ class ScanningPage extends StatelessWidget {
       child: Container(
         color: Colours.primaryAccent,
         padding: const EdgeInsets.all(23.0),
+        height: MediaQuery.of(context).size.height,
         child: SafeArea(
           child: Column(
             children: <Widget>[
               Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(32.0))),
-                  child: CameraMlVision<List<Barcode>>(
-                    detector:
-                        FirebaseVision.instance.barcodeDetector().detectInImage,
-                    onResult: (List<Barcode> barcodes) {
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(32.0))),
+                child: CameraMlVision<List<Barcode>>(
+                  detector:
+                      FirebaseVision.instance.barcodeDetector().detectInImage,
+                  onResult: (List<Barcode> barcodes) {
+                    BlocListener<ScanningBloc, ScanningState> listener;
+                    if (listener.bloc.state is Scanning) {
                       Barcode result = barcodes.first;
-                      BlocProvider.of<ScanningBloc>(context).add(RetrieveProduct(result.toString()));
-                    },
-                  )),
+                      BlocProvider.of<ScanningBloc>(context)
+                          .add(RetrieveProduct(result.toString()));
+                    }
+                  },
+                ),
+              ),
               Container(
                 child: ManualControls(),
               ),

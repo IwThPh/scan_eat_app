@@ -1,4 +1,4 @@
-package com.example.food_label_app
+package dev.iwanphillips.scaneat.scaneat
 
 import android.os.Bundle
 

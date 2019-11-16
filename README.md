@@ -1,4 +1,4 @@
-# food_label_app
+# scaneat
 
 A new Flutter project.
 

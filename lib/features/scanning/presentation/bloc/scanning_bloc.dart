@@ -39,7 +39,7 @@ class ScanningBloc extends Bloc<ScanningEvent, ScanningState> {
   Stream<ScanningState> _eitherFailureOrProduct(
       Either<Failure, Product> failureOrProduct) async* {
     yield failureOrProduct.fold(
-        (failure) => Error(message: "Yeet"),
+        (failure) => Error(message: "Error Retrieving Product"),
         (product) => Loaded(product: product)
       );
   }
