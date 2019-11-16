@@ -25,41 +25,40 @@ class ProductDisplay extends StatelessWidget {
                 style: TextStyle(fontSize: 16.0),
               ),
             ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
-                children: <Widget>[
-                  ProductNutrient(
-                    name: 'Energy',
-                    fg: Colours.offWhite,
-                    bg: Colours.offBlack,
-                    value: product?.energy_100g,
-                    weight: product?.weight_g,
-                    unit: 'Kcal',
-                  ),
-                  ProductNutrient(
-                      name: 'Carb',
-                      fg: Colours.green,
-                      bg: Colours.greenAccent,
-                      value: product?.carbohydrate_100g,
-                      weight: product?.weight_g,
-                      unit: 'g'),
-                  ProductNutrient(
-                      name: 'Protein',
-                      fg: Colours.orange,
-                      bg: Colours.orangeAccent,
-                      value: product?.protein_100g,
-                      weight: product?.weight_g,
-                      unit: 'g'),
-                  ProductNutrient(
-                      name: 'Fat',
-                      fg: Colours.red,
-                      bg: Colours.redAccent,
-                      value: product?.fat_100g,
-                      weight: product?.weight_g,
-                      unit: 'g'),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                ProductNutrient(
+                  name: 'Energy',
+                  fg: Colours.offWhite,
+                  bg: Colours.offBlack,
+                  value: product?.energy_100g ?? 0.0,
+                  weight: product?.weight_g ?? 0.0,
+                  unit: 'Kcal',
+                ),
+                ProductNutrient(
+                    name: 'Carb',
+                    fg: Colours.green,
+                    bg: Colours.greenAccent,
+                    value: product?.carbohydrate_100g ?? 0.0,
+                    weight: product?.weight_g ?? 0.0,
+                    unit: 'g'),
+                ProductNutrient(
+                    name: 'Protein',
+                    fg: Colours.orange,
+                    bg: Colours.orangeAccent,
+                    value: product?.protein_100g ?? 0.0,
+                    weight: product?.weight_g ?? 0.0,
+                    unit: 'g'),
+                ProductNutrient(
+                    name: 'Fat',
+                    fg: Colours.red,
+                    bg: Colours.redAccent,
+                    value: product?.fat_100g ?? 0.0,
+                    weight: product?.weight_g ?? 0.0,
+                    unit: 'g'),
+              ],
+            ),
             Center(
               child: Text(
                 product?.name ?? "",
@@ -117,8 +116,14 @@ class ProductNutrient extends StatelessWidget {
         ),
         child: Column(
           children: <Widget>[
-            Text(name, style: bodyText,),
-            Text(((value / 100) * weight).round().toString().trim() + unit, style: bodyText,),
+            Text(
+              name,
+              style: bodyText,
+            ),
+            Text(
+              ((value / 100) * weight).round().toString().trim() + unit,
+              style: bodyText,
+            ),
           ],
         ),
       ),

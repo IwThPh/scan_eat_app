@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "268102516048",
+    "firebase_url": "https://scaneat-62fa7.firebaseio.com",
+    "project_id": "scaneat-62fa7",
+    "storage_bucket": "scaneat-62fa7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:268102516048:android:83787f576594910c138055",
+        "android_client_info": {
+          "package_name": "dev.iwanphillips.scaneat.scaneat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "268102516048-5t2a01vula98vfft17scgmmie9hh5noi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZnMfGVAl7JWY0WSoK5okS5i5RTFEIs0A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "268102516048-5t2a01vula98vfft17scgmmie9hh5noi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

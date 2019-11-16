@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_camera_ml_vision/flutter_camera_ml_vision.dart';
+import 'package:scaneat/features/scanning/presentation/widgets/scanner.dart';
 
 import '../../../../assets/theme/app_theme.dart';
 import '../../../../di_container.dart';
@@ -24,6 +27,7 @@ class ScanningPage extends StatelessWidget {
   }
 
   BlocProvider<ScanningBloc> buildBody(BuildContext context) {
+
     return BlocProvider(
       builder: (_) => sl<ScanningBloc>(),
       child: Container(
@@ -33,23 +37,7 @@ class ScanningPage extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(32.0))),
-                child: CameraMlVision<List<Barcode>>(
-                  detector:
-                      FirebaseVision.instance.barcodeDetector().detectInImage,
-                  onResult: (List<Barcode> barcodes) {
-                    BlocListener<ScanningBloc, ScanningState> listener;
-                    if (listener.bloc.state is Scanning) {
-                      Barcode result = barcodes.first;
-                      BlocProvider.of<ScanningBloc>(context)
-                          .add(RetrieveProduct(result.toString()));
-                    }
-                  },
-                ),
-              ),
+              Scanner(),
               Container(
                 child: ManualControls(),
               ),
