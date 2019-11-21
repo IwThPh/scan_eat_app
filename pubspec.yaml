@@ -18,6 +18,7 @@ dependencies:
   get_it: ^3.0.3
   flutter_camera_ml_vision: ^2.2.4
   firebase_ml_vision: ^0.9.3+3
+  camera: ^0.5.6+3
 
   cupertino_icons: ^0.1.2
 
