@@ -12,6 +12,10 @@ class Scanning extends ScanningState {
   List<Object> get props => [];
 }
 
+class UserInput extends ScanningState {
+  @override
+  List<Object> get props => [];
+}
 class Loading extends ScanningState {
   @override
   List<Object> get props => [];

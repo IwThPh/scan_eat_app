@@ -8,38 +8,16 @@ class ManualControls extends StatefulWidget {
 }
 
 class _ManualControlsState extends State<ManualControls> {
-  final controller = TextEditingController();
-  String inBarcode;
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        TextField(
-          controller: controller,
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Input Barcode',
-          ),
-          onChanged: (v) {
-            inBarcode = v;
-          },
-          onSubmitted: (_) {
-            addRetrieveProduct();
-          },
-        ),
-        SizedBox(height: 20.0,),
-        RaisedButton(
-          child: Text('Search'),
-          onPressed: addRetrieveProduct,
-        ),
-      ],
+    return FlatButton(
+      textTheme: ButtonTextTheme.normal,
+      child: Text('Manual Input'),
+      onPressed: setManualInput,
     );
   }
 
-  void addRetrieveProduct() {
-    controller.clear();
-    BlocProvider.of<ScanningBloc>(context).add(RetrieveProduct(inBarcode));
+  void setManualInput() {
+    BlocProvider.of<ScanningBloc>(context).add(ManualInput());
   }
 }

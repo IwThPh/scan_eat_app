@@ -28,11 +28,13 @@ class ScanningBloc extends Bloc<ScanningEvent, ScanningState> {
     if (event is RetrieveProduct) {
       yield Loading();
       final failureOrProduct = await getProduct(Params(barcode: event.barcode));
-      // yield* _eitherFailureOrProduct(failureOrProduct);
-      yield failureOrProduct.fold(
-        (failure) => Error(message: "Yeet"),
-        (product) => Loaded(product: product)
-      );
+      yield* _eitherFailureOrProduct(failureOrProduct);
+    }
+    if(event is ScanProduct){
+      yield Scanning();
+    }
+    if(event is ManualInput){
+      yield UserInput();
     }
   }
 

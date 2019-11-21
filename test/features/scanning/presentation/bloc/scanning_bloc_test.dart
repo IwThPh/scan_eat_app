@@ -48,4 +48,33 @@ void main() {
       bloc.add(RetrieveProduct(tBarcode));
     });
   });
+
+  group('ScanProduct', () {
+    test('should emit [Scanning]', () async {
+      when(mockGetProduct(any)).thenAnswer((_) async => Right(null));
+
+      //Expected Emit Order.
+      final expected = [
+        Scanning(),
+      ];
+      expectLater(bloc, emitsInOrder(expected));
+
+      bloc.add(ScanProduct());
+    });
+  });
+
+  group('ManualInput', () {
+    test('should emit [Scanning, UserInput]', () async {
+      when(mockGetProduct(any)).thenAnswer((_) async => Right(null));
+
+      //Expected Emit Order.
+      final expected = [
+        Scanning(),
+        UserInput(),
+      ];
+      expectLater(bloc, emitsInOrder(expected));
+
+      bloc.add(ManualInput());
+    });
+  });
 }

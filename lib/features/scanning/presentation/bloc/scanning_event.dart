@@ -12,3 +12,15 @@ class RetrieveProduct extends ScanningEvent {
   @override
   List<Object> get props => null;
 }
+
+class ScanProduct extends ScanningEvent {
+  ScanProduct();
+  @override
+  List<Object> get props => null;
+}
+
+class ManualInput extends ScanningEvent {
+  ManualInput();
+  @override
+  List<Object> get props => null;
+}
