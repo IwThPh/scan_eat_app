@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../di_container.dart';
 import '../bloc/bloc.dart';
 import 'widgets.dart';
 
@@ -30,7 +29,7 @@ class _ProductDialogState extends State<ProductDialog> {
                 );
               }
               if (state is UserInput) {
-                return LoadingWidget();
+                return ManualControls();
               }
               if (state is Error) {
                 return Text('Could Not Find Product');

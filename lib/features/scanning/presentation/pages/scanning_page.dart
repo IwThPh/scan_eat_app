@@ -21,9 +21,8 @@ class ScanningPage extends StatelessWidget {
   Widget buildBody(BuildContext context) {
     //ShapeBorder fo BottomSheet
     ShapeBorder sb = RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(32.0),
-        topRight: Radius.circular(32.0),
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(32.0),
       ),
     );
 
@@ -39,12 +38,14 @@ class ScanningPage extends StatelessWidget {
           },
           listener: (context, state) {
             showModalBottomSheet<void>(
+              isScrollControlled: true,
               context: context,
               shape: sb,
               builder: (_) => BottomSheet(
                 shape: sb,
                 backgroundColor: Colours.primary,
-                builder: (_) => ProductDialog(),
+                builder: (_) =>
+                    ProductDialog(), //May need to be Wrapped in a SingleChildScrollView
                 onClosing: () {},
               ),
             ).whenComplete(() =>
@@ -56,7 +57,28 @@ class ScanningPage extends StatelessWidget {
               Spacer(),
               Scanner(),
               Spacer(),
-              ManualControls(),
+              OutlineButton(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 10.0, horizontal: 50.0),
+                textTheme: ButtonTextTheme.normal,
+                highlightColor: Colours.green,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0)),
+                highlightedBorderColor: Colours.green,
+                borderSide: BorderSide(
+                    color: Colours.offWhite,
+                    style: BorderStyle.solid,
+                    width: 2.0),
+                child: Text(
+                  'Manual Input',
+                  style: Theme.of(context)
+                      .textTheme
+                      .button
+                      .apply(color: Colours.offWhite),
+                ),
+                onPressed: () =>
+                    BlocProvider.of<ScanningBloc>(context).add(ManualInput()),
+              ),
             ],
           ),
         ),

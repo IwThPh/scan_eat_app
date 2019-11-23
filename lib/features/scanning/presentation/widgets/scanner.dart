@@ -31,7 +31,7 @@ class _ScannerState extends State<Scanner> {
           overlayBuilder: (_) => Center(
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: 2,
+              height: 3,
               color: Colours.redAccent.withAlpha(128),
             ),
           ),
