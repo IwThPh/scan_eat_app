@@ -18,8 +18,8 @@ class ProductDisplay extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
-            product.name,
-            textAlign: TextAlign.center,
+            product?.name ?? "Not Defined",
+            textAlign: TextAlign.left,
             style: Theme.of(context).textTheme.headline,
           ),
           Row(

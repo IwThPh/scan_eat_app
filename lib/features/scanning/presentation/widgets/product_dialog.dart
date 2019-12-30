@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scaneat/features/scanning/presentation/pages/product_page.dart';
 
 import '../bloc/bloc.dart';
 import 'widgets.dart';
@@ -19,8 +20,26 @@ class ProductDialog extends StatelessWidget {
                 return LoadingWidget();
               }
               if (state is Loaded) {
-                return ProductDisplay(
-                  product: state.product,
+                return Column(
+                  children: <Widget>[
+                    Hero(
+                      tag: 'product',
+                      child: ProductDisplay(
+                        product: state.product,
+                      ),
+                    ),
+                    RaisedButton(
+                      child: Text('View Product'),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProductPage(
+                                      product: state.product,
+                                    )));
+                      },
+                    ),
+                  ],
                 );
               }
               if (state is UserInput) {
