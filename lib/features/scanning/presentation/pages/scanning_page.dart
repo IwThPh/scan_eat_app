@@ -36,12 +36,8 @@ class ScanningPage extends StatelessWidget {
         showModalBottomSheet<void>(
           context: context,
           shape: sb,
-          builder: (_) => BottomSheet(
-            shape: sb,
-            backgroundColor: Colours.primary,
-            builder: (_) => SingleChildScrollView(child: ProductDialog()),
-            onClosing: () {},
-          ),
+          backgroundColor: Colours.primary,
+          builder: (_) => SingleChildScrollView(child: ProductDialog()),
         ).whenComplete(
             () => BlocProvider.of<ScanningBloc>(context).add(ScanProduct()));
       },
