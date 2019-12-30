@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scaneat/features/scanning/presentation/bloc/bloc.dart';
 import 'package:scaneat/features/scanning/presentation/pages/scanning_page.dart';
@@ -7,9 +8,13 @@ import 'di_container.dart' as di;
 
 import 'package:flutter/material.dart';
 
-void main() async {
-  await di.init();
-  runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) async {
+    await di.init();
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {

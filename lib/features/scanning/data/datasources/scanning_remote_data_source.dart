@@ -23,6 +23,8 @@ class ScanningRemoteDataSourceImpl implements ScanningRemoteDataSource {
       //TODO: Change this to a app config variable.
         'http://192.168.42.160:8000/api/product/$barcode',
         headers: {'Content-Type': 'application-json'});
+        // 'http://192.168.1.4:8000/api/product/$barcode',
+        // headers: {'Content-Type': 'application-json'});
 
     if (response.statusCode == 200) {
       return ProductModel.fromJson(jsonDecode(response.body));

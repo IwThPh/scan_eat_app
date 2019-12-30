@@ -10,7 +10,6 @@ class ManualControls extends StatefulWidget {
 }
 
 class _ManualControlsState extends State<ManualControls> {
-  final _formKey = GlobalKey<FormState>();
   String _barcode = "";
 
   @override
@@ -19,42 +18,47 @@ class _ManualControlsState extends State<ManualControls> {
       child: Padding(
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              TextFormField(
-                textInputAction: TextInputAction.done,
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline
-                    .apply(color: Colours.offWhite),
-                decoration: new InputDecoration(
-                  icon: Icon(Icons.edit),
-                  labelText: 'Barcode',
+        child: Column(
+          children: <Widget>[
+            TextFormField(
+              textInputAction: TextInputAction.done,
+              keyboardType: TextInputType.number,
+              textAlign: TextAlign.center,
+              cursorColor: Colours.offWhite,
+              style: Theme.of(context).textTheme.headline.apply(
+                    color: Colours.offWhite,
+                  ),
+              decoration: new InputDecoration(
+                icon: Icon(Icons.edit),
+                labelText: 'Barcode',
+                focusColor: Colours.offWhite,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                  borderSide: BorderSide(
+                    style: BorderStyle.solid,
+                    color: Colours.offWhite,
+                  ),
                 ),
-                onFieldSubmitted: (v) {
-                  _retrieveProduct();
-                },
-                onChanged: (String v) {
-                  setState(() {
-                    _barcode = v;
-                  });
-                },
-                validator: (String v) {
-                  if (v.isEmpty) return 'Value Needed';
-                  return null;
-                },
               ),
-              FlatButton(
-                textTheme: ButtonTextTheme.normal,
-                child: Text('Search'),
-                onPressed: _retrieveProduct,
-              ),
-            ],
-          ),
+              onFieldSubmitted: (v) {
+                _retrieveProduct();
+              },
+              onChanged: (String v) {
+                setState(() {
+                  _barcode = v;
+                });
+              },
+              validator: (String v) {
+                if (v.isEmpty) return 'Value Needed';
+                return null;
+              },
+            ),
+            FlatButton(
+              textTheme: ButtonTextTheme.normal,
+              child: Text('Search'),
+              onPressed: _retrieveProduct,
+            ),
+          ],
         ),
       ),
     );

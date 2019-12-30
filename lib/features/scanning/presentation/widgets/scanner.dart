@@ -8,25 +8,14 @@ import 'package:scaneat/assets/theme/app_theme.dart';
 import 'package:scaneat/features/scanning/presentation/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
-class Scanner extends StatefulWidget {
-  @override
-  _ScannerState createState() => _ScannerState();
-}
-
-class _ScannerState extends State<Scanner> {
-  String result;
-
+class Scanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BarcodeDetector detector = FirebaseVision.instance.barcodeDetector();
-    final _scanKey = GlobalKey<CameraMlVisionState>();
-
     return Container(
-      width: MediaQuery.of(context).size.width,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(32.0),
         child: CameraMlVision<List<Barcode>>(
-          key: _scanKey,
           detector: detector.detectInImage,
           overlayBuilder: (_) => Center(
             child: Container(
@@ -38,10 +27,11 @@ class _ScannerState extends State<Scanner> {
           resolution: ResolutionPreset.medium,
           onResult: (List<Barcode> barcodes) {
             if (barcodes.isNotEmpty) {
-              result = barcodes.first.rawValue;
+              String result = barcodes.first.rawValue;
               log(result);
               if (BlocProvider.of<ScanningBloc>(context).state is Scanning) {
-                addRetrieveProduct();
+                BlocProvider.of<ScanningBloc>(context)
+                    .add(RetrieveProduct(result));
               }
             }
           },
@@ -49,9 +39,5 @@ class _ScannerState extends State<Scanner> {
         ),
       ),
     );
-  }
-
-  void addRetrieveProduct() {
-    BlocProvider.of<ScanningBloc>(context).add(RetrieveProduct(result));
   }
 }

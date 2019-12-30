@@ -4,12 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/bloc.dart';
 import 'widgets.dart';
 
-class ProductDialog extends StatefulWidget {
-  @override
-  _ProductDialogState createState() => _ProductDialogState();
-}
-
-class _ProductDialogState extends State<ProductDialog> {
+class ProductDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,10 +35,5 @@ class _ProductDialogState extends State<ProductDialog> {
         ],
       ),
     );
-  }
-
-  void returnScanning() {
-    BlocProvider.of<ScanningBloc>(context).add(ScanProduct());
-    Navigator.pop(context);
   }
 }

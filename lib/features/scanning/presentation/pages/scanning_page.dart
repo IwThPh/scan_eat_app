@@ -27,62 +27,67 @@ class ScanningPage extends StatelessWidget {
     );
 
     return SafeArea(
-      child: Container(
-        color: Colours.primaryAccent,
-        padding: const EdgeInsets.all(23.0),
-        height: MediaQuery.of(context).size.height,
         child: BlocListener<ScanningBloc, ScanningState>(
-          bloc: BlocProvider.of<ScanningBloc>(context),
-          condition: (prev, next) {
-            return (prev is Scanning && (next is Loading || next is UserInput));
-          },
-          listener: (context, state) {
-            showModalBottomSheet<void>(
-              isScrollControlled: true,
-              context: context,
-              shape: sb,
-              builder: (_) => BottomSheet(
-                shape: sb,
-                backgroundColor: Colours.primary,
-                builder: (_) =>
-                    ProductDialog(), //May need to be Wrapped in a SingleChildScrollView
-                onClosing: () {},
-              ),
-            ).whenComplete(() =>
-                BlocProvider.of<ScanningBloc>(context).add(ScanProduct()));
-          },
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Spacer(),
-              Scanner(),
-              Spacer(),
-              OutlineButton(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 10.0, horizontal: 50.0),
-                textTheme: ButtonTextTheme.normal,
-                highlightColor: Colours.green,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0)),
-                highlightedBorderColor: Colours.green,
-                borderSide: BorderSide(
-                    color: Colours.offWhite,
-                    style: BorderStyle.solid,
-                    width: 2.0),
-                child: Text(
-                  'Manual Input',
-                  style: Theme.of(context)
-                      .textTheme
-                      .button
-                      .apply(color: Colours.offWhite),
+      bloc: BlocProvider.of<ScanningBloc>(context),
+      condition: (prev, next) {
+        return (prev is Scanning && (next is Loading || next is UserInput));
+      },
+      listener: (context, state) {
+        showModalBottomSheet<void>(
+          context: context,
+          shape: sb,
+          builder: (_) => BottomSheet(
+            shape: sb,
+            backgroundColor: Colours.primary,
+            builder: (_) => SingleChildScrollView(child: ProductDialog()),
+            onClosing: () {},
+          ),
+        ).whenComplete(
+            () => BlocProvider.of<ScanningBloc>(context).add(ScanProduct()));
+      },
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        color: Colours.primaryAccent,
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(23.0),
+            height: MediaQuery.of(context).size.height - 50.0,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Expanded(
+                  child: Scanner(),
                 ),
-                onPressed: () =>
-                    BlocProvider.of<ScanningBloc>(context).add(ManualInput()),
-              ),
-            ],
+                Container(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: OutlineButton(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 50.0),
+                    textTheme: ButtonTextTheme.normal,
+                    highlightColor: Colours.green,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.0)),
+                    highlightedBorderColor: Colours.green,
+                    borderSide: BorderSide(
+                        color: Colours.offWhite,
+                        style: BorderStyle.solid,
+                        width: 2.0),
+                    child: Text(
+                      'Manual Input',
+                      style: Theme.of(context)
+                          .textTheme
+                          .button
+                          .apply(color: Colours.offWhite),
+                    ),
+                    onPressed: () =>
+                        BlocProvider.of<ScanningBloc>(context).add(ManualInput()),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
-    );
+    ));
   }
 }
