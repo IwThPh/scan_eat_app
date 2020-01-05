@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      builder: (_) => di.sl<ScanningBloc>(),
+      create: (_) => di.sl<ScanningBloc>(),
       child: MaterialApp(
         theme: AppTheme.theme,
         home: ScanningPage(),
