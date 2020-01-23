@@ -133,7 +133,7 @@ packages:
       name: equatable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   firebase_ml_vision:
     dependency: "direct main"
     description:
@@ -166,7 +166,7 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.1.0"
   flutter_camera_ml_vision:
     dependency: "direct main"
     description:
@@ -174,6 +174,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.4"
+  flutter_dotenv:
+    dependency: "direct main"
+    description:
+      name: flutter_dotenv
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:

@@ -29,7 +29,7 @@ Future<void> init() async {
   );
 
   sl.registerLazySingleton<ScanningRemoteDataSource>(
-      () => ScanningRemoteDataSourceImpl(client: sl()),
+    () => ScanningRemoteDataSourceImpl(client: sl())
   );
 
   // | Core |
