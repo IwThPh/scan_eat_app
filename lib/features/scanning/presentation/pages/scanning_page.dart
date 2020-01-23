@@ -75,8 +75,8 @@ class ScanningPage extends StatelessWidget {
                           .button
                           .apply(color: Colours.offWhite),
                     ),
-                    onPressed: () =>
-                        BlocProvider.of<ScanningBloc>(context).add(ManualInput()),
+                    onPressed: () => BlocProvider.of<ScanningBloc>(context)
+                        .add(ManualInput()),
                   ),
                 ),
               ],
