@@ -1,0 +1,74 @@
+import 'package:equatable/equatable.dart';
+
+abstract class LoginPageState extends Equatable {
+  /// notify change state without deep clone state
+  final int version;
+  
+  final List propss;
+  LoginPageState(this.version,[this.propss]);
+
+  /// Copy object for use in action
+  /// if need use deep clone
+  LoginPageState getStateCopy();
+
+  LoginPageState getNewVersion();
+
+  @override
+  List<Object> get props => [version];
+}
+
+/// UnInitialized
+class UnLoginPageState extends LoginPageState {
+
+  UnLoginPageState(int version) : super(version);
+
+  @override
+  String toString() => 'UnLoginPageState';
+
+  @override
+  UnLoginPageState getStateCopy() {
+    return UnLoginPageState(0);
+  }
+
+  @override
+  UnLoginPageState getNewVersion() {
+    return UnLoginPageState(version+1);
+  }
+}
+
+/// Initialized
+class InLoginPageState extends LoginPageState {
+  InLoginPageState(int version) : super(version);
+
+  @override
+  String toString() => 'InLoginPageState';
+
+  @override
+  InLoginPageState getStateCopy() {
+    return InLoginPageState(this.version);
+  }
+
+  @override
+  InLoginPageState getNewVersion() {
+    return InLoginPageState(version+1);
+  }
+}
+
+class ErrorLoginPageState extends LoginPageState {
+  final String errorMessage;
+
+  ErrorLoginPageState(int version, this.errorMessage): super(version, [errorMessage]);
+  
+  @override
+  String toString() => 'ErrorLoginPageState';
+
+  @override
+  ErrorLoginPageState getStateCopy() {
+    return ErrorLoginPageState(this.version, this.errorMessage);
+  }
+
+  @override
+  ErrorLoginPageState getNewVersion() {
+    return ErrorLoginPageState(version+1, this.errorMessage);
+  }
+}
