@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:scaneat/features/scanning/presentation/bloc/bloc.dart';
+import 'package:scaneat/features/scanning/presentation/bloc/scanning_bloc.dart';
 import 'package:scaneat/features/scanning/presentation/pages/scanning_page.dart';
 
 import 'assets/theme/app_theme.dart';
@@ -14,7 +13,6 @@ void main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) async {
     await di.init();
-    await DotEnv().load('.env');
     runApp(MyApp());
   });
 }

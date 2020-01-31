@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
+import 'package:scaneat/config.dart';
 
 import '../../../../core/error/exception.dart';
 import '../models/product_model.dart';
@@ -20,7 +20,7 @@ class ScanningRemoteDataSourceImpl implements ScanningRemoteDataSource {
   @override
   Future<ProductModel> getProduct(String barcode) async {
     final response = await client.get(
-        DotEnv().env['APP_URL_DEBUG'] + 'api/product/$barcode',
+        Config.APP_URL + 'api/product/$barcode',
         headers: {'Content-Type': 'application-json'});
 
     if (response.statusCode == 200) {

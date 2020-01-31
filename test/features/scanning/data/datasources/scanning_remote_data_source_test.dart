@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
+import 'package:scaneat/config.dart';
 
 import 'package:scaneat/core/error/exception.dart';
 import 'package:scaneat/features/scanning/data/datasources/scanning_remote_data_source.dart';
@@ -32,7 +33,7 @@ void main() {
       dataSource.getProduct(tBarcode);
 
       verify(mockHttpClient.get(
-          'http://192.168.42.160:8000/api/product/$tBarcode',
+          Config.APP_URL_DEBUG + 'api/product/$tBarcode',
           headers: {'Content-Type': 'application-json'}));
     });
 

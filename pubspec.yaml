@@ -21,7 +21,7 @@ dependencies:
   camera: ^0.5.7+2
   flare_flutter: ^1.8.3
   cupertino_icons: ^0.1.2
-  flutter_dotenv: ^2.1.0
+  flutter_svg: ^0.17.0
 
 dev_dependencies:
   flutter_test:
@@ -35,7 +35,8 @@ flutter:
   # example:
   assets:
     - lib/assets/animations/
-    - .env
+    - lib/assets/icon/logo.png
+    - lib/assets/icon/test.jpg
   fonts:
     - family: Poppins
       fonts:
