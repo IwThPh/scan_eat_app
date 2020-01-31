@@ -25,7 +25,7 @@ class _ManualControlsState extends State<ManualControls> {
               keyboardType: TextInputType.number,
               textAlign: TextAlign.center,
               cursorColor: Colours.offWhite,
-              style: Theme.of(context).textTheme.headline.apply(
+              style: Theme.of(context).textTheme.headline5.apply(
                     color: Colours.offWhite,
                   ),
               decoration: new InputDecoration(

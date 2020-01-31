@@ -20,7 +20,7 @@ class ProductDisplay extends StatelessWidget {
           Text(
             product?.name ?? "Not Defined",
             textAlign: TextAlign.left,
-            style: Theme.of(context).textTheme.headline,
+            style: Theme.of(context).textTheme.headline5 ,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -116,7 +116,7 @@ class ProductNutrient extends StatelessWidget {
                 ),
                 Text(
                   ((value / 100) * weight).round().toString().trim() + unit,
-                  style: Theme.of(context).textTheme.subhead.merge(bodyText),
+                  style: Theme.of(context).textTheme.subtitle1.merge(bodyText),
                 ),
               ],
             ),
