@@ -2,10 +2,7 @@ import 'dart:async';
 import 'dart:developer' as developer;
 
 import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
-import 'package:scaneat/core/error/failure.dart';
-import 'package:scaneat/features/login/domain/entities/auth.dart';
 import 'package:scaneat/features/login/domain/usecases/login_request.dart';
 import 'package:scaneat/features/login/presentation/bloc/bloc.dart';
 
@@ -30,13 +27,5 @@ class LoginPageBloc extends Bloc<LoginPageEvent, LoginPageState> {
       developer.log('$_', name: 'LoginPageBloc', error: _, stackTrace: stackTrace);
       yield state;
     }
-  }
-
-  Stream<LoginPageState> _eitherFailureOrAuth(
-      Either<Failure, Auth> failureOrAuth) async* {
-    yield failureOrAuth.fold(
-        (failure) => ErrorLoginPageState(-1, "Error Authenticating"),
-        (auth) => InLoginPageState(1)
-      );
   }
 }

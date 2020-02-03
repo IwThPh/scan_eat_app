@@ -72,3 +72,23 @@ class ErrorLoginPageState extends LoginPageState {
     return ErrorLoginPageState(version+1, this.errorMessage);
   }
 }
+
+/// Logged In.
+class CompleteLoginPageState extends LoginPageState {
+  final String token;
+
+  CompleteLoginPageState(int version, this.token) : super(version, [ token ]);
+
+  @override
+  String toString() => 'CompleteLoginPageState';
+
+  @override
+  CompleteLoginPageState getStateCopy() {
+    return CompleteLoginPageState(this.version, this.token);
+  }
+
+  @override
+  CompleteLoginPageState getNewVersion() {
+    return CompleteLoginPageState(this.version+1, this.token);
+  }
+}

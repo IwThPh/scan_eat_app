@@ -1,8 +1,12 @@
 import 'dart:async';
 import 'dart:developer' as developer;
 
+import 'package:dartz/dartz.dart';
+import 'package:scaneat/core/error/failure.dart';
+import 'package:scaneat/features/login/domain/entities/auth.dart';
 import 'package:scaneat/features/login/presentation/bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:scaneat/features/login/domain/usecases/login_request.dart';
 
 abstract class LoginPageEvent extends Equatable {
   Future<LoginPageState> applyAsync(
@@ -47,4 +51,36 @@ class LoadLoginPageEvent extends LoginPageEvent {
 
   @override
   List<Object> get props => [];
+}
+
+class SendLoginPageEvent extends LoginPageEvent {
+  final String email;
+  final String password;
+
+  @override
+  String toString() => 'SendLoginPageEvent';
+
+  SendLoginPageEvent(this.email, this.password);
+
+  @override
+  Future<LoginPageState> applyAsync(
+      {LoginPageState currentState, LoginPageBloc bloc}) async {
+    try {
+      final failureOrProduct = await bloc.loginRequest(Params(email: email, password: password));
+      return _eitherFailureOrAuth(failureOrProduct);
+    } catch (_, stackTrace) {
+      developer.log('$_',
+          name: 'LoadTestEvent', error: _, stackTrace: stackTrace);
+      return ErrorLoginPageState(0, _?.toString());
+    }
+  }
+
+  @override
+  List<Object> get props => [];
+
+  LoginPageState _eitherFailureOrAuth(Either<Failure, Auth> failureOrAuth) {
+    return failureOrAuth.fold(
+        (failure) => ErrorLoginPageState(0, "Error Authenticating"),
+        (auth) => ErrorLoginPageState(1, auth.accessToken));
+  }
 }
