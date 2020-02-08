@@ -7,6 +7,8 @@ import '../widgets/scanner.dart';
 import '../widgets/widgets.dart';
 
 class ScanningPage extends StatelessWidget {
+  static const String routeName = '/scan';
+
   ScanningPage({
     Key key,
   }) : super(key: key);

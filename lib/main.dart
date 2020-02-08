@@ -1,5 +1,8 @@
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scaneat/features/login/presentation/pages/login_page.dart';
+import 'package:scaneat/features/scanning/presentation/bloc/bloc.dart';
+import 'package:scaneat/features/scanning/presentation/pages/scanning_page.dart';
 
 import 'assets/theme/app_theme.dart';
 import 'di_container.dart' as di;
@@ -18,9 +21,16 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: AppTheme.theme,
-      home: LoginPage(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ScanningBloc>(
+          create: (_) => di.sl<ScanningBloc>(),
+        ),
+      ],
+      child: MaterialApp(
+        theme: AppTheme.theme,
+        home: LoginPage(),
+      ),
     );
   }
 }

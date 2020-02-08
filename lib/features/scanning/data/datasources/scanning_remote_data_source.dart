@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 import 'package:scaneat/config.dart';
@@ -19,9 +20,10 @@ class ScanningRemoteDataSourceImpl implements ScanningRemoteDataSource {
 
   @override
   Future<ProductModel> getProduct(String barcode) async {
-    final response = await client.get(
-        Config.APP_URL + 'api/product/$barcode',
+    final response = await client.get(Config.APP_URL + 'api/product/$barcode',
         headers: {'Content-Type': 'application-json'});
+
+    log(response.body);
 
     if (response.statusCode == 200) {
       return ProductModel.fromJson(jsonDecode(response.body));
