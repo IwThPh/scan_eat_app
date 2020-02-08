@@ -34,8 +34,7 @@ void main() {
         dataSource.attemptLogin(tEmail, tPassword);
 
         verify(mockHttpClient.post(url,
-            headers: {'Content-Type': 'application/json'},
-            body: {'email': '$tEmail', 'password': '$tPassword'}));
+            body: {'username': '$tEmail', 'password': '$tPassword'}));
       },
     );
 
