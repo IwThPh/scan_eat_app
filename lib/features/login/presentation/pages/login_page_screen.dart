@@ -100,8 +100,7 @@ class LoginPageScreenState extends State<LoginPageScreen> {
   }
 
   void _send(){
-    //TODO: Debug, look into sending form data using http request in flutter.
     widget._loginPageBloc.add(UnLoginPageEvent());
-    widget._loginPageBloc.add(SendLoginPageEvent(emailController.value.toString(), passController.value.toString()));
+    widget._loginPageBloc.add(SendLoginPageEvent(emailController.value.text, passController.value.text));
   }
 }

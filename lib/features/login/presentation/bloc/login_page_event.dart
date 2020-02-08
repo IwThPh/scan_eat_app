@@ -66,8 +66,8 @@ class SendLoginPageEvent extends LoginPageEvent {
   Future<LoginPageState> applyAsync(
       {LoginPageState currentState, LoginPageBloc bloc}) async {
     try {
-      final failureOrProduct = await bloc.loginRequest(Params(email: email, password: password));
-      return _eitherFailureOrAuth(failureOrProduct);
+      final failureOrAuth = await bloc.loginRequest(Params(email: email, password: password));
+      return _eitherFailureOrAuth(failureOrAuth);
     } catch (_, stackTrace) {
       developer.log('$_',
           name: 'LoadTestEvent', error: _, stackTrace: stackTrace);
@@ -82,5 +82,6 @@ class SendLoginPageEvent extends LoginPageEvent {
     return failureOrAuth.fold(
         (failure) => ErrorLoginPageState(0, "Error Authenticating"),
         (auth) => ErrorLoginPageState(1, auth.accessToken));
+        //TODO: Handle Auth Success 
   }
 }
