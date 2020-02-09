@@ -4,6 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:scaneat/core/device/network_info.dart';
 import 'package:scaneat/core/error/exception.dart';
 import 'package:scaneat/core/error/failure.dart';
+import 'package:scaneat/features/login/data/datasources/login_local_data_source.dart';
 import 'package:scaneat/features/login/data/datasources/login_remote_data_source.dart';
 import 'package:scaneat/features/login/data/repositories/login_repository_impl.dart';
 
@@ -11,18 +12,23 @@ import '../../../../samples.dart';
 
 class MockRemoteDataSource extends Mock implements LoginRemoteDataSource {}
 
+class MockLocalDataSource extends Mock implements LoginLocalDataSource {}
+
 class MockNetworkInfo extends Mock implements NetworkInfo {}
 
 void main() {
   MockRemoteDataSource mockRemoteDataSource;
+  MockLocalDataSource mockLocalDataSource;
   MockNetworkInfo mockNetworkInfo;
   LoginRepositoryImpl repository;
 
   setUp(() {
     mockRemoteDataSource = MockRemoteDataSource();
+    mockLocalDataSource = MockLocalDataSource();
     mockNetworkInfo = MockNetworkInfo();
     repository = LoginRepositoryImpl(
       remoteDataSource: mockRemoteDataSource,
+      localDataSource: mockLocalDataSource,
       networkInfo: mockNetworkInfo,
     );
   });
@@ -56,7 +62,19 @@ void main() {
         },
       );
 
-      //TODO: Ensure that the access token is stored to shared prefs on successful.
+      test(
+        'Should cache auth data to shared preferences, if successful',
+        () async {
+          // arrange
+          when(mockRemoteDataSource.attemptLogin(any, any))
+              .thenAnswer((_) async => tAuthModel);
+          // act
+          await repository.attemptLogin(tEmail, tPassword);
+          // assert
+          verify(mockRemoteDataSource.attemptLogin(tEmail, tPassword));
+          verify(mockLocalDataSource.cacheAuth(tAuthModel));
+        },
+      );
 
       test(
         'Should return server failure when the call to remote data source is unsuccessful',
@@ -85,5 +103,20 @@ void main() {
         },
       );
     });
+  });
+
+  group('storeAuth', () {
+    test(
+      'Should return true when cache to local data source is successful',
+      () async {
+        when(mockLocalDataSource.cacheAuth(tAuth))
+            .thenAnswer((_) async => true);
+
+        final result = await repository.cacheAuth(tAuth);
+
+        verify(mockLocalDataSource.cacheAuth(tAuth));
+        expect(result, equals(Right(true)));
+      },
+    );
   });
 }
