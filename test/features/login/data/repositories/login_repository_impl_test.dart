@@ -35,76 +35,168 @@ void main() {
 
   final tAuthModel = Samples.tAuthModel;
   final tAuth = tAuthModel;
+
+  final tValidatorModel = Samples.tValidatorModel;
+  final tValidator = tAuthModel;
+
+  final tName = Samples.tName;
   final tEmail = Samples.tEmail;
   final tPassword = Samples.tPassword;
-  group('attemptLogin', () {
+
+  group('Online Functionality', () {
     test('Check device is online', () async {
       when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
       repository.attemptLogin(tEmail, tPassword);
       verify(mockNetworkInfo.isConnected);
     });
+    group('attemptLogin', () {
+      group('Device is online', () {
+        setUp(() {
+          when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+        });
 
-    group('Device is online', () {
-      setUp(() {
-        when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+        test(
+          'Should return remote data when the call to remote data source is successful',
+          () async {
+            when(mockRemoteDataSource.attemptLogin(tEmail, tPassword))
+                .thenAnswer((_) async => tAuthModel);
+
+            final result = await repository.attemptLogin(tEmail, tPassword);
+
+            verify(mockRemoteDataSource.attemptLogin(tEmail, tPassword));
+            expect(result, equals(Right(tAuth)));
+          },
+        );
+
+        test(
+          'Should cache auth data to shared preferences, if successful',
+          () async {
+            // arrange
+            when(mockRemoteDataSource.attemptLogin(any, any))
+                .thenAnswer((_) async => tAuthModel);
+            // act
+            await repository.attemptLogin(tEmail, tPassword);
+            // assert
+            verify(mockRemoteDataSource.attemptLogin(tEmail, tPassword));
+            verify(mockLocalDataSource.cacheAuth(tAuthModel));
+          },
+        );
+
+        test(
+          'Should return server failure when the call to remote data source is unsuccessful',
+          () async {
+            // arrange
+            when(mockRemoteDataSource.attemptLogin(tEmail, tPassword))
+                .thenThrow(ServerException());
+            // act
+            final result = await repository.attemptLogin(tEmail, tPassword);
+            // assert
+            verify(mockRemoteDataSource.attemptLogin(tEmail, tPassword));
+            expect(result, equals(Left(ServerFailure())));
+          },
+        );
       });
 
-      test(
-        'Should return remote data when the call to remote data source is successful',
-        () async {
-          when(mockRemoteDataSource.attemptLogin(tEmail, tPassword))
-              .thenAnswer((_) async => tAuthModel);
+      group('Device is offline', () {
+        setUp(() {
+          when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
+        });
 
-          final result = await repository.attemptLogin(tEmail, tPassword);
-
-          verify(mockRemoteDataSource.attemptLogin(tEmail, tPassword));
-          expect(result, equals(Right(tAuth)));
-        },
-      );
-
-      test(
-        'Should cache auth data to shared preferences, if successful',
-        () async {
-          // arrange
-          when(mockRemoteDataSource.attemptLogin(any, any))
-              .thenAnswer((_) async => tAuthModel);
-          // act
-          await repository.attemptLogin(tEmail, tPassword);
-          // assert
-          verify(mockRemoteDataSource.attemptLogin(tEmail, tPassword));
-          verify(mockLocalDataSource.cacheAuth(tAuthModel));
-        },
-      );
-
-      test(
-        'Should return server failure when the call to remote data source is unsuccessful',
-        () async {
-          // arrange
-          when(mockRemoteDataSource.attemptLogin(tEmail, tPassword))
-              .thenThrow(ServerException());
-          // act
-          final result = await repository.attemptLogin(tEmail, tPassword);
-          // assert
-          verify(mockRemoteDataSource.attemptLogin(tEmail, tPassword));
-          expect(result, equals(Left(ServerFailure())));
-        },
-      );
+        test(
+          'Should return not connected error',
+          () async {
+            //TODO: Offline logic
+          },
+        );
+      });
     });
 
-    group('Device is offline', () {
-      setUp(() {
-        when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
+    group('attemptRegister', () {
+      group('Device is online', () {
+        setUp(() {
+          when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+        });
+
+        test(
+          'Should return remote data when the call to remote data source is successful and correct',
+          () async {
+            when(mockRemoteDataSource.attemptRegister(
+                    tName, tEmail, tPassword, tPassword))
+                .thenAnswer((_) async => Right(tAuthModel));
+
+            final result = await repository.attemptRegister(
+                tName, tEmail, tPassword, tPassword);
+
+            verify(mockRemoteDataSource.attemptRegister(
+                tName, tEmail, tPassword, tPassword));
+            expect(result, equals(Right(Right(tAuth))));
+          },
+        );
+
+        test(
+          'Should return remote data validator when the call to remote data source is successful and incorrect',
+          () async {
+            when(mockRemoteDataSource.attemptRegister(
+                    tName, tEmail, tPassword, tPassword))
+                .thenAnswer((_) async => Left(tValidatorModel));
+
+            final result = await repository.attemptRegister(
+                tName, tEmail, tPassword, tPassword);
+
+            verify(mockRemoteDataSource.attemptRegister(
+                tName, tEmail, tPassword, tPassword));
+            expect(result, equals(Right(Left(tValidatorModel))));
+          },
+        );
+
+        test(
+          'Should cache auth data to shared preferences, if successful',
+          () async {
+            // arrange
+            when(mockRemoteDataSource.attemptRegister(any, any, any, any))
+                .thenAnswer((_) async => Right(tAuthModel));
+            // act
+            await repository.attemptRegister(
+                tName, tEmail, tPassword, tPassword);
+            // assert
+            verify(mockRemoteDataSource.attemptRegister(
+                tName, tEmail, tPassword, tPassword));
+            verify(mockLocalDataSource.cacheAuth(tAuthModel));
+          },
+        );
+
+        test(
+          'Should return server failure when the call to remote data source is unsuccessful',
+          () async {
+            // arrange
+            when(mockRemoteDataSource.attemptRegister(
+                    tName, tEmail, tPassword, tPassword))
+                .thenThrow(ServerException());
+            // act
+            final result = await repository.attemptRegister(
+                tName, tEmail, tPassword, tPassword);
+            // assert
+            verify(mockRemoteDataSource.attemptRegister(
+                tName, tEmail, tPassword, tPassword));
+            expect(result, equals(Left(ServerFailure())));
+          },
+        );
       });
 
-      test(
-        'Should return not connected error',
-        () async {
-          //TODO: Offline logic
-        },
-      );
+      group('Device is offline', () {
+        setUp(() {
+          when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
+        });
+
+        test(
+          'Should return not connected error',
+          () async {
+            //TODO: Offline logic
+          },
+        );
+      });
     });
   });
-
   group('storeAuth', () {
     test(
       'Should return true when cache to local data source is successful',

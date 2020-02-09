@@ -1,9 +1,12 @@
+import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:scaneat/config.dart';
 import 'package:scaneat/core/error/exception.dart';
 import 'package:scaneat/features/login/data/datasources/login_remote_data_source.dart';
+import 'package:scaneat/features/login/data/models/auth_model.dart';
+import 'package:scaneat/features/login/data/models/validator_model.dart';
 
 import '../../../../samples.dart';
 
@@ -14,9 +17,14 @@ void main() {
   MockHttpClient mockHttpClient;
 
   final tAuthJson = Samples.tAuthJson;
+  final tAuthModel = Samples.tAuthModel;
+  final tValidatorJson = Samples.tValidatorJson;
+  final tValidatorModel = Samples.tValidatorModel;
+  final tName = Samples.tName;
   final tEmail = Samples.tEmail;
   final tPassword = Samples.tPassword;
-  final url = Config.APP_URL_DEBUG + 'api/auth/token';
+  final urlLogin = Config.APP_URL_DEBUG + 'api/auth/token';
+  final urlRegister = Config.APP_URL_DEBUG + 'api/auth/register';
 
   setUp(() {
     mockHttpClient = MockHttpClient();
@@ -33,7 +41,7 @@ void main() {
 
         dataSource.attemptLogin(tEmail, tPassword);
 
-        verify(mockHttpClient.post(url,
+        verify(mockHttpClient.post(urlLogin,
             body: {'username': '$tEmail', 'password': '$tPassword'}));
       },
     );
@@ -48,6 +56,37 @@ void main() {
       final call = dataSource.attemptLogin('incorrect', 'incorrect');
 
       expect(() => call, throwsA(isInstanceOf<ServerException>()));
+    });
+  });
+
+  group('attemptRegister', () {
+    test(
+      'Should preform a POST request to Register URL with valid credentials, Expect Auth json response',
+      () async {
+        when(mockHttpClient.post(any,
+                headers: anyNamed('headers'), body: anyNamed('body')))
+            .thenAnswer((_) async => http.Response(tAuthJson, 200));
+
+        final result = await dataSource.attemptRegister(tName, tEmail, tPassword, tPassword);
+
+        verify(mockHttpClient.post(urlRegister,
+            body: {'name': tName, 'email': tEmail, 'password': tPassword, 'confirm_password': tPassword}));
+        expect(result.isRight(), equals(true));
+      },
+    );
+
+    test(
+        'Should preform a POST request to Register URL with invalid credentials, Expect Validator json response',
+        () async {
+        when(mockHttpClient.post(any,
+                headers: anyNamed('headers'), body: anyNamed('body')))
+            .thenAnswer((_) async => http.Response(tValidatorJson, 400));
+
+        final result = await dataSource.attemptRegister(tName, tEmail, tPassword, tPassword);
+
+        verify(mockHttpClient.post(urlRegister,
+            body: {'name': tName, 'email': tEmail, 'password': tPassword, 'confirm_password': tPassword}));
+        expect(result.isLeft(), equals(true));
     });
   });
 }
