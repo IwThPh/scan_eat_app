@@ -1,11 +1,13 @@
+import 'dart:developer';
+
 import 'package:meta/meta.dart';
 import '../../domain/entities/validator.dart';
 
 class ValidatorModel extends Validator {
   ValidatorModel({
-    @required nameError,
-    @required emailError,
-    @required passwordError,
+    @required String nameError,
+    @required String emailError,
+    @required String passwordError,
   }) : super(
           nameError: nameError,
           emailError: emailError,
@@ -13,14 +15,14 @@ class ValidatorModel extends Validator {
         );
         
   factory ValidatorModel.fromJson(Map<String, dynamic> json) {
-    List<dynamic> nameErrors = json['name'];
-    List<dynamic> emailErrors = json['email'];
-    List<dynamic> passwordErrors = json['password'];
+    List<dynamic> nameErrors = json.containsKey('name') ? json['name'] : [];
+    List<dynamic> emailErrors = json.containsKey('email') ? json['email'] : [];
+    List<dynamic> passwordErrors = json.containsKey('password') ? json['password'] : [];
 
     return ValidatorModel(
-      nameError: nameErrors.first,
-      emailError: emailErrors.first,
-      passwordError: passwordErrors.first,
+      nameError: nameErrors.length > 0 ? nameErrors[0] : "",
+      emailError: emailErrors.length > 0 ? emailErrors[0] : "",
+      passwordError: passwordErrors.length > 0 ? passwordErrors[0] : "",
     );
   }
 }

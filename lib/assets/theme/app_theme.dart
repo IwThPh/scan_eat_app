@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:scaneat/assets/theme/colours.dart';
 
 export 'colours.dart';
 
 class AppTheme {
   static final ThemeData theme = ThemeData(
     brightness: Brightness.light,
+    primaryColor: Colours.primary,
+    accentColor: Colours.green,
+    cursorColor: Colours.primaryAccent,
+    splashColor: Colours.primary,
+    backgroundColor: Colours.offWhite,
     fontFamily: 'Poppins',
     textTheme: TextTheme(
       //See https://api.flutter.dev/flutter/material/TextTheme-class.html for details.

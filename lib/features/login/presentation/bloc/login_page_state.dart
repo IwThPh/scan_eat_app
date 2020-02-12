@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:scaneat/features/login/domain/entities/validator.dart';
 
 abstract class LoginPageState extends Equatable {
   /// notify change state without deep clone state
@@ -38,7 +39,10 @@ class UnLoginPageState extends LoginPageState {
 
 /// Initialized
 class InLoginPageState extends LoginPageState {
-  InLoginPageState(int version) : super(version);
+  final Validator errors;
+  final bool isReg;
+
+  InLoginPageState(int version, [this.isReg = false, this.errors]) : super(version);
 
   @override
   String toString() => 'InLoginPageState';
@@ -54,6 +58,7 @@ class InLoginPageState extends LoginPageState {
   }
 }
 
+//Error. Displays message
 class ErrorLoginPageState extends LoginPageState {
   final String errorMessage;
 

@@ -13,119 +13,93 @@ class LoginPage extends StatelessWidget {
     //ShapeBorder for Panel
     ShapeBorder sb = RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
-        top: Radius.elliptical(MediaQuery.of(context).size.width + 30, 135),
+        bottom: Radius.elliptical(MediaQuery.of(context).size.width + 30, 80),
       ),
     );
 
-    return Stack(
-      overflow: Overflow.clip,
-      children: <Widget>[
-        RotatedBox(
-          quarterTurns: 3,
-          child: Image.asset(
-            //TODO: Dynamic BG would be cool to add.
-            'lib/assets/icon/test.jpg',
-            fit: BoxFit.fitHeight,
-          ),
-        ),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
-            child: CustomScrollView(
-              slivers: <Widget>[
-                SliverSpacer(),
-                SliverPersistentHeader(
-                  delegate: HeaderDelegate(),
-                  pinned: true,
+    //ShapeBorder for Card
+    ShapeBorder cb = RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(
+        Radius.elliptical(MediaQuery.of(context).size.width + 30, 80),
+      ),
+    );
+
+    return SafeArea(
+      child: Scaffold(
+        body: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            return Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                gradient: RadialGradient(
+                  center: Alignment(0, 0),
+                  stops: [0.1, 1],
+                  radius: 3,
+                  colors: [
+                    Colours.primary,
+                    Colours.green,
+                  ],
                 ),
-                SliverSpacer(),
-                SliverFillRemaining(
-                  fillOverscroll: false,
-                  hasScrollBody: false,
-                  child: ClipPath.shape(
-                    shape: sb,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: RadialGradient(
-                          center: Alignment(0, 1),
-                          stops: [0.1, 1],
-                          radius: 3,
-                          colors: [
-                            Colours.primary,
-                            Colours.green,
-                          ],
+              ),
+              child: CustomScrollView(
+                slivers: <Widget>[
+                  SliverAppBar(
+                    centerTitle: true,
+                    pinned: true,
+                    elevation: 0,
+                    backgroundColor: Colors.transparent,
+                    expandedHeight: constraints.maxHeight / 2.8,
+                    bottom: PreferredSize(
+                      preferredSize: Size(174, 72),
+                      child: Material(
+                        color: Colors.transparent,
+                        elevation: 16,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: Colors.white,
+                          ),
+                          child: Image.asset(
+                            'lib/assets/icon/logo.png',
+                            height: 52,
+                            width: 154,
+                            semanticLabel: 'ScanEat Logo',
+                            fit: BoxFit.none,
+                          ),
                         ),
                       ),
-                      child: Center(
-                        child: Container(
-                          margin: EdgeInsets.all(60),
-                          color: Colours.offWhite,
-                          child: Padding(
-                              padding: EdgeInsets.all(16),
-                              child:
-                                  LoginPageScreen(loginPageBloc: _loginPageBloc)),
+                    ),
+                    flexibleSpace: ClipPath.shape(
+                      shape: sb,
+                      child: RotatedBox(
+                        quarterTurns: 1,
+                        child: Image.asset(
+                          //TODO: Dynamic BG would be cool to add.
+                          'lib/assets/icon/test.jpg',
+                          fit: BoxFit.fitHeight,
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-/// Custom persistant header for Login Sliver.
-///
-/// Used incase the user's phone is too small in height to support
-/// the ui as well as an onscreen keyboard.
-class HeaderDelegate extends SliverPersistentHeaderDelegate {
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return LayoutBuilder(builder: (context, constraints) {
-      return Material(
-        elevation: 16,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colours.offWhite,
-          ),
-          height: constraints.maxHeight,
-          child: SafeArea(
-            child: Center(
-              child: Image.asset(
-                'lib/assets/icon/logo.png',
-                height: 52,
-                width: 154,
-                semanticLabel: 'ScanEat Logo',
-                fit: BoxFit.none,
+                  SliverToBoxAdapter(
+                    child: Card(
+                      elevation: 8.0,
+                      shape: cb,
+                      child: Center(
+                        child: LoginPageScreen(
+                          loginPageBloc: _loginPageBloc,
+                        ),
+                      ),
+                      margin: EdgeInsets.all(30),
+                    ),
+                  )
+                ],
               ),
-            ),
-          ),
+            );
+          },
         ),
-      );
-    });
-  }
-
-  @override
-  double get maxExtent => 88;
-
-  @override
-  double get minExtent => 72;
-
-  @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate _) => true;
-}
-
-class SliverSpacer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.1,
       ),
     );
   }

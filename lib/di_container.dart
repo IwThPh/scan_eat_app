@@ -22,7 +22,8 @@ Future<void> init() async {
   // | Features |
   // Bloc
   sl.registerFactory(() => ScanningBloc(product: sl()));
-  sl.registerFactory(() => LoginPageBloc(request: sl()));
+  sl.registerFactory(
+      () => LoginPageBloc(loginRequest: sl(), registerRequest: sl()));
 
   // Use Cases
   sl.registerLazySingleton(() => GetProduct(sl()));
@@ -61,5 +62,4 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DataConnectionChecker());
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
-
 }

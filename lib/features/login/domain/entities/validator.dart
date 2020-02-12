@@ -14,5 +14,9 @@ class Validator extends Equatable {
 
   @override
   List<Object> get props => [nameError, emailError, passwordError];
-  
+
+  @override
+  String toString() {
+    return "$nameError $emailError $passwordError";
+  }
 }
