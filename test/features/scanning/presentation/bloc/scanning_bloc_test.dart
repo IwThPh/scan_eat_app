@@ -18,7 +18,7 @@ void main() {
   });
 
   test('initial state should be scanning', () {
-    expect(bloc.initialState, equals(Scanning()));
+    expect(bloc.initialState, equals(UnScanningState(0)));
   });
 
   group('GetProduct', () {
@@ -34,14 +34,13 @@ void main() {
       verify(mockGetProduct(Params(barcode: tBarcode)));
     });
 
-    test('should emit [Loading, Loaded] on success', () async {
+    test('should emit [UnScanningState, LoadedScanningState] on success', () async {
       when(mockGetProduct(any)).thenAnswer((_) async => Right(tProduct));
 
       //Expected Emit Order.
       final expected = [
-        Scanning(),
-        Loading(),
-        Loaded(product: tProduct),
+        UnScanningState(0),
+        LoadedScanningState(1, product: tProduct),
       ];
       expectLater(bloc, emitsInOrder(expected));
 
@@ -50,12 +49,13 @@ void main() {
   });
 
   group('ScanProduct', () {
-    test('should emit [Scanning]', () async {
+    test('should emit [UnScanningState],[ScanScanningState]', () async {
       when(mockGetProduct(any)).thenAnswer((_) async => Right(null));
 
       //Expected Emit Order.
       final expected = [
-        Scanning(),
+        UnScanningState(0),
+        ScanScanningState(1),
       ];
       expectLater(bloc, emitsInOrder(expected));
 
@@ -64,13 +64,13 @@ void main() {
   });
 
   group('ManualInput', () {
-    test('should emit [Scanning, UserInput]', () async {
+    test('should emit [UnScanningState, ScanScanningState, UserInputScanningState]', () async {
       when(mockGetProduct(any)).thenAnswer((_) async => Right(null));
 
       //Expected Emit Order.
       final expected = [
-        Scanning(),
-        UserInput(),
+        UnScanningState(0),
+        UserInputScanningState(1),
       ];
       expectLater(bloc, emitsInOrder(expected));
 

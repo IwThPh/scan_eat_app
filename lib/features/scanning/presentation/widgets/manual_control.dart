@@ -5,6 +5,14 @@ import '../../../../assets/theme/app_theme.dart';
 import '../bloc/bloc.dart';
 
 class ManualControls extends StatefulWidget {
+  final ScanningBloc scanningBloc;
+
+  const ManualControls(
+    ScanningBloc scanningBloc, {
+    Key key,
+  })  : scanningBloc = scanningBloc,
+        super(key: key);
+
   @override
   _ManualControlsState createState() => _ManualControlsState();
 }
@@ -65,6 +73,7 @@ class _ManualControlsState extends State<ManualControls> {
   }
 
   void _retrieveProduct() {
-    BlocProvider.of<ScanningBloc>(context).add(RetrieveProduct(_barcode));
+    this.widget.scanningBloc.add(LoadingScanningEvent());
+    this.widget.scanningBloc.add(RetrieveProduct(_barcode));
   }
 }
