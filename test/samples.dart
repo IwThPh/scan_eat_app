@@ -1,3 +1,8 @@
+import 'package:mockito/mockito.dart';
+import 'package:scaneat/features/home_page/data/models/allergen_model.dart';
+import 'package:scaneat/features/home_page/data/models/diet_model.dart';
+import 'package:scaneat/features/home_page/domain/entities/allergen.dart';
+import 'package:scaneat/features/home_page/domain/entities/diet.dart';
 import 'package:scaneat/features/login/data/models/auth_model.dart';
 import 'package:scaneat/features/login/data/models/validator_model.dart';
 import 'package:scaneat/features/login/domain/entities/auth.dart';
@@ -69,4 +74,42 @@ class Samples {
 
   static final String tValidatorJson =
       "{\"name\": \[\"name error\"\],\"email\": \[\"email error\"\],\"password\": \[\"password error\"\]}";
+
+  static final tAllergen = Allergen(
+    name: "name",
+    description: "description",
+  );
+
+  static final tAllergenModel = AllergenModel(
+    name: "name",
+    description: "description",
+  );
+
+  static final List<Allergen> tAllergenList = [tAllergen,tAllergen,tAllergen];
+  static final List<AllergenModel> tAllergenModelList = [tAllergenModel,tAllergenModel,tAllergenModel];
+
+  static final tAllergenListJson = 
+    "[{\"id\":1,\"name\":\"name\",\"description\":\"description\",\"created_at\":\"2020-02-08 14:24:19\",\"updated_at\":\"2020-02-08 14:24:19\"}," + 
+    "{\"id\":2,\"name\":\"name\",\"description\":\"description\",\"created_at\":\"2020-02-08 14:24:19\",\"updated_at\":\"2020-02-08 14:24:19\"}," + 
+    "{\"id\":3,\"name\":\"name\",\"description\":\"description\",\"created_at\":\"2020-02-08 14:24:19\",\"updated_at\":\"2020-02-08 14:24:19\"}" + 
+    "]";
+
+  static final tDiet = Diet(
+    name: "name",
+    description: "description",
+  );
+
+  static final tDietModel = DietModel(
+    name: "name",
+    description: "description",
+  );
+
+  static final List<Diet> tDietList = [tDiet,tDiet,tDiet];
+  static final List<DietModel> tDietModelList = [tDietModel,tDietModel,tDietModel];
+
+  static final tDietListJson = 
+    "[{\"id\":1,\"name\":\"name\",\"description\":\"description\",\"created_at\":\"2020-02-08 14:24:19\",\"updated_at\":\"2020-02-08 14:24:19\"}," + 
+    "{\"id\":2,\"name\":\"name\",\"description\":\"description\",\"created_at\":\"2020-02-08 14:24:19\",\"updated_at\":\"2020-02-08 14:24:19\"}," + 
+    "{\"id\":3,\"name\":\"name\",\"description\":\"description\",\"created_at\":\"2020-02-08 14:24:19\",\"updated_at\":\"2020-02-08 14:24:19\"}" + 
+    "]";
 }
