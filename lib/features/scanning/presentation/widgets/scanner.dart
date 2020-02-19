@@ -7,6 +7,7 @@ import 'package:scaneat/assets/theme/app_theme.dart';
 import 'package:scaneat/core/widgets/loading_widget.dart';
 import 'package:scaneat/features/scanning/presentation/bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:scaneat/di_container.dart' as di;
 
 class Scanner extends StatelessWidget {
   final ScanningBloc scanningBloc;
@@ -19,13 +20,12 @@ class Scanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BarcodeDetector detector = FirebaseVision.instance.barcodeDetector();
     return Container(
       child: ClipRRect(
         borderRadius: BorderRadius.circular(32.0),
         child: CameraMlVision<List<Barcode>>(
-          detector: detector.detectInImage,
-          loadingBuilder: (_) => LoadingWidget(),
+          detector: di.sl<BarcodeDetector>().detectInImage,
+          loadingBuilder: (_) => Center(child: LoadingWidget()),
           overlayBuilder: (_) => Center(
             child: Container(
               width: MediaQuery.of(context).size.width,
@@ -44,7 +44,6 @@ class Scanner extends StatelessWidget {
               }
             }
           },
-          onDispose: detector.close,
         ),
       ),
     );

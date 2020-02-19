@@ -1,6 +1,13 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:http/http.dart' as http;
 import 'package:scaneat/core/device/network_info.dart';
+import 'package:scaneat/features/home_page/data/datasources/home_remote_data_source.dart';
+import 'package:scaneat/features/home_page/data/repositories/home_repository_impl.dart';
+import 'package:scaneat/features/home_page/domain/repositories/home_repository.dart';
+import 'package:scaneat/features/home_page/domain/usecases/get_allergen.dart';
+import 'package:scaneat/features/home_page/domain/usecases/get_diet.dart';
+import 'package:scaneat/features/home_page/presentation/bloc/home_page/bloc.dart';
 import 'package:scaneat/features/login/data/datasources/login_local_data_source.dart';
 import 'package:scaneat/features/login/data/datasources/login_remote_data_source.dart';
 import 'package:scaneat/features/login/data/repositories/login_repository_impl.dart';
@@ -14,6 +21,7 @@ import 'package:scaneat/features/scanning/domain/repositories/scanning_repositor
 import 'package:scaneat/features/scanning/domain/usecases/get_product.dart';
 import 'package:scaneat/features/scanning/presentation/bloc/bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:scaneat/features/scanning/presentation/widgets/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
@@ -24,11 +32,14 @@ Future<void> init() async {
   sl.registerFactory(() => ScanningBloc(product: sl()));
   sl.registerFactory(
       () => LoginPageBloc(loginRequest: sl(), registerRequest: sl()));
+  sl.registerFactory(() => HomePageBloc());
 
   // Use Cases
   sl.registerLazySingleton(() => GetProduct(sl()));
   sl.registerLazySingleton(() => LoginRequest(sl()));
   sl.registerLazySingleton(() => RegisterRequest(sl()));
+  sl.registerLazySingleton(() => GetDiet(sl()));
+  sl.registerLazySingleton(() => GetAllergen(sl()));
 
   // Repositories
   sl.registerLazySingleton<ScanningRepository>(
@@ -46,6 +57,13 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerLazySingleton<HomeRepository>(
+    () => HomeRepositoryImpl(
+      networkInfo: sl(),
+      remoteDataSource: sl(),
+    ),
+  );
+
   sl.registerLazySingleton<ScanningRemoteDataSource>(
       () => ScanningRemoteDataSourceImpl(client: sl()));
 
@@ -53,6 +71,9 @@ Future<void> init() async {
       () => LoginRemoteDataSourceImpl(client: sl()));
   sl.registerLazySingleton<LoginLocalDataSource>(
       () => LoginLocalDataSourceImpl(sharedPreferences: sl()));
+
+  sl.registerLazySingleton<HomeRemoteDataSource>(
+      () => HomeRemoteDataSourceImpl(client: sl()));
 
   // | Core |
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
@@ -62,4 +83,5 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DataConnectionChecker());
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
+  sl.registerLazySingleton(() => FirebaseVision.instance.barcodeDetector());
 }

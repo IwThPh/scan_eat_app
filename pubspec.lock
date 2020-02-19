@@ -56,7 +56,7 @@ packages:
       name: camera
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.7+2"
+    version: "0.5.7+3"
   charcode:
     dependency: transitive
     description:
@@ -126,7 +126,7 @@ packages:
       name: device_info
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.1+1"
+    version: "0.4.1+4"
   equatable:
     dependency: "direct main"
     description:
@@ -173,7 +173,7 @@ packages:
       name: flutter_camera_ml_vision
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.4"
+    version: "2.2.5"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -204,7 +204,7 @@ packages:
       name: flutter_widgets
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.7+1"
+    version: "0.1.11"
   front_end:
     dependency: transitive
     description:
@@ -393,7 +393,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.2"
+    version: "1.6.0"
   pedantic:
     dependency: transitive
     description:
@@ -632,4 +632,4 @@ packages:
     version: "2.2.0"
 sdks:
   dart: ">=2.6.0 <3.0.0"
-  flutter: ">=1.12.13+hotfix.4 <2.0.0"
+  flutter: ">=1.12.13+hotfix.5 <2.0.0"

@@ -22,7 +22,7 @@ class SlideBottomRoute extends PageRouteBuilder {
           ) {
             animation = CurvedAnimation(
               parent: animation,
-              curve: Curves.easeInCubic,
+              curve: Curves.easeInOutCirc,
             );
             return FadeTransition(
               opacity: animation,

@@ -16,9 +16,9 @@ dependencies:
   provider: ^4.0.1
   data_connection_checker: ^0.3.4
   get_it: ^3.1.0
-  flutter_camera_ml_vision: ^2.2.4
+  flutter_camera_ml_vision: ^2.2.5
   firebase_ml_vision: ^0.9.3+5
-  camera: ^0.5.7+2
+  camera: ^0.5.7+3
   flare_flutter: ^1.8.3
   cupertino_icons: ^0.1.2
   flutter_svg: ^0.17.0
