@@ -7,13 +7,16 @@ import 'package:scaneat/features/home_page/data/repositories/home_repository_imp
 import 'package:scaneat/features/home_page/domain/repositories/home_repository.dart';
 import 'package:scaneat/features/home_page/domain/usecases/get_allergen.dart';
 import 'package:scaneat/features/home_page/domain/usecases/get_diet.dart';
+import 'package:scaneat/features/home_page/presentation/bloc/home_page/allergen/allergen_bloc.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/bloc.dart';
+import 'package:scaneat/features/home_page/presentation/bloc/home_page/diet/diet_bloc.dart';
 import 'package:scaneat/features/login/data/datasources/login_local_data_source.dart';
 import 'package:scaneat/features/login/data/datasources/login_remote_data_source.dart';
 import 'package:scaneat/features/login/data/repositories/login_repository_impl.dart';
 import 'package:scaneat/features/login/domain/repositories/login_repository.dart';
 import 'package:scaneat/features/login/domain/usecases/login_request.dart';
 import 'package:scaneat/features/login/domain/usecases/register_request.dart';
+import 'package:scaneat/features/login/domain/usecases/retrieve_user.dart';
 import 'package:scaneat/features/login/presentation/bloc/login_page_bloc.dart';
 import 'package:scaneat/features/scanning/data/datasources/scanning_remote_data_source.dart';
 import 'package:scaneat/features/scanning/data/repositories/scanning_repository_impl.dart';
@@ -31,13 +34,21 @@ Future<void> init() async {
   // Bloc
   sl.registerFactory(() => ScanningBloc(product: sl()));
   sl.registerFactory(
-      () => LoginPageBloc(loginRequest: sl(), registerRequest: sl()));
+    () => LoginPageBloc(
+      loginRequest: sl(),
+      registerRequest: sl(),
+      retrieveUser: sl(),
+    ),
+  );
   sl.registerFactory(() => HomePageBloc());
+  sl.registerFactory(() => AllergenBloc(getAllergen: sl()));
+  sl.registerFactory(() => DietBloc(getDiet: sl()));
 
   // Use Cases
   sl.registerLazySingleton(() => GetProduct(sl()));
   sl.registerLazySingleton(() => LoginRequest(sl()));
   sl.registerLazySingleton(() => RegisterRequest(sl()));
+  sl.registerLazySingleton(() => RetrieveUser(sl()));
   sl.registerLazySingleton(() => GetDiet(sl()));
   sl.registerLazySingleton(() => GetAllergen(sl()));
 
@@ -61,6 +72,7 @@ Future<void> init() async {
     () => HomeRepositoryImpl(
       networkInfo: sl(),
       remoteDataSource: sl(),
+      localDataSource: sl(),
     ),
   );
 
