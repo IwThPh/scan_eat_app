@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer' as developer;
 
 import 'package:dartz/dartz.dart';
+import 'package:scaneat/core/usecases/usecase.dart';
 import 'package:scaneat/features/login/domain/entities/auth.dart';
 import 'package:scaneat/features/login/domain/entities/validator.dart';
 import 'package:scaneat/features/login/presentation/bloc/bloc.dart';
@@ -10,6 +11,8 @@ import 'package:scaneat/features/login/domain/usecases/login_request.dart'
     as login;
 import 'package:scaneat/features/login/domain/usecases/register_request.dart'
     as register;
+import 'package:scaneat/features/login/domain/usecases/retrieve_user.dart'
+    as user;
 
 abstract class LoginPageEvent extends Equatable {
   Future<LoginPageState> applyAsync(
@@ -30,18 +33,20 @@ class UnLoginPageEvent extends LoginPageEvent {
 }
 
 class LoadLoginPageEvent extends LoginPageEvent {
-  final bool isError;
-
   @override
   String toString() => 'LoadLoginPageEvent';
 
-  LoadLoginPageEvent(this.isError);
+  LoadLoginPageEvent();
 
   @override
   Future<LoginPageState> applyAsync(
       {LoginPageState currentState, LoginPageBloc bloc}) async {
     try {
-      return InLoginPageState(1);
+      final failureOrUser = await bloc.retrieveUser(NoParams());
+      return failureOrUser.fold(
+        (failure) => InLoginPageState(1),
+        (user) => CompleteLoginPageState(1, user),
+      );
     } catch (_, stackTrace) {
       developer.log('$_',
           name: 'LoadTestEvent', error: _, stackTrace: stackTrace);
@@ -73,7 +78,13 @@ class SendLoginPageEvent extends LoginPageEvent {
 
       return failureOrAuth.fold(
         (failure) => ErrorLoginPageState(0, "Error Authenticating"),
-        (auth) => _onSuccess(auth, bloc),
+        (auth) async {
+          final failureOrUser = await bloc.retrieveUser(NoParams());
+          return failureOrUser.fold(
+            (failure) => InLoginPageState(1),
+            (user) => CompleteLoginPageState(1, user),
+          );
+        },
       );
     } catch (_, stackTrace) {
       developer.log('$_',
@@ -84,10 +95,6 @@ class SendLoginPageEvent extends LoginPageEvent {
 
   @override
   List<Object> get props => [];
-
-  LoginPageState _onSuccess(Auth auth, LoginPageBloc bloc) {
-    return CompleteLoginPageState(1, auth.accessToken);
-  }
 }
 
 class RegLoginPageEvent extends LoginPageEvent {
@@ -114,7 +121,16 @@ class RegLoginPageEvent extends LoginPageEvent {
 
       return failureOrSuccess.fold(
         (failure) => ErrorLoginPageState(0, "Error Registering"),
-        (success) => _onSuccess(success, bloc),
+        (success) => success.fold(
+          (validator) => InLoginPageState(1, true, validator),
+          (auth) async {
+            final failureOrUser = await bloc.retrieveUser(NoParams());
+            return failureOrUser.fold(
+              (failure) => InLoginPageState(1, true),
+              (user) => CompleteLoginPageState(1, user),
+            );
+          },
+        ),
       );
     } catch (_, stackTrace) {
       developer.log('$_',
@@ -125,12 +141,4 @@ class RegLoginPageEvent extends LoginPageEvent {
 
   @override
   List<Object> get props => [];
-
-  LoginPageState _onSuccess(
-      Either<Validator, Auth> success, LoginPageBloc bloc) {
-    return success.fold(
-      (validator) => InLoginPageState(1, true, validator),
-      (auth) => CompleteLoginPageState(1, auth.accessToken),
-    );
-  }
 }

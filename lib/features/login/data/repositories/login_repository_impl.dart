@@ -9,6 +9,7 @@ import 'package:scaneat/features/login/data/datasources/login_remote_data_source
 import 'package:scaneat/features/login/data/models/auth_model.dart';
 import 'package:scaneat/features/login/data/models/validator_model.dart';
 import 'package:scaneat/features/login/domain/entities/auth.dart';
+import 'package:scaneat/features/login/domain/entities/user.dart';
 import 'package:scaneat/features/login/domain/entities/validator.dart';
 import 'package:scaneat/features/login/domain/repositories/login_repository.dart';
 
@@ -63,6 +64,28 @@ class LoginRepositoryImpl implements LoginRepository {
       return Right(await localDataSource.cacheAuth(auth));
     } on CacheException {
       return Left(CacheFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Auth>> getAuth() async {
+    try {
+      return Right(await localDataSource.getAuth());
+    } on CacheException {
+      return Left(CacheFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> getUser() async {
+    networkInfo.isConnected;
+    try {
+      AuthModel auth = await localDataSource.getAuth();
+      String token = auth.accessToken;
+      User user = await remoteDataSource.retrieveUser(token);
+      return Right(user);
+    } on ServerException {
+      return Left(ServerFailure());
     }
   }
 }

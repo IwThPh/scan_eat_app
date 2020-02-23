@@ -39,6 +39,9 @@ void main() {
   final tValidatorModel = Samples.tValidatorModel;
   final tValidator = tAuthModel;
 
+  final tUserModel = Samples.tUserModel;
+  final tUser = tUserModel;
+
   final tName = Samples.tName;
   final tEmail = Samples.tEmail;
   final tPassword = Samples.tPassword;
@@ -64,6 +67,21 @@ void main() {
             final result = await repository.attemptLogin(tEmail, tPassword);
 
             verify(mockRemoteDataSource.attemptLogin(tEmail, tPassword));
+            expect(result, equals(Right(tAuth)));
+          },
+        );
+
+        test(
+          'Should return cache auth data from shared preferences, if exists',
+          () async {
+            // arrange
+            when(mockLocalDataSource.getAuth())
+                .thenAnswer((_) async => tAuthModel);
+            // act
+            final result = await repository.getAuth();
+            // assert
+            verifyZeroInteractions(mockRemoteDataSource);
+            verify(mockLocalDataSource.getAuth());
             expect(result, equals(Right(tAuth)));
           },
         );
@@ -208,6 +226,23 @@ void main() {
 
         verify(mockLocalDataSource.cacheAuth(tAuth));
         expect(result, equals(Right(true)));
+      },
+    );
+  });
+
+  group('retrieveUser', () {
+    test(
+      'Should return remote data when the call to remote data source is successful',
+      () async {
+        when(mockLocalDataSource.getAuth())
+            .thenAnswer((_) async => tAuthModel);
+        when(mockRemoteDataSource.retrieveUser(any))
+            .thenAnswer((_) async => tUserModel);
+
+        final result = await repository.getUser();
+
+        verify(mockRemoteDataSource.retrieveUser(tAuthModel.accessToken));
+        expect(result, equals(Right(tUser)));
       },
     );
   });

@@ -22,9 +22,9 @@ class AuthModel extends Auth {
 
   Map<String, dynamic> toJson() {
     return {
-      'tokenType': tokenType,
-      'accessToken': accessToken,
-      'refreshToken': refreshToken,
+      'token_type': tokenType,
+      'access_token': accessToken,
+      'refresh_token': refreshToken,
     };
   }
 }

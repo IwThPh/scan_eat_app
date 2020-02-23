@@ -1,7 +1,11 @@
+import 'dart:developer' as developer;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scaneat/assets/theme/colours.dart';
+import 'package:scaneat/core/animations/SlideBottomRoute.dart';
+import 'package:scaneat/features/home_page/presentation/pages/home_page.dart';
 import 'package:scaneat/features/login/presentation/bloc/bloc.dart';
 
 import '../widgets/widgets.dart';
@@ -25,11 +29,6 @@ class LoginPageScreenState extends State<LoginPageScreen>
     with SingleTickerProviderStateMixin {
   final LoginPageBloc _loginPageBloc;
   LoginPageScreenState(this._loginPageBloc);
-
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passController = TextEditingController();
-  final confirmPassController = TextEditingController();
 
   TabController _tabController;
   List<Tab> tabList = List();
@@ -63,10 +62,6 @@ class LoginPageScreenState extends State<LoginPageScreen>
 
   @override
   void dispose() {
-    nameController.dispose();
-    emailController.dispose();
-    passController.dispose();
-    confirmPassController.dispose();
     _tabController.dispose();
     super.dispose();
   }
@@ -90,14 +85,26 @@ class LoginPageScreenState extends State<LoginPageScreen>
       },
     );
 
-    return BlocBuilder(
+    return BlocConsumer(
       bloc: _loginPageBloc,
+      listener: (
+        BuildContext context,
+        LoginPageState currentState,
+      ) {
+        if (currentState is CompleteLoginPageState) {
+          developer.log(currentState.user.name + ' | ' + currentState.user.email);
+          Navigator.pushReplacement(
+            context,
+            SlideBottomRoute(page: HomePage(currentState.user)),
+          );
+        }
+      },
       builder: (
         BuildContext context,
         LoginPageState currentState,
       ) {
         if (currentState is UnLoginPageState) {
-          return LoadingWidget();
+          return LoadingWidget(message: 'Initialising',);
         }
         if (currentState is InLoginPageState) {
           return Column(
@@ -130,37 +137,34 @@ class LoginPageScreenState extends State<LoginPageScreen>
           );
         }
         if (currentState is CompleteLoginPageState) {
-          //TODO: Fire animation trigger to home here.
-          return Column(
-            children: <Widget>[
-              Text('Completed Login'),
-              Text(currentState.token),
-              RaisedButton(
-                onPressed: () => _load(false),
-                child: Text('Reset'),
-              ),
-            ],
-          );
+          return LoadingWidget(message: 'Logging In.',);
         }
         if (currentState is ErrorLoginPageState) {
-          return Column(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Text(currentState.errorMessage),
-              RaisedButton(
-                onPressed: () => _load(false),
-                child: Text('Reset'),
-              ),
-            ],
-          );
+          return displayError(currentState.errorMessage);
         }
-        return Text('Error');
+        return displayError('Big Error');
       },
     );
   }
 
-  void _load([bool isError = false]) {
+  void _load() {
     widget._loginPageBloc.add(UnLoginPageEvent());
-    widget._loginPageBloc.add(LoadLoginPageEvent(isError));
+    widget._loginPageBloc.add(LoadLoginPageEvent());
+  }
+
+  Widget displayError(String errorMessage) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(errorMessage),
+        ),
+        RaisedButton(
+          onPressed: () => _load(),
+          child: Text('Reset'),
+        ),
+      ],
+    );
   }
 }

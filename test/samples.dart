@@ -1,11 +1,12 @@
-import 'package:mockito/mockito.dart';
 import 'package:scaneat/features/home_page/data/models/allergen_model.dart';
 import 'package:scaneat/features/home_page/data/models/diet_model.dart';
 import 'package:scaneat/features/home_page/domain/entities/allergen.dart';
 import 'package:scaneat/features/home_page/domain/entities/diet.dart';
 import 'package:scaneat/features/login/data/models/auth_model.dart';
+import 'package:scaneat/features/login/data/models/user_model.dart';
 import 'package:scaneat/features/login/data/models/validator_model.dart';
 import 'package:scaneat/features/login/domain/entities/auth.dart';
+import 'package:scaneat/features/login/domain/entities/user.dart';
 import 'package:scaneat/features/login/domain/entities/validator.dart';
 import 'package:scaneat/features/scanning/data/models/product_model.dart';
 import 'package:scaneat/features/scanning/domain/entities/product.dart';
@@ -76,13 +77,17 @@ class Samples {
       "{\"name\": \[\"name error\"\],\"email\": \[\"email error\"\],\"password\": \[\"password error\"\]}";
 
   static final tAllergen = Allergen(
+    id: 0,
     name: "name",
     description: "description",
+    selected: false,
   );
 
   static final tAllergenModel = AllergenModel(
+    id: 0,
     name: "name",
     description: "description",
+    selected: false,
   );
 
   static final List<Allergen> tAllergenList = [tAllergen,tAllergen,tAllergen];
@@ -95,13 +100,17 @@ class Samples {
     "]";
 
   static final tDiet = Diet(
+    id: 0,
     name: "name",
     description: "description",
+    selected: false,
   );
 
   static final tDietModel = DietModel(
+    id: 0,
     name: "name",
     description: "description",
+    selected: false,
   );
 
   static final List<Diet> tDietList = [tDiet,tDiet,tDiet];
@@ -112,4 +121,17 @@ class Samples {
     "{\"id\":2,\"name\":\"name\",\"description\":\"description\",\"created_at\":\"2020-02-08 14:24:19\",\"updated_at\":\"2020-02-08 14:24:19\"}," + 
     "{\"id\":3,\"name\":\"name\",\"description\":\"description\",\"created_at\":\"2020-02-08 14:24:19\",\"updated_at\":\"2020-02-08 14:24:19\"}" + 
     "]";
+
+  static final User tUser = User(
+    name: tName,
+    email: tEmail
+  );
+
+  static final UserModel tUserModel = UserModel(
+    name: tName,
+    email: tEmail
+  );
+
+  static final String tUserJson =
+    "{\"name\": \"$tName\",\"email\": \"$tEmail\"}";
 }

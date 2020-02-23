@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:scaneat/features/login/domain/entities/user.dart';
 import 'package:scaneat/features/login/domain/entities/validator.dart';
 
 abstract class LoginPageState extends Equatable {
@@ -80,20 +81,20 @@ class ErrorLoginPageState extends LoginPageState {
 
 /// Logged In.
 class CompleteLoginPageState extends LoginPageState {
-  final String token;
+  final User user;
 
-  CompleteLoginPageState(int version, this.token) : super(version, [ token ]);
+  CompleteLoginPageState(int version, this.user) : super(version);
 
   @override
   String toString() => 'CompleteLoginPageState';
 
   @override
   CompleteLoginPageState getStateCopy() {
-    return CompleteLoginPageState(this.version, this.token);
+    return CompleteLoginPageState(this.version, this.user);
   }
 
   @override
   CompleteLoginPageState getNewVersion() {
-    return CompleteLoginPageState(this.version+1, this.token);
+    return CompleteLoginPageState(this.version+1, this.user);
   }
 }

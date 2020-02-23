@@ -18,6 +18,8 @@ void main() {
 
   final tAuthJson = Samples.tAuthJson;
   final tAuthModel = Samples.tAuthModel;
+  final tUserJson = Samples.tUserJson;
+  final tUserModel = Samples.tUserModel;
   final tValidatorJson = Samples.tValidatorJson;
   final tValidatorModel = Samples.tValidatorModel;
   final tName = Samples.tName;
@@ -25,6 +27,7 @@ void main() {
   final tPassword = Samples.tPassword;
   final urlLogin = Config.APP_URL_DEBUG + 'api/auth/token';
   final urlRegister = Config.APP_URL_DEBUG + 'api/auth/register';
+  final urlUser = Config.APP_URL_DEBUG + 'api/user';
 
   setUp(() {
     mockHttpClient = MockHttpClient();
@@ -67,10 +70,15 @@ void main() {
                 headers: anyNamed('headers'), body: anyNamed('body')))
             .thenAnswer((_) async => http.Response(tAuthJson, 200));
 
-        final result = await dataSource.attemptRegister(tName, tEmail, tPassword, tPassword);
+        final result = await dataSource.attemptRegister(
+            tName, tEmail, tPassword, tPassword);
 
-        verify(mockHttpClient.post(urlRegister,
-            body: {'name': tName, 'email': tEmail, 'password': tPassword, 'confirm_password': tPassword}));
+        verify(mockHttpClient.post(urlRegister, body: {
+          'name': tName,
+          'email': tEmail,
+          'password': tPassword,
+          'confirm_password': tPassword
+        }));
         expect(result.isRight(), equals(true));
       },
     );
@@ -78,15 +86,40 @@ void main() {
     test(
         'Should preform a POST request to Register URL with invalid credentials, Expect Validator json response',
         () async {
+      when(mockHttpClient.post(any,
+              headers: anyNamed('headers'), body: anyNamed('body')))
+          .thenAnswer((_) async => http.Response(tValidatorJson, 400));
+
+      final result =
+          await dataSource.attemptRegister(tName, tEmail, tPassword, tPassword);
+
+      verify(mockHttpClient.post(urlRegister, body: {
+        'name': tName,
+        'email': tEmail,
+        'password': tPassword,
+        'confirm_password': tPassword
+      }));
+      expect(result.isLeft(), equals(true));
+    });
+  });
+
+  group('retrieveUser', () {
+    test(
+      'Should preform a POST request to User URL with valid token, Expect User json response',
+      () async {
         when(mockHttpClient.post(any,
                 headers: anyNamed('headers'), body: anyNamed('body')))
-            .thenAnswer((_) async => http.Response(tValidatorJson, 400));
+            .thenAnswer((_) async => http.Response(tUserJson, 200));
 
-        final result = await dataSource.attemptRegister(tName, tEmail, tPassword, tPassword);
+        final result = await dataSource.retrieveUser(tAuthModel.accessToken);
 
-        verify(mockHttpClient.post(urlRegister,
-            body: {'name': tName, 'email': tEmail, 'password': tPassword, 'confirm_password': tPassword}));
-        expect(result.isLeft(), equals(true));
-    });
+        verify(mockHttpClient.post(urlUser, headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + tAuthModel.accessToken,
+        }));
+        expect(result, equals(tUserModel));
+      },
+    );
   });
 }

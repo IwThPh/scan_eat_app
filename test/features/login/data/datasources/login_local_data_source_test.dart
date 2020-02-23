@@ -41,7 +41,7 @@ void main() {
 
     test('should throw a CacheException, if not present', () {
       // arrange
-      when(mockSharedPreferences.getString(any)).thenReturn(null);
+      when(mockSharedPreferences.getString(any)).thenThrow(CacheException());
       // act
       final call =
           dataSource.getAuth; //Not being called. Just stored for comparison.
