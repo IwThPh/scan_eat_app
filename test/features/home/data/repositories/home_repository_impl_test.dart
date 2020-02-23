@@ -12,13 +12,17 @@ import '../../../../samples.dart';
 
 class MockRemoteDataSource extends Mock implements HomeRemoteDataSource {}
 
+class MockLocalDataSource extends Mock implements LoginLocalDataSource {}
+
 class MockNetworkInfo extends Mock implements NetworkInfo {}
 
 void main() {
   MockRemoteDataSource mockRemoteDataSource;
+  MockLocalDataSource mockLocalDataSource;
   MockNetworkInfo mockNetworkInfo;
   HomeRepositoryImpl repository;
 
+  final tAuthModel = Samples.tAuthModel;
   final tAllergenListJson = Samples.tAllergenListJson;
   final tAllergenList = Samples.tAllergenModelList;
   final tDietListJson = Samples.tDietListJson;
@@ -26,38 +30,47 @@ void main() {
 
   setUp(() {
     mockRemoteDataSource = MockRemoteDataSource();
+    mockLocalDataSource = MockLocalDataSource();
     mockNetworkInfo = MockNetworkInfo();
     repository = HomeRepositoryImpl(
       remoteDataSource: mockRemoteDataSource,
+      localDataSource: mockLocalDataSource,
       networkInfo: mockNetworkInfo,
     );
   });
 
-  group('Online Functionality', () {
-        test(
-          'Should return list of allergen data when the call to remote data source is successful',
-          () async {
-            when(mockRemoteDataSource.getAllergens())
-                .thenAnswer((_) async => tAllergenList);
+  group(
+    'Online Functionality',
+    () {
+      test(
+        'Should return list of allergen data when the call to remote data source is successful',
+        () async {
+          when(mockLocalDataSource.getAuth())
+              .thenAnswer((_) async => tAuthModel);
+          when(mockRemoteDataSource.getAllergens(any))
+              .thenAnswer((_) async => tAllergenList);
 
-            final result = await repository.getAllergens();
+          final result = await repository.getAllergens();
 
-            verify(mockRemoteDataSource.getAllergens());
-            expect(result, equals(Right(tAllergenList)));
-          },
-        );
+          verify(mockRemoteDataSource.getAllergens(tAuthModel.accessToken));
+          expect(result, equals(Right(tAllergenList)));
+        },
+      );
 
-        test(
-          'Should return list of diet data when the call to remote data source is successful',
-          () async {
-            when(mockRemoteDataSource.getDiets())
-                .thenAnswer((_) async => tDietList);
+      test(
+        'Should return list of diet data when the call to remote data source is successful',
+        () async {
+          when(mockLocalDataSource.getAuth())
+              .thenAnswer((_) async => tAuthModel);
+          when(mockRemoteDataSource.getDiets(any))
+              .thenAnswer((_) async => tDietList);
 
-            final result = await repository.getDiets();
+          final result = await repository.getDiets();
 
-            verify(mockRemoteDataSource.getDiets());
-            expect(result, equals(Right(tDietList)));
-          },
-        );
-  });
+          verify(mockRemoteDataSource.getDiets(tAuthModel.accessToken));
+          expect(result, equals(Right(tDietList)));
+        },
+      );
+    },
+  );
 }

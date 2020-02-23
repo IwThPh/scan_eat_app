@@ -19,19 +19,15 @@ class UnHomePageEvent extends HomePageEvent {
 
 class LoadHomePageEvent extends HomePageEvent {
    
-  final bool isError;
   @override
   String toString() => 'LoadHomePageEvent';
 
-  LoadHomePageEvent(this.isError);
+  LoadHomePageEvent();
 
   @override
   Future<HomePageState> applyAsync(
       {HomePageState currentState, HomePageBloc bloc}) async {
     try {
-      if (currentState is InHomePageState) {
-        return currentState.getNewVersion();
-      }
       return InHomePageState(0);
     } catch (_, stackTrace) {
       developer.log('$_', name: 'LoadHomePageEvent', error: _, stackTrace: stackTrace);

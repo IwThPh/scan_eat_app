@@ -14,7 +14,7 @@ abstract class HomePageState extends Equatable {
   HomePageState getNewVersion();
 
   @override
-  List<Object> get props => (propss);
+  List<Object> get props => [version];
 }
 
 /// UnInitialized

@@ -21,8 +21,7 @@ main() {
   setUp(() {
     mockGetAllergen = MockGetAllergen();
     mockGetDiet = MockGetDiet();
-    bloc = HomePageBloc(
-    );
+    bloc = HomePageBloc();
   });
 
   test('Initial state should be UnHomePageState, version: 0', () {
@@ -34,28 +33,10 @@ main() {
       () {
     final expected = [
       UnHomePageState(0),
-      InHomePageState(1),
+      InHomePageState(0),
     ];
     expectLater(bloc, emitsInOrder(expected));
 
-    bloc.add(LoadHomePageEvent(false));
-  });
-
-  group('GetAllergen', () {
-    final tAllergenList = Samples.tAllergenList;
-    test('Sending a AllergenHomePageEvent should return AllergenList',
-        () {
-      when(mockGetAllergen(any)).thenAnswer((_) async => Right(tAllergenList));
-
-      final expected = [
-        UnLoginPageState(0),
-        InLoginPageState(1),
-        //TODO
-      ];
-      expectLater(bloc, emitsInOrder(expected));
-
-      bloc.add(LoadHomePageEvent(false));
-      //TODO
-    });
+    bloc.add(LoadHomePageEvent());
   });
 }

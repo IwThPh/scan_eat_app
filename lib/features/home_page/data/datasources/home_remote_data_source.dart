@@ -9,8 +9,8 @@ import 'package:scaneat/features/home_page/data/models/diet_model.dart';
 import '../../../../core/error/exception.dart';
 
 abstract class HomeRemoteDataSource {
-  Future<List<AllergenModel>> getAllergens();
-  Future<List<DietModel>> getDiets();
+  Future<List<AllergenModel>> getAllergens(String token);
+  Future<List<DietModel>> getDiets(String token);
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -21,9 +21,14 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   });
 
   @override
-  Future<List<AllergenModel>> getAllergens() async {
-    final response = await client.get(
+  Future<List<AllergenModel>> getAllergens(String token) async {
+    final response = await client.post(
       Config.APP_URL + 'api/allergens',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
     );
 
     if (response.statusCode == 200) {
@@ -37,9 +42,14 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }
 
   @override
-  Future<List<DietModel>> getDiets() async {
-    final response = await client.get(
+  Future<List<DietModel>> getDiets(String token) async {
+    final response = await client.post(
       Config.APP_URL + 'api/diets',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
     );
 
     if (response.statusCode == 200) {

@@ -15,6 +15,8 @@ void main() {
   HomeRemoteDataSourceImpl dataSource;
   MockHttpClient mockHttpClient;
 
+  final tAuthModel = Samples.tAuthModel;
+  final String token = tAuthModel.accessToken;
   final urlAllergen = Config.APP_URL_DEBUG + 'api/allergens';
   final urlDiet = Config.APP_URL_DEBUG + 'api/diets';
   final tAllergenListJson = Samples.tAllergenListJson;
@@ -27,30 +29,42 @@ void main() {
 
   group('getAllergens', () {
     test(
-      'Should preform a GET request to Allergen URL, Expect List of Allergen json response',
+      'Should preform a POST request to Allergen URL, Expect List of Allergen json response',
       () {
-        when(mockHttpClient.get(any,
-                headers: anyNamed('headers')))
+        when(mockHttpClient.post(any, headers: anyNamed('headers')))
             .thenAnswer((_) async => http.Response(tAllergenListJson, 200));
 
-        dataSource.getAllergens();
+        dataSource.getAllergens(token);
 
-        verify(mockHttpClient.get(urlAllergen));
+        verify(mockHttpClient.post(
+          urlAllergen,
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ));
       },
     );
   });
 
   group('getDiets', () {
     test(
-      'Should preform a GET request to Diet URL, Expect List of Diet json response',
+      'Should preform a POST request to Diet URL, Expect List of Diet json response',
       () {
-        when(mockHttpClient.get(any,
-                headers: anyNamed('headers')))
+        when(mockHttpClient.post(any, headers: anyNamed('headers')))
             .thenAnswer((_) async => http.Response(tDietListJson, 200));
 
-        dataSource.getDiets();
+        dataSource.getDiets(token);
 
-        verify(mockHttpClient.get(urlDiet));
+        verify(mockHttpClient.post(
+          urlDiet,
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ));
       },
     );
   });

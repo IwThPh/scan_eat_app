@@ -9,13 +9,17 @@ import 'package:scaneat/features/home_page/data/models/allergen_model.dart';
 import 'package:scaneat/features/home_page/domain/entities/allergen.dart';
 import 'package:scaneat/features/home_page/domain/entities/diet.dart';
 import 'package:scaneat/features/home_page/domain/repositories/home_repository.dart';
+import 'package:scaneat/features/login/data/datasources/login_local_data_source.dart';
+import 'package:scaneat/features/login/data/models/auth_model.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
   final HomeRemoteDataSource remoteDataSource;
+  final LoginLocalDataSource localDataSource;
   final NetworkInfo networkInfo;
 
   HomeRepositoryImpl({
     @required this.remoteDataSource,
+    @required this.localDataSource,
     @required this.networkInfo,
   });
 
@@ -23,7 +27,8 @@ class HomeRepositoryImpl implements HomeRepository {
   Future<Either<Failure, List<Allergen>>> getAllergens() async {
     networkInfo.isConnected;
     try {
-      List<AllergenModel> allergens = await remoteDataSource.getAllergens();
+      AuthModel auth = await localDataSource.getAuth();
+      List<Allergen> allergens = await remoteDataSource.getAllergens(auth.accessToken);
       return Right(allergens);
     } on ServerException {
       return Left(ServerFailure());
@@ -34,7 +39,8 @@ class HomeRepositoryImpl implements HomeRepository {
   Future<Either<Failure, List<Diet>>> getDiets() async {
     networkInfo.isConnected;
     try {
-      List<Diet> diets = await remoteDataSource.getDiets();
+      AuthModel auth = await localDataSource.getAuth();
+      List<Diet> diets = await remoteDataSource.getDiets(auth.accessToken);
       return Right(diets);
     } on ServerException {
       return Left(ServerFailure());
