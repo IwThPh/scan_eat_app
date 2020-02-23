@@ -25,16 +25,24 @@ void main() {
     final tResponse = Samples.tProductJson;
     final tProductModel = ProductModel.fromJson(jsonDecode(tResponse));
     final tBarcode = tProductModel.barcode;
+    final tToken = Samples.tAuth.accessToken;
 
     test('should send a GET request to product/{barcode} endpoint', () {
       when(mockHttpClient.get(any, headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(tResponse, 200));
 
-      dataSource.getProduct(tBarcode);
+      dataSource.getProduct(tBarcode, tToken);
 
-      verify(mockHttpClient.get(
+      verify(
+        mockHttpClient.get(
           Config.APP_URL_DEBUG + 'api/product/$tBarcode',
-          headers: {'Content-Type': 'application-json'}));
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $tToken',
+          },
+        ),
+      );
     });
 
     test(
@@ -45,7 +53,7 @@ void main() {
           (_) async => http.Response(tResponse, 200),
         );
         // act
-        final result = await dataSource.getProduct(tBarcode);
+        final result = await dataSource.getProduct(tBarcode, tToken);
         // assert
         expect(result, equals(tProductModel));
       },
@@ -57,7 +65,8 @@ void main() {
 
       final call = dataSource.getProduct;
 
-      expect(() => call(tBarcode), throwsA(isInstanceOf<ServerException>()));
+      expect(() => call(tBarcode, tToken),
+          throwsA(isInstanceOf<ServerException>()));
     });
   });
 }

@@ -15,15 +15,17 @@ class ProductDisplay extends StatelessWidget {
       color: Colours.offWhite,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
             product?.name ?? "Not Defined",
             textAlign: TextAlign.left,
-            style: Theme.of(context).textTheme.headline,
+            style: AppTheme.theme.textTheme.headline
+                .apply(color: Colours.offBlack),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               ProductNutrient(
                 name: 'Energy',
@@ -102,8 +104,8 @@ class ProductNutrient extends StatelessWidget {
             ),
           ),
           Container(
+            constraints: BoxConstraints(minWidth: 60),
             padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-            width: MediaQuery.of(context).size.width/6,
             decoration: BoxDecoration(
               color: fg,
               borderRadius: BorderRadius.all(Radius.circular(18.0)),

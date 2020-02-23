@@ -56,6 +56,7 @@ Future<void> init() async {
   sl.registerLazySingleton<ScanningRepository>(
     () => ScanningRepositoryImpl(
       networkInfo: sl(),
+      localDataSource: sl(),
       remoteDataSource: sl(),
     ),
   );

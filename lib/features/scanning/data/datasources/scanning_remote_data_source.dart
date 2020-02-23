@@ -8,7 +8,7 @@ import '../../../../core/error/exception.dart';
 import '../models/product_model.dart';
 
 abstract class ScanningRemoteDataSource {
-  Future<ProductModel> getProduct(String barcode);
+  Future<ProductModel> getProduct(String barcode, String token);
 }
 
 class ScanningRemoteDataSourceImpl implements ScanningRemoteDataSource {
@@ -19,11 +19,15 @@ class ScanningRemoteDataSourceImpl implements ScanningRemoteDataSource {
   });
 
   @override
-  Future<ProductModel> getProduct(String barcode) async {
-    final response = await client.get(Config.APP_URL + 'api/product/$barcode',
-        headers: {'Content-Type': 'application-json'});
-
-    log(response.body);
+  Future<ProductModel> getProduct(String barcode, String token) async {
+    final response = await client.get(
+      Config.APP_URL + 'api/product/$barcode',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
 
     if (response.statusCode == 200) {
       return ProductModel.fromJson(jsonDecode(response.body));

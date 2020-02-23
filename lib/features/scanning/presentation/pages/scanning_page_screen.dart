@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:developer' as developer;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scaneat/assets/theme/app_theme.dart';
 import 'package:scaneat/assets/theme/colours.dart';
 import 'package:scaneat/core/animations/SlideBottomRoute.dart';
 import 'package:scaneat/core/widgets/loading_widget.dart';
@@ -79,7 +80,19 @@ class ScanningPageScreenState extends State<ScanningPageScreen> {
                       onTap: () => productPage(state.product),
                       child: Hero(
                         tag: 'product',
-                        child: ProductDisplay(product: state.product),
+                        child: Column(
+                          children: <Widget>[
+                            ProductDisplay(product: state.product),
+                            Container(
+                              height: 10,
+                            ),
+                            Text(
+                              'Press Product Card for more info.',
+                              style: AppTheme.theme.textTheme.button
+                                  .apply(color: Colours.offBlack),
+                            )
+                          ],
+                        ),
                       ),
                     );
                   }

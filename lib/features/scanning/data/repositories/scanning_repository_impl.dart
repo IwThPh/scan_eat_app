@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
+import 'package:scaneat/features/login/data/datasources/login_local_data_source.dart';
+import 'package:scaneat/features/login/data/models/auth_model.dart';
 
 import '../../../../core/device/network_info.dart';
 import '../../../../core/error/exception.dart';
@@ -10,10 +12,12 @@ import '../datasources/scanning_remote_data_source.dart';
 
 class ScanningRepositoryImpl implements ScanningRepository{
   final ScanningRemoteDataSource remoteDataSource;
+  final LoginLocalDataSource localDataSource;
   final NetworkInfo networkInfo;
 
   ScanningRepositoryImpl({
     @required this.remoteDataSource,
+    @required this.localDataSource,
     @required this.networkInfo,
   });
 
@@ -21,7 +25,8 @@ class ScanningRepositoryImpl implements ScanningRepository{
   Future<Either<Failure, Product>> getProduct(String barcode) async {
     networkInfo.isConnected;
     try {
-      final remoteProduct = await remoteDataSource.getProduct(barcode);
+      AuthModel auth = await localDataSource.getAuth();
+      final remoteProduct = await remoteDataSource.getProduct(barcode, auth.accessToken);
       return Right(remoteProduct);
     } on ServerException {
       return Left(ServerFailure());
