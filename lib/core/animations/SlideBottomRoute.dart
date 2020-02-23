@@ -4,6 +4,7 @@ class SlideBottomRoute extends PageRouteBuilder {
   final Widget page;
   SlideBottomRoute({this.page})
       : super(
+          opaque: false,
           pageBuilder: (
             BuildContext context,
             Animation<double> animation,
@@ -12,7 +13,7 @@ class SlideBottomRoute extends PageRouteBuilder {
             return page;
           },
           transitionDuration: Duration(
-            milliseconds: 800,
+            milliseconds: 1200,
           ),
           transitionsBuilder: (
             BuildContext context,
