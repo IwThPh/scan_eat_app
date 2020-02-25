@@ -10,7 +10,9 @@ import '../../../../core/error/exception.dart';
 
 abstract class HomeRemoteDataSource {
   Future<List<AllergenModel>> getAllergens(String token);
+  Future<String> selectAllergens(String token, List<int> allergenIds);
   Future<List<DietModel>> getDiets(String token);
+  Future<String> selectDiets(String token, List<int> dietIds);
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -42,6 +44,23 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }
 
   @override
+  Future<String> selectAllergens(String token, List<int> allergenIds) async {
+    final response = await client.patch(Config.APP_URL + 'api/allergens',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: allergenIds);
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body)['message'];
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
   Future<List<DietModel>> getDiets(String token) async {
     final response = await client.post(
       Config.APP_URL + 'api/diets',
@@ -54,9 +73,28 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
     if (response.statusCode == 200) {
       Iterable l = json.decode(response.body);
-      List<DietModel> allergens =
+      List<DietModel> diets =
           l.map((model) => DietModel.fromJson(model)).toList();
-      return allergens;
+      return diets;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<String> selectDiets(String token, List<int> dietIds) async {
+    final response = await client.patch(
+      Config.APP_URL + 'api/diets',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: dietIds,
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body)['message'];
     } else {
       throw ServerException();
     }

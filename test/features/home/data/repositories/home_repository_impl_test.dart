@@ -23,10 +23,10 @@ void main() {
   HomeRepositoryImpl repository;
 
   final tAuthModel = Samples.tAuthModel;
-  final tAllergenListJson = Samples.tAllergenListJson;
   final tAllergenList = Samples.tAllergenModelList;
-  final tDietListJson = Samples.tDietListJson;
+  final List<int> tAllergenIds = tAllergenList.where((a) => a.selected).map((a)=> a.id).toList();
   final tDietList = Samples.tDietModelList;
+  final List<int> tDietIds = tDietList.where((d) => d.selected).map((d)=> d.id).toList();
 
   setUp(() {
     mockRemoteDataSource = MockRemoteDataSource();
@@ -42,35 +42,68 @@ void main() {
   group(
     'Online Functionality',
     () {
-      test(
-        'Should return list of allergen data when the call to remote data source is successful',
-        () async {
-          when(mockLocalDataSource.getAuth())
-              .thenAnswer((_) async => tAuthModel);
-          when(mockRemoteDataSource.getAllergens(any))
-              .thenAnswer((_) async => tAllergenList);
+      group('Allergens', (){
+        test(
+          'Should return list of allergen data when the call to remote data source is successful',
+          () async {
+            when(mockLocalDataSource.getAuth())
+                .thenAnswer((_) async => tAuthModel);
+            when(mockRemoteDataSource.getAllergens(any))
+                .thenAnswer((_) async => tAllergenList);
 
-          final result = await repository.getAllergens();
+            final result = await repository.getAllergens();
 
-          verify(mockRemoteDataSource.getAllergens(tAuthModel.accessToken));
-          expect(result, equals(Right(tAllergenList)));
-        },
-      );
+            verify(mockRemoteDataSource.getAllergens(tAuthModel.accessToken));
+            expect(result, equals(Right(tAllergenList)));
+          },
+        );
+        test(
+          'Should return success message when the call to remote data source is successful',
+          () async {
+            when(mockLocalDataSource.getAuth())
+                .thenAnswer((_) async => tAuthModel);
+            when(mockRemoteDataSource.selectAllergens(any, any))
+                .thenAnswer((_) async => Samples.tSuccessJson);
 
-      test(
-        'Should return list of diet data when the call to remote data source is successful',
-        () async {
-          when(mockLocalDataSource.getAuth())
-              .thenAnswer((_) async => tAuthModel);
-          when(mockRemoteDataSource.getDiets(any))
-              .thenAnswer((_) async => tDietList);
+            final result = await repository.selectAllergens(tAllergenList);
 
-          final result = await repository.getDiets();
+            verify(mockRemoteDataSource.selectAllergens(tAuthModel.accessToken, tAllergenIds));
+            expect(result, equals(Right(Samples.tSuccess)));
+          },
+        );
+      });
 
-          verify(mockRemoteDataSource.getDiets(tAuthModel.accessToken));
-          expect(result, equals(Right(tDietList)));
-        },
-      );
+      group('Diets', (){
+        test(
+          'Should return list of diet data when the call to remote data source is successful',
+          () async {
+            when(mockLocalDataSource.getAuth())
+                .thenAnswer((_) async => tAuthModel);
+            when(mockRemoteDataSource.getDiets(any))
+                .thenAnswer((_) async => tDietList);
+
+            final result = await repository.getDiets();
+
+            verify(mockRemoteDataSource.getDiets(tAuthModel.accessToken));
+            expect(result, equals(Right(tDietList)));
+          },
+        );
+
+        test(
+          'Should return success message when the call to remote data source is successful',
+          () async {
+            when(mockLocalDataSource.getAuth())
+                .thenAnswer((_) async => tAuthModel);
+            when(mockRemoteDataSource.selectDiets(any, any))
+                .thenAnswer((_) async => Samples.tSuccessJson);
+
+            final result = await repository.selectDiets(tDietList);
+
+            verify(mockRemoteDataSource.selectDiets(tAuthModel.accessToken, tDietIds));
+            expect(result, equals(Right(Samples.tSuccess)));
+          },
+        );
+      });
     },
   );
 }

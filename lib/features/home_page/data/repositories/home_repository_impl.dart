@@ -46,4 +46,30 @@ class HomeRepositoryImpl implements HomeRepository {
       return Left(ServerFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, String>> selectAllergens(List<Allergen> allergens) async {
+    networkInfo.isConnected;
+    try {
+      List<int> selected = allergens.where((a) => a.selected).map((a)=> a.id).toList();
+      AuthModel auth = await localDataSource.getAuth();
+      String result = await remoteDataSource.selectAllergens(auth.accessToken, selected);
+      return Right(result);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> selectDiets(List<Diet> diets) async {
+    networkInfo.isConnected;
+    try {
+      List<int> selected = diets.where((d) => d.selected).map((d)=> d.id).toList();
+      AuthModel auth = await localDataSource.getAuth();
+      String result = await remoteDataSource.selectDiets(auth.accessToken, selected);
+      return Right(result);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }
