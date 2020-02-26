@@ -111,30 +111,21 @@ class HomePageScreenState extends State<HomePageScreen> {
   }
 
   Widget _buildBody() {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Flexible(
-          flex: 2,
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverToBoxAdapter(
           child: Text(
             'Hello ' + _user.name,
             textAlign: TextAlign.left,
             style: AppTheme.theme.textTheme.display1.apply(color: Colors.white),
           ),
         ),
-        Spacer(
-          flex: 1,
-        ),
-        Flexible(
-          flex: 4,
+        SliverToBoxAdapter(
           child: AllergenScreen(
             allergenBloc: _allergenBloc,
           ),
         ),
-        Flexible(
-          flex: 4,
+        SliverToBoxAdapter(
           child: DietScreen(
             dietBloc: _dietBloc,
           ),
