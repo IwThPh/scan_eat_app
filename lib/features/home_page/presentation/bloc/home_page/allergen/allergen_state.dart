@@ -69,3 +69,19 @@ class ErrorAllergenState extends AllergenState {
     return ErrorAllergenState(version+1, this.errorMessage);
   }
 }
+
+class MessageAllergenState extends AllergenState {
+  final String message;
+
+  MessageAllergenState(int version, this.message): super(version, [message]);
+
+  @override
+  MessageAllergenState getStateCopy() {
+    return MessageAllergenState(this.version, this.message);
+  }
+
+  @override
+  ErrorAllergenState getNewVersion() {
+    return ErrorAllergenState(version+1, this.message);
+  }
+}

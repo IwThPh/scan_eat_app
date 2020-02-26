@@ -7,6 +7,7 @@ import 'package:scaneat/features/home_page/data/repositories/home_repository_imp
 import 'package:scaneat/features/home_page/domain/repositories/home_repository.dart';
 import 'package:scaneat/features/home_page/domain/usecases/get_allergen.dart';
 import 'package:scaneat/features/home_page/domain/usecases/get_diet.dart';
+import 'package:scaneat/features/home_page/domain/usecases/select_allergen.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/allergen/allergen_bloc.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/bloc.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/diet/diet_bloc.dart';
@@ -41,7 +42,10 @@ Future<void> init() async {
     ),
   );
   sl.registerFactory(() => HomePageBloc());
-  sl.registerFactory(() => AllergenBloc(getAllergen: sl()));
+  sl.registerFactory(() => AllergenBloc(
+        getAllergen: sl(),
+        selectAllergen: sl(),
+      ));
   sl.registerFactory(() => DietBloc(getDiet: sl()));
 
   // Use Cases
@@ -51,6 +55,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => RetrieveUser(sl()));
   sl.registerLazySingleton(() => GetDiet(sl()));
   sl.registerLazySingleton(() => GetAllergen(sl()));
+  sl.registerLazySingleton(() => SelectAllergen(sl()));
 
   // Repositories
   sl.registerLazySingleton<ScanningRepository>(
