@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_test/flutter_test.dart';
@@ -66,7 +68,7 @@ void main() {
             'Accept': 'application/json',
             'Authorization': 'Bearer $token',
           },
-          body: allergenIds
+          body: json.encode(allergenIds)
         ));
       },
     );
@@ -110,7 +112,7 @@ void main() {
             'Accept': 'application/json',
             'Authorization': 'Bearer $token',
           },
-          body: dietIds
+          body: json.encode(dietIds)
         ));
       },
     );

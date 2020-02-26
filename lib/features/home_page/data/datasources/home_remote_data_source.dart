@@ -45,13 +45,15 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
   @override
   Future<String> selectAllergens(String token, List<int> allergenIds) async {
-    final response = await client.patch(Config.APP_URL + 'api/allergens',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        body: allergenIds);
+    final response = await client.patch(
+      Config.APP_URL + 'api/allergens',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: (json.encode(allergenIds)),
+    );
 
     if (response.statusCode == 200) {
       return json.decode(response.body)['message'];
@@ -90,7 +92,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       },
-      body: dietIds,
+      body: (json.encode(dietIds)),
     );
 
     if (response.statusCode == 200) {
