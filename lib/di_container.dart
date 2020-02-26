@@ -8,6 +8,7 @@ import 'package:scaneat/features/home_page/domain/repositories/home_repository.d
 import 'package:scaneat/features/home_page/domain/usecases/get_allergen.dart';
 import 'package:scaneat/features/home_page/domain/usecases/get_diet.dart';
 import 'package:scaneat/features/home_page/domain/usecases/select_allergen.dart';
+import 'package:scaneat/features/home_page/domain/usecases/select_diet.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/allergen/allergen_bloc.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/bloc.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/diet/diet_bloc.dart';
@@ -46,7 +47,10 @@ Future<void> init() async {
         getAllergen: sl(),
         selectAllergen: sl(),
       ));
-  sl.registerFactory(() => DietBloc(getDiet: sl()));
+  sl.registerFactory(() => DietBloc(
+        getDiet: sl(),
+        selectDiet: sl(),
+      ));
 
   // Use Cases
   sl.registerLazySingleton(() => GetProduct(sl()));
@@ -54,6 +58,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => RegisterRequest(sl()));
   sl.registerLazySingleton(() => RetrieveUser(sl()));
   sl.registerLazySingleton(() => GetDiet(sl()));
+  sl.registerLazySingleton(() => SelectDiet(sl()));
   sl.registerLazySingleton(() => GetAllergen(sl()));
   sl.registerLazySingleton(() => SelectAllergen(sl()));
 

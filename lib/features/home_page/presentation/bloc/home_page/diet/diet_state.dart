@@ -72,3 +72,19 @@ class ErrorDietState extends DietState {
     return ErrorDietState(version+1, this.errorMessage);
   }
 }
+
+class MessageDietState extends DietState {
+  final String message;
+
+  MessageDietState(int version, this.message): super(version, [message]);
+
+  @override
+  MessageDietState getStateCopy() {
+    return MessageDietState(this.version, this.message);
+  }
+
+  @override
+  ErrorDietState getNewVersion() {
+    return ErrorDietState(version+1, this.message);
+  }
+}
