@@ -1,7 +1,9 @@
 import 'package:scaneat/features/home_page/data/models/allergen_model.dart';
 import 'package:scaneat/features/home_page/data/models/diet_model.dart';
+import 'package:scaneat/features/home_page/data/models/preference_model.dart';
 import 'package:scaneat/features/home_page/domain/entities/allergen.dart';
 import 'package:scaneat/features/home_page/domain/entities/diet.dart';
+import 'package:scaneat/features/home_page/domain/entities/preference.dart';
 import 'package:scaneat/features/login/data/models/auth_model.dart';
 import 'package:scaneat/features/login/data/models/user_model.dart';
 import 'package:scaneat/features/login/data/models/validator_model.dart';
@@ -143,4 +145,65 @@ class Samples {
 
   static final String tSuccessJson = "{\"message\":\"Success\"}";
   static final String tSuccess = "{\"message\":\"Success\"}";
+
+  static final Preference tPreference = Preference(
+    user_id: 1,
+    energy_max: 2000,
+    carbohydrate_1: 0.5,
+    carbohydrate_2: 0.5,
+    carbohydrate_max: 100,
+    protein_1: 0.5,
+    protein_2: 0.5,
+    protein_max: 100,
+    fat_1: 0.5,
+    fat_2: 0.5,
+    fat_max: 100,
+    sodium_1: 0.5,
+    sodium_2: 0.5,
+    sodium_max: 100,
+    saturated_1: 0.5,
+    saturated_2: 0.5,
+    saturated_max: 100,
+    fiber_1: 0.5,
+    fiber_2: 0.5,
+    fiber_max: 100,
+    salt_1: 0.5,
+    salt_2: 0.5,
+    salt_max: 100,
+    sugar_1: 0.5,
+    sugar_2: 0.5,
+    sugar_max: 100,
+  );
+
+  static final PreferenceModel tPreferenceModel = PreferenceModel(
+    user_id: 1,
+    energy_max: 2000,
+    carbohydrate_1: 0.5,
+    carbohydrate_2: 0.5,
+    carbohydrate_max: 100,
+    protein_1: 0.5,
+    protein_2: 0.5,
+    protein_max: 100,
+    fat_1: 0.5,
+    fat_2: 0.5,
+    fat_max: 100,
+    sodium_1: 0.5,
+    sodium_2: 0.5,
+    sodium_max: 100,
+    saturated_1: 0.5,
+    saturated_2: 0.5,
+    saturated_max: 100,
+    fiber_1: 0.5,
+    fiber_2: 0.5,
+    fiber_max: 100,
+    salt_1: 0.5,
+    salt_2: 0.5,
+    salt_max: 100,
+    sugar_1: 0.5,
+    sugar_2: 0.5,
+    sugar_max: 100,
+  );
+
+  static final String tPreferenceJson =
+      '\{\"user_id\":1,\"energy_max\":2000,\"carbohydrate_max\":325,\"protein_max\":50,\"fat_max\":70,\"fiber_max\":30,\"salt_max\":6,\"sugar_max\":90,\"saturated_max\":20,\"sodium_max\":2.3,\"carbohydrate_1\":0.5,\"carbohydrate_2\":0.7,\"protein_1\":0.5,\"protein_2\":0.7,\"fat_1\":0.5,\"fat_2\":0.7,\"fiber_1\":null,\"fiber_2\":null,\"salt_1\":0.5,\"salt_2\":0.7,\"sugar_1\":0.5,\"sugar_2\":0.7,\"saturated_1\":0.5,\"saturated_2\":0.7,\"sodium_1\":0.5,\"sodium_2\":0.7\}';
 }

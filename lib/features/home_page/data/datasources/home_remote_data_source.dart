@@ -5,6 +5,8 @@ import 'package:meta/meta.dart';
 import 'package:scaneat/config.dart';
 import 'package:scaneat/features/home_page/data/models/allergen_model.dart';
 import 'package:scaneat/features/home_page/data/models/diet_model.dart';
+import 'package:scaneat/features/home_page/data/models/preference_model.dart';
+import 'package:scaneat/features/home_page/domain/entities/preference.dart';
 
 import '../../../../core/error/exception.dart';
 
@@ -13,10 +15,19 @@ abstract class HomeRemoteDataSource {
   Future<String> selectAllergens(String token, List<int> allergenIds);
   Future<List<DietModel>> getDiets(String token);
   Future<String> selectDiets(String token, List<int> dietIds);
+
+  Future<PreferenceModel> getPreference(String token);
+  Future<PreferenceModel> updatePreference(String token, PreferenceModel pref);
+  Future<PreferenceModel> deletePreference(String token);
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   final http.Client client;
+
+  static const String urlApp = Config.APP_URL;
+  static const String urlAllergen = urlApp + 'api/allergens';
+  static const String urlDiet = urlApp + 'api/diets';
+  static const String urlPreference = urlApp + 'api/preferences';
 
   HomeRemoteDataSourceImpl({
     @required this.client,
@@ -25,7 +36,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<List<AllergenModel>> getAllergens(String token) async {
     final response = await client.post(
-      Config.APP_URL + 'api/allergens',
+      urlAllergen,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -46,7 +57,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<String> selectAllergens(String token, List<int> allergenIds) async {
     final response = await client.patch(
-      Config.APP_URL + 'api/allergens',
+      urlAllergen,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -65,7 +76,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<List<DietModel>> getDiets(String token) async {
     final response = await client.post(
-      Config.APP_URL + 'api/diets',
+      urlDiet,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -86,7 +97,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<String> selectDiets(String token, List<int> dietIds) async {
     final response = await client.patch(
-      Config.APP_URL + 'api/diets',
+      urlDiet,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -97,6 +108,62 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
     if (response.statusCode == 200) {
       return json.decode(response.body)['message'];
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<PreferenceModel> deletePreference(String token) async {
+    final response = await client.delete(
+      urlPreference,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return PreferenceModel.fromJson(json.decode(response.body));
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<PreferenceModel> getPreference(String token) async {
+    final response = await client.get(
+      urlPreference,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return PreferenceModel.fromJson(json.decode(response.body));
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<PreferenceModel> updatePreference(
+      String token, PreferenceModel pref) async {
+    final response = await client.patch(
+      urlPreference,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: json.encode(pref),
+    );
+
+    if (response.statusCode == 200) {
+      return PreferenceModel.fromJson(json.decode(response.body));
     } else {
       throw ServerException();
     }

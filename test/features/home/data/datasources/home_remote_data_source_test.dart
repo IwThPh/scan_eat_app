@@ -1,13 +1,10 @@
 import 'dart:convert';
 
-import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:scaneat/config.dart';
-import 'package:scaneat/core/error/exception.dart';
 import 'package:scaneat/features/home_page/data/datasources/home_remote_data_source.dart';
-import 'package:scaneat/features/login/data/datasources/login_remote_data_source.dart';
 
 import '../../../../samples.dart';
 
@@ -17,13 +14,19 @@ void main() {
   HomeRemoteDataSourceImpl dataSource;
   MockHttpClient mockHttpClient;
 
-  final tAuthModel = Samples.tAuthModel;
-  final String token = tAuthModel.accessToken;
   final urlAllergen = Config.APP_URL_DEBUG + 'api/allergens';
   final urlDiet = Config.APP_URL_DEBUG + 'api/diets';
+  final urlPref = Config.APP_URL_DEBUG + 'api/preferences';
+
+  final tAuthModel = Samples.tAuthModel;
+  final String token = tAuthModel.accessToken;
+
   final tAllergenListJson = Samples.tAllergenListJson;
   final tDietListJson = Samples.tDietListJson;
   final tSuccessJson = Samples.tSuccessJson;
+
+  final tPreferenceModel = Samples.tPreferenceModel;
+  final tPreferenceJson = Samples.tPreferenceJson;
 
   setUp(() {
     mockHttpClient = MockHttpClient();
@@ -55,21 +58,20 @@ void main() {
     test(
       'Should preform a PATCH request to Allergen URL, Expect success response',
       () {
-        when(mockHttpClient.patch(any, headers: anyNamed('headers'), body: anyNamed('body')))
+        when(mockHttpClient.patch(any,
+                headers: anyNamed('headers'), body: anyNamed('body')))
             .thenAnswer((_) async => http.Response(tSuccessJson, 200));
 
-        var allergenIds = [1,2,3];
+        var allergenIds = [1, 2, 3];
         dataSource.selectAllergens(token, allergenIds);
 
-        verify(mockHttpClient.patch(
-          urlAllergen,
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer $token',
-          },
-          body: json.encode(allergenIds)
-        ));
+        verify(mockHttpClient.patch(urlAllergen,
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Authorization': 'Bearer $token',
+            },
+            body: json.encode(allergenIds)));
       },
     );
   });
@@ -99,20 +101,83 @@ void main() {
     test(
       'Should preform a PATCH request to Diet URL, Expect success response',
       () {
-        when(mockHttpClient.patch(any, headers: anyNamed('headers'), body: anyNamed('body')))
+        when(mockHttpClient.patch(any,
+                headers: anyNamed('headers'), body: anyNamed('body')))
             .thenAnswer((_) async => http.Response(tSuccessJson, 200));
 
-        var dietIds = [1,2,3];
+        var dietIds = [1, 2, 3];
         dataSource.selectDiets(token, dietIds);
 
-        verify(mockHttpClient.patch(
-          urlDiet,
+        verify(mockHttpClient.patch(urlDiet,
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Authorization': 'Bearer $token',
+            },
+            body: json.encode(dietIds)));
+      },
+    );
+  });
+
+  group('getPreference', () {
+    test(
+      'Should preform a GET request to Preference URL, Expect success response',
+      () {
+        when(mockHttpClient.get(any, headers: anyNamed('headers')))
+            .thenAnswer((_) async => http.Response(tPreferenceJson, 200));
+
+        dataSource.getPreference(token);
+
+        verify(mockHttpClient.get(
+          urlPref,
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'Authorization': 'Bearer $token',
           },
-          body: json.encode(dietIds)
+        ));
+      },
+    );
+  });
+
+  group('updatePreference', () {
+    test(
+      'Should preform a PATCH request to Preference URL, Expect success response',
+      () {
+        when(mockHttpClient.patch(any, headers: anyNamed('headers'), body: anyNamed('body')))
+            .thenAnswer((_) async => http.Response(tPreferenceJson, 200));
+
+        dataSource.updatePreference(token, tPreferenceModel);
+
+        verify(mockHttpClient.patch(
+          urlPref,
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+          body: json.encode(tPreferenceModel),
+        ));
+      },
+    );
+  });
+
+  group('resetPreference', () {
+    test(
+      'Should preform a DELETE request to Preference URL, Expect success response',
+      () {
+        when(mockHttpClient.delete(any, headers: anyNamed('headers')))
+            .thenAnswer((_) async => http.Response(tPreferenceJson, 200));
+
+        dataSource.deletePreference(token);
+
+        verify(mockHttpClient.delete(
+          urlPref,
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
         ));
       },
     );

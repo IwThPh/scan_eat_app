@@ -5,9 +5,9 @@ import 'package:scaneat/core/device/network_info.dart';
 import 'package:scaneat/core/error/exception.dart';
 import 'package:scaneat/core/error/failure.dart';
 import 'package:scaneat/features/home_page/data/datasources/home_remote_data_source.dart';
-import 'package:scaneat/features/home_page/data/models/allergen_model.dart';
 import 'package:scaneat/features/home_page/domain/entities/allergen.dart';
 import 'package:scaneat/features/home_page/domain/entities/diet.dart';
+import 'package:scaneat/features/home_page/domain/entities/preference.dart';
 import 'package:scaneat/features/home_page/domain/repositories/home_repository.dart';
 import 'package:scaneat/features/login/data/datasources/login_local_data_source.dart';
 import 'package:scaneat/features/login/data/models/auth_model.dart';
@@ -43,8 +43,7 @@ class HomeRepositoryImpl implements HomeRepository {
       List<Diet> diets = await remoteDataSource.getDiets(auth.accessToken);
       return Right(diets);
     } on ServerException {
-      return Left(ServerFailure());
-    }
+      return Left(ServerFailure()); }
   }
 
   @override
@@ -68,6 +67,42 @@ class HomeRepositoryImpl implements HomeRepository {
       AuthModel auth = await localDataSource.getAuth();
       String result = await remoteDataSource.selectDiets(auth.accessToken, selected);
       return Right(result);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Preference>> deletePreference() async {
+    networkInfo.isConnected;
+    try {
+      AuthModel auth = await localDataSource.getAuth();
+      Preference pref = await remoteDataSource.deletePreference(auth.accessToken);
+      return Right(pref);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Preference>> getPreference() async {
+    networkInfo.isConnected;
+    try {
+      AuthModel auth = await localDataSource.getAuth();
+      Preference pref = await remoteDataSource.getPreference(auth.accessToken);
+      return Right(pref);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Preference>> updatePreference(preference) async {
+    networkInfo.isConnected;
+    try {
+      AuthModel auth = await localDataSource.getAuth();
+      Preference pref = await remoteDataSource.updatePreference(auth.accessToken, preference);
+      return Right(pref);
     } on ServerException {
       return Left(ServerFailure());
     }

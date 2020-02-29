@@ -5,8 +5,6 @@ import 'package:scaneat/core/device/network_info.dart';
 import 'package:scaneat/features/home_page/data/datasources/home_remote_data_source.dart';
 import 'package:scaneat/features/home_page/data/repositories/home_repository_impl.dart';
 import 'package:scaneat/features/login/data/datasources/login_local_data_source.dart';
-import 'package:scaneat/features/login/data/datasources/login_remote_data_source.dart';
-import 'package:scaneat/features/login/data/repositories/login_repository_impl.dart';
 
 import '../../../../samples.dart';
 
@@ -23,10 +21,17 @@ void main() {
   HomeRepositoryImpl repository;
 
   final tAuthModel = Samples.tAuthModel;
+
   final tAllergenList = Samples.tAllergenModelList;
-  final List<int> tAllergenIds = tAllergenList.where((a) => a.selected).map((a)=> a.id).toList();
+  final List<int> tAllergenIds =
+      tAllergenList.where((a) => a.selected).map((a) => a.id).toList();
+
   final tDietList = Samples.tDietModelList;
-  final List<int> tDietIds = tDietList.where((d) => d.selected).map((d)=> d.id).toList();
+  final List<int> tDietIds =
+      tDietList.where((d) => d.selected).map((d) => d.id).toList();
+
+  final tPreferenceModel = Samples.tPreferenceModel;
+  final tPreference = tPreferenceModel;
 
   setUp(() {
     mockRemoteDataSource = MockRemoteDataSource();
@@ -42,7 +47,7 @@ void main() {
   group(
     'Online Functionality',
     () {
-      group('Allergens', (){
+      group('Allergens', () {
         test(
           'Should return list of allergen data when the call to remote data source is successful',
           () async {
@@ -67,13 +72,14 @@ void main() {
 
             final result = await repository.selectAllergens(tAllergenList);
 
-            verify(mockRemoteDataSource.selectAllergens(tAuthModel.accessToken, tAllergenIds));
+            verify(mockRemoteDataSource.selectAllergens(
+                tAuthModel.accessToken, tAllergenIds));
             expect(result, equals(Right(Samples.tSuccess)));
           },
         );
       });
 
-      group('Diets', (){
+      group('Diets', () {
         test(
           'Should return list of diet data when the call to remote data source is successful',
           () async {
@@ -99,8 +105,56 @@ void main() {
 
             final result = await repository.selectDiets(tDietList);
 
-            verify(mockRemoteDataSource.selectDiets(tAuthModel.accessToken, tDietIds));
+            verify(mockRemoteDataSource.selectDiets(
+                tAuthModel.accessToken, tDietIds));
             expect(result, equals(Right(Samples.tSuccess)));
+          },
+        );
+      });
+
+      group('Preference', () {
+        test(
+          'Should return preference data when the call to remote data source is successful',
+          () async {
+            when(mockLocalDataSource.getAuth())
+                .thenAnswer((_) async => tAuthModel);
+            when(mockRemoteDataSource.getPreference(any))
+                .thenAnswer((_) async => tPreferenceModel);
+
+            final result = await repository.getPreference();
+
+            verify(mockRemoteDataSource.getPreference(tAuthModel.accessToken));
+            expect(result, equals(Right(tPreference)));
+          },
+        );
+
+        test(
+          'Should return default preference data when the call to remote data source is successful',
+          () async {
+            when(mockLocalDataSource.getAuth())
+                .thenAnswer((_) async => tAuthModel);
+            when(mockRemoteDataSource.deletePreference(any))
+                .thenAnswer((_) async => tPreferenceModel);
+
+            final result = await repository.deletePreference();
+
+            verify(mockRemoteDataSource.deletePreference(tAuthModel.accessToken));
+            expect(result, equals(Right(tPreference)));
+          },
+        );
+
+        test(
+          'Should return updated preference data when the call to remote data source is successful',
+          () async {
+            when(mockLocalDataSource.getAuth())
+                .thenAnswer((_) async => tAuthModel);
+            when(mockRemoteDataSource.updatePreference(any, any))
+                .thenAnswer((_) async => tPreferenceModel);
+
+            final result = await repository.updatePreference(tPreference);
+
+            verify(mockRemoteDataSource.updatePreference(tAuthModel.accessToken, tPreferenceModel));
+            expect(result, equals(Right(tPreference)));
           },
         );
       });
