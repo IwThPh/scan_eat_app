@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer' as developer;
 
 import 'package:dartz/dartz.dart';
+import 'package:scaneat/core/error/exception.dart';
 import 'package:scaneat/core/usecases/usecase.dart';
 import 'package:scaneat/features/login/domain/entities/auth.dart';
 import 'package:scaneat/features/login/domain/entities/validator.dart';
@@ -47,10 +48,11 @@ class LoadLoginPageEvent extends LoginPageEvent {
         (failure) => InLoginPageState(1),
         (user) => CompleteLoginPageState(1, user),
       );
-    } catch (_, stackTrace) {
-      developer.log('$_',
-          name: 'LoadTestEvent', error: _, stackTrace: stackTrace);
-      return ErrorLoginPageState(0, _?.toString());
+    } catch (e, stackTrace) {
+      developer.log('$e',
+          name: 'LoadTestEvent', error: e, stackTrace: stackTrace);
+      if(e is CacheException) return InLoginPageState(1);
+      return ErrorLoginPageState(0, e?.toString());
     }
   }
 
