@@ -6,6 +6,7 @@ import 'package:scaneat/core/animations/SlideBottomRoute.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/allergen/bloc.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/bloc.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/diet/bloc.dart';
+import 'package:scaneat/features/home_page/presentation/bloc/home_page/preference/bloc.dart';
 import 'package:scaneat/features/home_page/presentation/pages/home_page_screen.dart';
 import 'package:scaneat/features/scanning/presentation/pages/scanning_page.dart';
 import 'package:scaneat/di_container.dart' as di;
@@ -16,6 +17,7 @@ class HomePage extends StatelessWidget {
   final _homePageBloc = di.sl<HomePageBloc>();
   final _allergenBloc = di.sl<AllergenBloc>();
   final _dietBloc = di.sl<DietBloc>();
+  final _preferenceBloc = di.sl<PreferenceBloc>();
 
   HomePage(this._user);
 
@@ -27,7 +29,7 @@ class HomePage extends StatelessWidget {
           //Check if swipe direction is between top left and top right quadrants.
           if (details.delta.direction < -pi / 4 &&
               details.delta.direction > -(3 * pi) / 4) {
-            _scan(context);
+            // _scan(context);
           }
         },
         child: Scaffold(
@@ -80,6 +82,7 @@ class HomePage extends StatelessWidget {
               homePageBloc: _homePageBloc,
               allergenBloc: _allergenBloc,
               dietBloc: _dietBloc,
+              preferenceBloc: _preferenceBloc,
               user: _user,
             ),
           ),

@@ -5,13 +5,17 @@ import 'package:scaneat/core/device/network_info.dart';
 import 'package:scaneat/features/home_page/data/datasources/home_remote_data_source.dart';
 import 'package:scaneat/features/home_page/data/repositories/home_repository_impl.dart';
 import 'package:scaneat/features/home_page/domain/repositories/home_repository.dart';
+import 'package:scaneat/features/home_page/domain/usecases/delete_preference.dart';
 import 'package:scaneat/features/home_page/domain/usecases/get_allergen.dart';
 import 'package:scaneat/features/home_page/domain/usecases/get_diet.dart';
+import 'package:scaneat/features/home_page/domain/usecases/get_preference.dart';
 import 'package:scaneat/features/home_page/domain/usecases/select_allergen.dart';
 import 'package:scaneat/features/home_page/domain/usecases/select_diet.dart';
+import 'package:scaneat/features/home_page/domain/usecases/update_preference.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/allergen/allergen_bloc.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/bloc.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/diet/diet_bloc.dart';
+import 'package:scaneat/features/home_page/presentation/bloc/home_page/preference/bloc.dart';
 import 'package:scaneat/features/login/data/datasources/login_local_data_source.dart';
 import 'package:scaneat/features/login/data/datasources/login_remote_data_source.dart';
 import 'package:scaneat/features/login/data/repositories/login_repository_impl.dart';
@@ -26,7 +30,6 @@ import 'package:scaneat/features/scanning/domain/repositories/scanning_repositor
 import 'package:scaneat/features/scanning/domain/usecases/get_product.dart';
 import 'package:scaneat/features/scanning/presentation/bloc/bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:scaneat/features/scanning/presentation/widgets/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
@@ -51,6 +54,11 @@ Future<void> init() async {
         getDiet: sl(),
         selectDiet: sl(),
       ));
+  sl.registerFactory(() => PreferenceBloc(
+        getPreference: sl(),
+        updatePreference: sl(),
+        deletePreference: sl(),
+      ));
 
   // Use Cases
   sl.registerLazySingleton(() => GetProduct(sl()));
@@ -61,6 +69,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SelectDiet(sl()));
   sl.registerLazySingleton(() => GetAllergen(sl()));
   sl.registerLazySingleton(() => SelectAllergen(sl()));
+  sl.registerLazySingleton(() => GetPreference(sl()));
+  sl.registerLazySingleton(() => UpdatePreference(sl()));
+  sl.registerLazySingleton(() => DeletePreference(sl()));
 
   // Repositories
   sl.registerLazySingleton<ScanningRepository>(
