@@ -68,17 +68,17 @@ class PreferenceScreenState extends State<PreferenceScreen> {
             bloc: widget._preferenceBloc,
             builder: (
               BuildContext context,
-              PreferenceState currentState,
+              PreferenceState state,
             ) {
-              if (currentState is UnPreferenceState) {
+              if (state is UnPreferenceState) {
                 return Center(child: LoadingWidget());
               }
-              if (currentState is ErrorPreferenceState) {
+              if (state is ErrorPreferenceState) {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(currentState.errorMessage ?? 'Error'),
+                    Text(state.errorMessage ?? 'Error'),
                     Padding(
                       padding: const EdgeInsets.only(top: 32.0),
                       child: RaisedButton(
@@ -90,8 +90,72 @@ class PreferenceScreenState extends State<PreferenceScreen> {
                   ],
                 );
               }
-              if (currentState is InPreferenceState) {
-                return Text('Loaded Preferences.');
+              if (state is InPreferenceState) {
+                final p = state.preference;
+                return Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Calories',
+                          style: AppTheme.theme.textTheme.subtitle
+                              .apply(color: Colors.white),
+                        ),
+                        Text(
+                          'Daily Max : ' + p.energy_max.toString() + 'Kcal',
+                          style: AppTheme.theme.textTheme.subtitle
+                              .apply(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                    Divider(
+                      color: Colours.offWhite,
+                      thickness: 1,
+                    ),
+                    NutrientDisplay(
+                        name: 'Carbohyrates',
+                        max: p.carbohydrate_max.toString(),
+                        s1: p.carbohydrate_1,
+                        s2: p.carbohydrate_2),
+                    NutrientDisplay(
+                        name: 'Protein',
+                        max: p.protein_max.toString(),
+                        s1: p.protein_1,
+                        s2: p.protein_2),
+                    NutrientDisplay(
+                        name: 'Fat',
+                        max: p.fat_max.toString(),
+                        s1: p.fat_1,
+                        s2: p.fat_2),
+                    NutrientDisplay(
+                        name: 'Fibre',
+                        max: p.fibre_max.toString(),
+                        s1: p.fibre_1,
+                        s2: p.fibre_2),
+                    NutrientDisplay(
+                        name: 'Salt',
+                        max: p.salt_max.toString(),
+                        s1: p.salt_1,
+                        s2: p.salt_2),
+                    NutrientDisplay(
+                        name: 'Sodium',
+                        max: p.sodium_max.toString(),
+                        s1: p.sodium_1,
+                        s2: p.sodium_2),
+                    NutrientDisplay(
+                        name: 'Saturated',
+                        max: p.saturated_max.toString(),
+                        s1: p.saturated_1,
+                        s2: p.saturated_2),
+                    NutrientDisplay(
+                        name: 'Sugar',
+                        max: p.sugar_max.toString(),
+                        s1: p.sugar_1,
+                        s2: p.sugar_2)
+                  ],
+                );
               }
               return Container();
             },

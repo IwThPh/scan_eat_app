@@ -129,11 +129,6 @@ class HomePageScreenState extends State<HomePageScreen> {
           ),
         ),
         SliverToBoxAdapter(
-          child: PreferenceScreen(
-            preferenceBloc: _preferenceBloc,
-          ),
-        ),
-        SliverToBoxAdapter(
           child: AllergenScreen(
             allergenBloc: _allergenBloc,
           ),
@@ -141,6 +136,11 @@ class HomePageScreenState extends State<HomePageScreen> {
         SliverToBoxAdapter(
           child: DietScreen(
             dietBloc: _dietBloc,
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: PreferenceScreen(
+            preferenceBloc: _preferenceBloc,
           ),
         ),
       ],
