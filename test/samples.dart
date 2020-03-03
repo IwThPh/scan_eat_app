@@ -20,7 +20,7 @@ class Samples {
       carbohydrate_100g: 70.5,
       energy_100g: 1660.0,
       fat_100g: 8.97,
-      fiber_100g: 0.0,
+      fibre_100g: 0.0,
       protein_100g: 8.97,
       salt_100g: 2.05,
       saturates_100g: 1.28,
@@ -34,7 +34,7 @@ class Samples {
       carbohydrate_100g: tProduct.carbohydrate_100g,
       energy_100g: tProduct.energy_100g,
       fat_100g: tProduct.fat_100g,
-      fiber_100g: tProduct.fiber_100g,
+      fibre_100g: tProduct.fibre_100g,
       protein_100g: tProduct.protein_100g,
       salt_100g: tProduct.salt_100g,
       saturates_100g: tProduct.saturates_100g,
@@ -43,7 +43,7 @@ class Samples {
       weight_g: tProduct.weight_g);
 
   static final String tProductJson =
-      "{\"id\":105,\"barcode\":\"0737628064502\",\"name\":\"Stir-Fry Rice Noodles\",\"weight_g\":155,\"energy_100g\":1660,\"carbohydrate_100g\":70.5,\"protein_100g\":8.97,\"fat_100g\":8.97,\"fiber_100g\":0,\"salt_100g\":2.05,\"sugar_100g\":12.8,\"saturated_100g\":1.28,\"sodium_100g\":0.819,\"created_at\":\"2019-11-10T18:22:51.000000Z\",\"updated_at\":\"2019-11-10T18:22:51.000000Z\"}";
+      "{\"id\":105,\"barcode\":\"0737628064502\",\"name\":\"Stir-Fry Rice Noodles\",\"weight_g\":155,\"energy_100g\":1660,\"carbohydrate_100g\":70.5,\"protein_100g\":8.97,\"fat_100g\":8.97,\"fibre_100g\":0,\"salt_100g\":2.05,\"sugar_100g\":12.8,\"saturated_100g\":1.28,\"sodium_100g\":0.819,\"created_at\":\"2019-11-10T18:22:51.000000Z\",\"updated_at\":\"2019-11-10T18:22:51.000000Z\"}";
 
   static final Auth tAuth = Auth(
     tokenType: 'Bearer',
@@ -164,9 +164,9 @@ class Samples {
     saturated_1: 0.5,
     saturated_2: 0.5,
     saturated_max: 100,
-    fiber_1: 0.5,
-    fiber_2: 0.5,
-    fiber_max: 100,
+    fibre_1: 0.5,
+    fibre_2: 0.5,
+    fibre_max: 100,
     salt_1: 0.5,
     salt_2: 0.5,
     salt_max: 100,
@@ -193,9 +193,9 @@ class Samples {
     saturated_1: 0.5,
     saturated_2: 0.5,
     saturated_max: 100,
-    fiber_1: 0.5,
-    fiber_2: 0.5,
-    fiber_max: 100,
+    fibre_1: 0.5,
+    fibre_2: 0.5,
+    fibre_max: 100,
     salt_1: 0.5,
     salt_2: 0.5,
     salt_max: 100,
@@ -205,5 +205,5 @@ class Samples {
   );
 
   static final String tPreferenceJson =
-      '\{\"user_id\":1,\"energy_max\":2000,\"carbohydrate_max\":325,\"protein_max\":50,\"fat_max\":70,\"fiber_max\":30,\"salt_max\":6,\"sugar_max\":90,\"saturated_max\":20,\"sodium_max\":2.3,\"carbohydrate_1\":0.5,\"carbohydrate_2\":0.7,\"protein_1\":0.5,\"protein_2\":0.7,\"fat_1\":0.5,\"fat_2\":0.7,\"fiber_1\":null,\"fiber_2\":null,\"salt_1\":0.5,\"salt_2\":0.7,\"sugar_1\":0.5,\"sugar_2\":0.7,\"saturated_1\":0.5,\"saturated_2\":0.7,\"sodium_1\":0.5,\"sodium_2\":0.7\}';
+      '\{\"user_id\":1,\"energy_max\":2000,\"carbohydrate_max\":325,\"protein_max\":50,\"fat_max\":70,\"fibre_max\":30,\"salt_max\":6,\"sugar_max\":90,\"saturated_max\":20,\"sodium_max\":2.3,\"carbohydrate_1\":0.5,\"carbohydrate_2\":0.7,\"protein_1\":0.5,\"protein_2\":0.7,\"fat_1\":0.5,\"fat_2\":0.7,\"fibre_1\":null,\"fibre_2\":null,\"salt_1\":0.5,\"salt_2\":0.7,\"sugar_1\":0.5,\"sugar_2\":0.7,\"saturated_1\":0.5,\"saturated_2\":0.7,\"sodium_1\":0.5,\"sodium_2\":0.7\}';
 }

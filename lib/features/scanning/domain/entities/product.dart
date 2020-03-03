@@ -9,7 +9,7 @@ class Product extends Equatable {
   final num carbohydrate_100g;
   final num protein_100g;
   final num fat_100g;
-  final num fiber_100g;
+  final num fibre_100g;
   final num salt_100g;
   final num sugars_100g;
   final num saturates_100g;
@@ -23,7 +23,7 @@ class Product extends Equatable {
       @required this.carbohydrate_100g,
       @required this.protein_100g,
       @required this.fat_100g,
-      @required this.fiber_100g,
+      @required this.fibre_100g,
       @required this.salt_100g,
       @required this.sugars_100g,
       @required this.saturates_100g,

@@ -7,7 +7,7 @@ class Preference extends Equatable {
   final double carbohydrate_max;
   final double protein_max;
   final double fat_max;
-  final double fiber_max;
+  final double fibre_max;
   final double salt_max;
   final double sugar_max;
   final double saturated_max;
@@ -18,8 +18,8 @@ class Preference extends Equatable {
   final double protein_2;
   final double fat_1;
   final double fat_2;
-  final double fiber_1;
-  final double fiber_2;
+  final double fibre_1;
+  final double fibre_2;
   final double salt_1;
   final double salt_2;
   final double sugar_1;
@@ -35,7 +35,7 @@ class Preference extends Equatable {
     @required this.carbohydrate_max,
     @required this.protein_max,
     @required this.fat_max,
-    @required this.fiber_max,
+    @required this.fibre_max,
     @required this.salt_max,
     @required this.sugar_max,
     @required this.saturated_max,
@@ -46,8 +46,8 @@ class Preference extends Equatable {
     @required this.protein_2,
     @required this.fat_1,
     @required this.fat_2,
-    @required this.fiber_1,
-    @required this.fiber_2,
+    @required this.fibre_1,
+    @required this.fibre_2,
     @required this.salt_1,
     @required this.salt_2,
     @required this.sugar_1,
