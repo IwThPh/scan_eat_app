@@ -5,6 +5,7 @@ import 'package:scaneat/assets/theme/app_theme.dart';
 import 'package:scaneat/assets/theme/colours.dart';
 import 'package:scaneat/core/animations/SlideBottomRoute.dart';
 import 'package:scaneat/core/widgets/loading_widget.dart';
+import 'package:scaneat/features/home_page/domain/entities/preference.dart';
 import 'package:scaneat/features/scanning/domain/entities/product.dart';
 import 'package:scaneat/features/scanning/presentation/bloc/bloc.dart';
 import 'package:scaneat/features/scanning/presentation/pages/product_page.dart';
@@ -14,20 +15,24 @@ class ScanningPageScreen extends StatefulWidget {
   const ScanningPageScreen({
     Key key,
     @required ScanningBloc scanningPageBloc,
+    @required Preference preference,
   })  : _scanningPageBloc = scanningPageBloc,
+        _preference = preference,
         super(key: key);
 
   final ScanningBloc _scanningPageBloc;
+  final Preference _preference;
 
   @override
   ScanningPageScreenState createState() {
-    return ScanningPageScreenState(_scanningPageBloc);
+    return ScanningPageScreenState(_scanningPageBloc, _preference);
   }
 }
 
 class ScanningPageScreenState extends State<ScanningPageScreen> {
   final ScanningBloc _scanningPageBloc;
-  ScanningPageScreenState(this._scanningPageBloc);
+  final Preference _preference;
+  ScanningPageScreenState(this._scanningPageBloc, this._preference);
 
   @override
   void initState() {
@@ -78,21 +83,18 @@ class ScanningPageScreenState extends State<ScanningPageScreen> {
                   if (state is LoadedScanningState) {
                     return GestureDetector(
                       onTap: () => productPage(state.product),
-                      child: Hero(
-                        tag: 'product',
-                        child: Column(
-                          children: <Widget>[
-                            ProductDisplay(product: state.product),
-                            Container(
-                              height: 10,
-                            ),
-                            Text(
-                              'Press Product Card for more info.',
-                              style: AppTheme.theme.textTheme.button
-                                  .apply(color: Colours.offBlack),
-                            )
-                          ],
-                        ),
+                      child: Column(
+                        children: <Widget>[
+                          ProductDisplay(product: state.product, preference: _preference,),
+                          Container(
+                            height: 10,
+                          ),
+                          Text(
+                            'Press Product Card for more info.',
+                            style: AppTheme.theme.textTheme.button
+                                .apply(color: Colours.offBlack),
+                          )
+                        ],
                       ),
                     );
                   }
@@ -169,7 +171,7 @@ class ScanningPageScreenState extends State<ScanningPageScreen> {
     developer.log("Product Card Pressed.");
     Navigator.push(
       context,
-      SlideBottomRoute(page: ProductPage(product: product)),
+      SlideBottomRoute(page: ProductPage(product: product, preference: _preference,)),
     );
   }
 }

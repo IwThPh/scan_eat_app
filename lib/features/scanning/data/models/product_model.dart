@@ -41,7 +41,7 @@ class ProductModel extends Product {
       fat_100g: json['fat_100g']?.toDouble(),
       fibre_100g: json['fibre_100g']?.toDouble(),
       salt_100g: json['salt_100g']?.toDouble(),
-      sugars_100g: json['sugars_100g']?.toDouble(),
+      sugars_100g: json['sugar_100g']?.toDouble(),
       saturates_100g: json['saturated_100g']?.toDouble(),
       sodium_100g: json['sodium_100g']?.toDouble(),
     );

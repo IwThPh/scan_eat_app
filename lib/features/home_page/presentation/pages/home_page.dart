@@ -1,8 +1,11 @@
 import 'dart:math';
+import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scaneat/assets/theme/colours.dart';
 import 'package:scaneat/core/animations/SlideBottomRoute.dart';
+import 'package:scaneat/features/home_page/domain/entities/preference.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/allergen/bloc.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/bloc.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/diet/bloc.dart';
@@ -51,7 +54,12 @@ class HomePage extends StatelessWidget {
                   child: FloatingActionButton(
                     backgroundColor: Colors.white,
                     child: Icon(Icons.blur_on),
-                    onPressed: () => _scan(context),
+                    onPressed: () {
+                      final state = _preferenceBloc.state;
+                      if (state is InPreferenceState) {
+                        _scan(context, state.preference);
+                      }
+                    },
                   ),
                 ),
                 IconButton(
@@ -91,10 +99,12 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  void _scan(BuildContext context) {
+  void _scan(BuildContext context, Preference pref) {
     Navigator.push(
       context,
-      SlideBottomRoute(page: ScanningPage()),
+      SlideBottomRoute(
+        page: ScanningPage(preference: pref),
+      ),
     );
   }
 }
