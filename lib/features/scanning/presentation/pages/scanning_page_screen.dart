@@ -78,14 +78,17 @@ class ScanningPageScreenState extends State<ScanningPageScreen> {
                 bloc: _scanningPageBloc,
                 builder: (context, state) {
                   if (state is LoadingScaningState) {
-                    return LoadingWidget();
+                    return Center(child: LoadingWidget());
                   }
                   if (state is LoadedScanningState) {
                     return GestureDetector(
                       onTap: () => productPage(state.product),
                       child: Column(
                         children: <Widget>[
-                          ProductDisplay(product: state.product, preference: _preference,),
+                          ProductDisplay(
+                            product: state.product,
+                            preference: _preference,
+                          ),
                           Container(
                             height: 10,
                           ),
@@ -98,10 +101,13 @@ class ScanningPageScreenState extends State<ScanningPageScreen> {
                       ),
                     );
                   }
+                  if (state is ErrorScanningState) {
+                    return error(state.message);
+                  }
                   if (state is UserInputScanningState) {
                     return ManualControls(_scanningPageBloc);
                   }
-                  return Container();
+                  return Container(width: 0, height: 0);
                 },
               ),
             ),
@@ -115,24 +121,6 @@ class ScanningPageScreenState extends State<ScanningPageScreen> {
         if (currentState is UnScanningState) {
           return Center(
             child: LoadingWidget(),
-          );
-        }
-        if (currentState is ErrorScanningState) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(currentState.message ?? 'Error'),
-                Padding(
-                  padding: const EdgeInsets.only(top: 32.0),
-                  child: RaisedButton(
-                    color: Colours.primary,
-                    child: Text('Reload'),
-                    onPressed: () => this._load(),
-                  ),
-                ),
-              ],
-            ),
           );
         }
         return Center(
@@ -171,7 +159,25 @@ class ScanningPageScreenState extends State<ScanningPageScreen> {
     developer.log("Product Card Pressed.");
     Navigator.push(
       context,
-      SlideBottomRoute(page: ProductPage(product: product, preference: _preference,)),
+      SlideBottomRoute(
+          page: ProductPage(
+        product: product,
+        preference: _preference,
+      )),
+    );
+  }
+
+  Widget error(String message) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(message ?? 'Error'),
+          Container(
+            height: 50,
+          )
+        ],
+      ),
     );
   }
 }

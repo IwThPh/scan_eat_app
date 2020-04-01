@@ -45,6 +45,10 @@ class Samples {
   static final String tProductJson =
       "{\"id\":105,\"barcode\":\"0737628064502\",\"name\":\"Stir-Fry Rice Noodles\",\"weight_g\":155,\"energy_100g\":1660,\"carbohydrate_100g\":70.5,\"protein_100g\":8.97,\"fat_100g\":8.97,\"fibre_100g\":0,\"salt_100g\":2.05,\"sugar_100g\":12.8,\"saturated_100g\":1.28,\"sodium_100g\":0.819,\"created_at\":\"2019-11-10T18:22:51.000000Z\",\"updated_at\":\"2019-11-10T18:22:51.000000Z\"}";
 
+  static final String tMissingJson = "{\"message\": \"No Information Found\"}";
+
+  static final String tMissing = "No Information Found";
+
   static final Auth tAuth = Auth(
     tokenType: 'Bearer',
     accessToken:

@@ -46,7 +46,7 @@ class RetrieveProduct extends ScanningEvent {
       final failureOrProduct = await bloc.getProduct(Params(barcode: barcode));
 
       return failureOrProduct.fold(
-          (failure) => ErrorScanningState(1, "Error Retrieving Product"),
+          (failure) => ErrorScanningState(1, "No Information Found"),
           (product) => LoadedScanningState(1, product: product));
     } catch (_, stackTrace) {
       developer.log('$_',
