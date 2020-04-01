@@ -13,51 +13,50 @@ class NutrientDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                name,
-                style:
-                    AppTheme.theme.textTheme.body1.apply(color: Colors.white),
-              ),
-              Text(
-                'Daily Max : ' + max + 'g',
-                style:
-                    AppTheme.theme.textTheme.body2.apply(color: Colors.white),
-              ),
-            ],
-          ),
-          Container(
-            height: 10,
-            child: Flex(
-              direction: Axis.horizontal,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Flexible(
-                  flex: (s1 * 100).round(),
-                  child: Container(color: Colours.green),
-                ),
-                Flexible(
-                  flex: ((s2 - s1) * 100).round(),
-                  child: Container(color: Colours.orange),
-                ),
-                Flexible(
-                    flex: ((1 - s2) * 100).round(),
-                    child: Container(
-                      color: Colours.red,
-                    )),
-              ],
+    final wCol = 30.0;
+
+    return Card(
+      margin: const EdgeInsets.all(8.0),
+      elevation: 4.0,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Flex(
+          direction: Axis.vertical,
+          verticalDirection: VerticalDirection.up,
+          children: <Widget>[
+            Text(
+              'Max : ' + max + 'g',
+              style:
+                  AppTheme.theme.textTheme.body2.apply(color: Colours.offBlack),
             ),
-          )
-        ],
+            Flexible(
+              flex: (s1 * 100).round(),
+              child: Container(
+                color: Colours.green,
+                width: wCol,
+              ),
+            ),
+            Flexible(
+              flex: ((s2 - s1) * 100).round(),
+              child: Container(
+                color: Colours.orange,
+                width: wCol,
+              ),
+            ),
+            Flexible(
+              flex: ((1 - s2) * 100).round(),
+              child: Container(
+                color: Colours.red,
+                width: wCol,
+              ),
+            ),
+            Text(
+              name,
+              style: AppTheme.theme.textTheme.subtitle
+                  .apply(color: Colours.offBlack),
+            ),
+          ],
+        ),
       ),
     );
   }

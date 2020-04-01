@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scaneat/assets/theme/app_theme.dart';
+import 'package:scaneat/core/animations/SlideBottomRoute.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/preference/bloc.dart';
+import 'package:scaneat/features/home_page/presentation/pages/preference_selection.dart';
 import 'package:scaneat/features/home_page/presentation/widgets/widgets.dart';
 
 class PreferenceScreen extends StatefulWidget {
@@ -39,7 +41,6 @@ class PreferenceScreenState extends State<PreferenceScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,25 +75,29 @@ class PreferenceScreenState extends State<PreferenceScreen> {
                 return Center(child: LoadingWidget());
               }
               if (state is ErrorPreferenceState) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(state.errorMessage ?? 'Error'),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 32.0),
-                      child: RaisedButton(
-                        color: Colours.green,
-                        child: Text('reload'),
-                        onPressed: () => this._load(),
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text(state.errorMessage ?? 'Error'),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: IconButton(
+                          color: Colours.offBlack,
+                          iconSize: 40,
+                          icon: Icon(Icons.replay),
+                          onPressed: () => this._load(),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 );
               }
               if (state is InPreferenceState) {
                 final p = state.preference;
                 return Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Row(
                       mainAxisSize: MainAxisSize.max,
@@ -114,46 +119,54 @@ class PreferenceScreenState extends State<PreferenceScreen> {
                       color: Colours.offWhite,
                       thickness: 1,
                     ),
-                    NutrientDisplay(
-                        name: 'Carbohyrates',
-                        max: p.carbohydrate_max.toString(),
-                        s1: p.carbohydrate_1,
-                        s2: p.carbohydrate_2),
-                    NutrientDisplay(
-                        name: 'Protein',
-                        max: p.protein_max.toString(),
-                        s1: p.protein_1,
-                        s2: p.protein_2),
-                    NutrientDisplay(
-                        name: 'Fat',
-                        max: p.fat_max.toString(),
-                        s1: p.fat_1,
-                        s2: p.fat_2),
-                    NutrientDisplay(
-                        name: 'Fibre',
-                        max: p.fibre_max.toString(),
-                        s1: p.fibre_1,
-                        s2: p.fibre_2),
-                    NutrientDisplay(
-                        name: 'Salt',
-                        max: p.salt_max.toString(),
-                        s1: p.salt_1,
-                        s2: p.salt_2),
-                    NutrientDisplay(
-                        name: 'Sodium',
-                        max: p.sodium_max.toString(),
-                        s1: p.sodium_1,
-                        s2: p.sodium_2),
-                    NutrientDisplay(
-                        name: 'Saturated',
-                        max: p.saturated_max.toString(),
-                        s1: p.saturated_1,
-                        s2: p.saturated_2),
-                    NutrientDisplay(
-                        name: 'Sugar',
-                        max: p.sugar_max.toString(),
-                        s1: p.sugar_1,
-                        s2: p.sugar_2)
+                    Container(
+                      height: 120,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: <Widget>[
+                          NutrientDisplay(
+                              name: 'Carbohyrates',
+                              max: p.carbohydrate_max.toString(),
+                              s1: p.carbohydrate_1,
+                              s2: p.carbohydrate_2),
+                          NutrientDisplay(
+                              name: 'Protein',
+                              max: p.protein_max.toString(),
+                              s1: p.protein_1,
+                              s2: p.protein_2),
+                          NutrientDisplay(
+                              name: 'Fat',
+                              max: p.fat_max.toString(),
+                              s1: p.fat_1,
+                              s2: p.fat_2),
+                          NutrientDisplay(
+                              name: 'Fibre',
+                              max: p.fibre_max.toString(),
+                              s1: p.fibre_1,
+                              s2: p.fibre_2),
+                          NutrientDisplay(
+                              name: 'Salt',
+                              max: p.salt_max.toString(),
+                              s1: p.salt_1,
+                              s2: p.salt_2),
+                          NutrientDisplay(
+                              name: 'Sodium',
+                              max: p.sodium_max.toString(),
+                              s1: p.sodium_1,
+                              s2: p.sodium_2),
+                          NutrientDisplay(
+                              name: 'Saturated',
+                              max: p.saturated_max.toString(),
+                              s1: p.saturated_1,
+                              s2: p.saturated_2),
+                          NutrientDisplay(
+                              name: 'Sugar',
+                              max: p.sugar_max.toString(),
+                              s1: p.sugar_1,
+                              s2: p.sugar_2)
+                        ],
+                      ),
+                    ),
                   ],
                 );
               }
@@ -171,14 +184,27 @@ class PreferenceScreenState extends State<PreferenceScreen> {
   }
 
   void _edit(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => CustomDialog(
-        title: "Edit Preferences",
-        content: Text('Preferences Here'),
+    Navigator.push(
+      context,
+      SlideBottomRoute(
+        page: Scaffold(
+          appBar: AppBar(
+            title: Text('Edit Preferences'),
+          ),
+          body: PreferenceSelection(preferenceBloc: _preferenceBloc),
+        ),
       ),
-    ).whenComplete(() {
-      widget._preferenceBloc.add(LoadPreferenceEvent());
-    });
+    );
+    // showDialog(
+    //   context: context,
+    //   builder: (BuildContext context) => CustomDialog(
+    //     title: "Edit Preferences",
+    //     content: PreferenceSelection(
+    //       preferenceBloc: _preferenceBloc,
+    //     ),
+    //   ),
+    // ).whenComplete(() {
+    //   widget._preferenceBloc.add(LoadPreferenceEvent());
+    // });
   }
 }

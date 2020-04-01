@@ -70,7 +70,7 @@ class CustomDialog extends StatelessWidget {
               Icons.edit,
               color: Colors.white,
             ),
-            backgroundColor: Colours.green,
+            backgroundColor: Colours.primary,
             radius: 25,
           ),
         ),
