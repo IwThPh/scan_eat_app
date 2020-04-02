@@ -9,11 +9,6 @@ import '../../../home_page/domain/entities/preference.dart';
 import '../../domain/entities/product.dart';
 
 class ProductDisplay extends StatelessWidget {
-  final Product product;
-  final Preference preference;
-  final List<Allergen> allergens;
-  final List<Diet> diets;
-
   const ProductDisplay({
     Key key,
     this.product,
@@ -22,31 +17,83 @@ class ProductDisplay extends StatelessWidget {
     this.diets,
   }) : super(key: key);
 
+  final List<Allergen> allergens;
+  final List<Diet> diets;
+  final Preference preference;
+  final Product product;
+
+  Widget allergenInfo() {
+    var selected = allergens.where((a) => a.selected);
+    if (selected.isEmpty) return Container(width: 0, height: 0);
+    var contains = selected.where((a) => product.allergenIds.contains(a.id));
+    if (contains.isEmpty)
+      return alertMessage(
+          'No information on selected Allergens', Colours.orange);
+    return Wrap(
+      alignment: WrapAlignment.center,
+      spacing: 5,
+      children: <Widget>[
+        for (var i in contains) alertMessage('Contains ' + i.name, Colours.red),
+      ],
+    );
+  }
+
+  Widget dietInfo() {
+    var selected = diets.where((a) => a.selected);
+    if (selected.isEmpty) return Container(width: 0, height: 0);
+    var contains = selected.where((a) => product.dietIds.contains(a.id));
+    if (contains.isEmpty)
+      return alertMessage('No Dietary Information Found', Colours.orange);
+
+    return Wrap(
+      alignment: WrapAlignment.center,
+      spacing: 5,
+      children: <Widget>[
+        for (var i in contains) alertMessage(i.name, Colours.green),
+      ],
+    );
+  }
+
+  Widget alertMessage(String message, Color color) {
+    return Container(
+      padding: EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Text(
+        message,
+        style: AppTheme.theme.textTheme.caption.apply(color: Colors.white),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: Colours.offWhite,
-        borderRadius: BorderRadius.circular(10),
-      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Flex(
+            direction: Axis.horizontal,
             children: <Widget>[
-              Text(
-                product?.name ?? "Not Defined",
-                textAlign: TextAlign.center,
-                style: AppTheme.theme.textTheme.title
-                    .apply(color: Colours.offBlack),
+              Flexible(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Text(
+                    product.name,
+                    textAlign: TextAlign.left,
+                    style: AppTheme.theme.textTheme.title
+                        .apply(color: Colours.offBlack),
+                  ),
+                ),
               ),
               IconButton(
                 icon: Icon(Icons.favorite_border),
-                color: Colours.green,
+                color: Colours.primary,
                 onPressed: () {},
               ),
             ],
@@ -140,61 +187,9 @@ class ProductDisplay extends StatelessWidget {
       ),
     );
   }
-
-  Widget allergenInfo() {
-    var selected = allergens.where((a) => a.selected);
-    if (selected.isEmpty) return Container(width: 0, height: 0);
-    var contains = selected.where((a) => product.allergenIds.contains(a.id));
-    if (contains.isEmpty)
-      return alertMessage(
-          'No information on selected Allergens', Colours.orange);
-    return Wrap(
-      alignment: WrapAlignment.center,
-      spacing: 5,
-      children: <Widget>[
-        for (var i in contains) alertMessage('Contains ' + i.name, Colours.red),
-      ],
-    );
-  }
-
-  Widget dietInfo() {
-    var selected = diets.where((a) => a.selected);
-    if (selected.isEmpty) return Container(width: 0, height: 0);
-    var contains = selected.where((a) => product.dietIds.contains(a.id));
-    if (contains.isEmpty)
-      return alertMessage('No Dietary Information Found', Colours.orange);
-
-    return Wrap(
-      alignment: WrapAlignment.center,
-      spacing: 5,
-      children: <Widget>[
-        for (var i in contains) alertMessage(i.name, Colours.green),
-      ],
-    );
-  }
-
-  Widget alertMessage(String message, Color color) {
-    return Container(
-      padding: EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Text(
-        message,
-        style: AppTheme.theme.textTheme.caption.apply(color: Colors.white),
-      ),
-    );
-  }
 }
 
 class ProductNutrient extends StatelessWidget {
-  final String name;
-  final double value_100g;
-  final double per;
-  final String unit;
-  final Nutrient pref;
-
   const ProductNutrient({
     Key key,
     @required this.name,
@@ -203,6 +198,12 @@ class ProductNutrient extends StatelessWidget {
     this.unit = 'g',
     @required this.pref,
   }) : super(key: key);
+
+  final String name;
+  final double per;
+  final Nutrient pref;
+  final String unit;
+  final double value_100g;
 
   @override
   Widget build(BuildContext context) {
@@ -253,7 +254,7 @@ class ProductNutrient extends StatelessWidget {
               children: <Widget>[
                 Text(
                   name,
-                  style: Theme.of(context).textTheme.body1.merge(bodyText),
+                  style: Theme.of(context).textTheme.caption.merge(bodyText),
                 ),
                 Text(
                   ((value_100g / 100) * per).round().toString().trim() + unit,

@@ -28,10 +28,10 @@ class ScanningPageScreen extends StatefulWidget {
         _diets = diets,
         super(key: key);
 
-  final ScanningBloc _scanningPageBloc;
-  final Preference _preference;
   final List<Allergen> _allergens;
   final List<Diet> _diets;
+  final Preference _preference;
+  final ScanningBloc _scanningPageBloc;
 
   @override
   ScanningPageScreenState createState() {
@@ -41,12 +41,18 @@ class ScanningPageScreen extends StatefulWidget {
 }
 
 class ScanningPageScreenState extends State<ScanningPageScreen> {
-  final ScanningBloc _scanningPageBloc;
-  final Preference _preference;
-  final List<Allergen> _allergens;
-  final List<Diet> _diets;
   ScanningPageScreenState(
       this._scanningPageBloc, this._preference, this._allergens, this._diets);
+
+  final List<Allergen> _allergens;
+  final List<Diet> _diets;
+  final Preference _preference;
+  final ScanningBloc _scanningPageBloc;
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -54,9 +60,38 @@ class ScanningPageScreenState extends State<ScanningPageScreen> {
     this._load();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  void _load() {
+    widget._scanningPageBloc.add(UnScanningEvent());
+    widget._scanningPageBloc.add(ScanProduct());
+  }
+
+//TODO: This may need to be externalised into its own [ScanningEvent].
+  productPage(Product product) {
+    developer.log("Product Card Pressed.");
+    Navigator.push(
+      context,
+      SlideBottomRoute(
+          page: ProductPage(
+        product: product,
+        preference: _preference,
+        allergens: _allergens,
+        diets: _diets,
+      )),
+    );
+  }
+
+  Widget error(String message) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(message ?? 'Error'),
+          Container(
+            height: 50,
+          )
+        ],
+      ),
+    );
   }
 
   @override
@@ -81,12 +116,10 @@ class ScanningPageScreenState extends State<ScanningPageScreen> {
         BuildContext context,
         ScanningState currentState,
       ) {
-        showModalBottomSheet<void>(
+        showDialog(
           context: context,
-          shape: sb,
-          backgroundColor: Colours.primary,
-          builder: (_) => SingleChildScrollView(
-            child: Padding(
+          builder: (_) => CustomDialog(
+            content: Padding(
               padding: const EdgeInsets.all(16.0),
               child: BlocBuilder(
                 bloc: _scanningPageBloc,
@@ -162,38 +195,6 @@ class ScanningPageScreenState extends State<ScanningPageScreen> {
           ),
         );
       },
-    );
-  }
-
-  void _load() {
-    widget._scanningPageBloc.add(UnScanningEvent());
-    widget._scanningPageBloc.add(ScanProduct());
-  }
-
-//TODO: This may need to be externalised into its own [ScanningEvent].
-  productPage(Product product) {
-    developer.log("Product Card Pressed.");
-    Navigator.push(
-      context,
-      SlideBottomRoute(
-          page: ProductPage(
-        product: product,
-        preference: _preference,
-      )),
-    );
-  }
-
-  Widget error(String message) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(message ?? 'Error'),
-          Container(
-            height: 50,
-          )
-        ],
-      ),
     );
   }
 }
