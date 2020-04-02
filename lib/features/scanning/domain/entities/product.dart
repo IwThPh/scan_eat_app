@@ -4,7 +4,10 @@ import 'package:meta/meta.dart';
 class Product extends Equatable {
   final String barcode;
   final String name;
+  final List<int> allergenIds;
+  final List<int> dietIds;
   final num weight_g;
+  final num serving_g;
   final num energy_100g;
   final num carbohydrate_100g;
   final num protein_100g;
@@ -18,7 +21,10 @@ class Product extends Equatable {
   Product(
       {@required this.barcode,
       @required this.name,
+      @required this.allergenIds,
+      @required this.dietIds,
       @required this.weight_g,
+      @required this.serving_g,
       @required this.energy_100g,
       @required this.carbohydrate_100g,
       @required this.protein_100g,

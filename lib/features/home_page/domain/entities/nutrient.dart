@@ -9,7 +9,8 @@ class Nutrient {
 
   Nutrient({
     @required this.nutrient_max,
-    @required this.nutrient_1,
-    @required this.nutrient_2,
-  }) : range = RangeValues(nutrient_1 * nutrient_max, nutrient_2 * nutrient_max);
+    this.nutrient_1 = 0,
+    this.nutrient_2 = 1,
+  }) : range =
+            RangeValues(nutrient_1 * nutrient_max, nutrient_2 * nutrient_max);
 }

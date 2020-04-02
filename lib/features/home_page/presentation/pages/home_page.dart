@@ -1,18 +1,21 @@
-import 'dart:math';
 import 'dart:developer' as developer;
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scaneat/assets/theme/colours.dart';
-import 'package:scaneat/core/animations/SlideBottomRoute.dart';
-import 'package:scaneat/features/home_page/domain/entities/preference.dart';
-import 'package:scaneat/features/home_page/presentation/bloc/home_page/allergen/bloc.dart';
-import 'package:scaneat/features/home_page/presentation/bloc/home_page/bloc.dart';
-import 'package:scaneat/features/home_page/presentation/bloc/home_page/diet/bloc.dart';
-import 'package:scaneat/features/home_page/presentation/bloc/home_page/preference/bloc.dart';
-import 'package:scaneat/features/home_page/presentation/pages/home_page_screen.dart';
-import 'package:scaneat/features/scanning/presentation/pages/scanning_page.dart';
-import 'package:scaneat/di_container.dart' as di;
+import 'package:scaneat/features/home_page/domain/entities/allergen.dart';
+import 'package:scaneat/features/home_page/domain/entities/diet.dart';
+
+import '../../../../assets/theme/colours.dart';
+import '../../../../core/animations/SlideBottomRoute.dart';
+import '../../../../di_container.dart' as di;
+import '../../../scanning/presentation/pages/scanning_page.dart';
+import '../../domain/entities/preference.dart';
+import '../bloc/home_page/allergen/bloc.dart';
+import '../bloc/home_page/bloc.dart';
+import '../bloc/home_page/diet/bloc.dart';
+import '../bloc/home_page/preference/bloc.dart';
+import 'home_page_screen.dart';
 
 class HomePage extends StatelessWidget {
   static const String routeName = '/homePage';
@@ -55,9 +58,14 @@ class HomePage extends StatelessWidget {
                     backgroundColor: Colors.white,
                     child: Icon(Icons.blur_on),
                     onPressed: () {
-                      final state = _preferenceBloc.state;
-                      if (state is InPreferenceState) {
-                        _scan(context, state.preference);
+                      final prefState = _preferenceBloc.state;
+                      final allergenState = _allergenBloc.state;
+                      final dietState = _dietBloc.state;
+                      if (prefState is InPreferenceState &&
+                          allergenState is InAllergenState &&
+                          dietState is InDietState) {
+                        _scan(context, prefState.preference,
+                            allergenState.allergens, dietState.diets);
                       }
                     },
                   ),
@@ -99,11 +107,11 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  void _scan(BuildContext context, Preference pref) {
+  void _scan(BuildContext context, Preference pref, List<Allergen> allergens, List<Diet> diets) {
     Navigator.push(
       context,
       SlideBottomRoute(
-        page: ScanningPage(preference: pref),
+        page: ScanningPage(preference: pref, allergens: allergens, diets: diets),
       ),
     );
   }

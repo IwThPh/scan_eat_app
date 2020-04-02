@@ -1,38 +1,52 @@
-import 'package:flutter/material.dart';
 import 'dart:developer' as developer;
+
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scaneat/assets/theme/app_theme.dart';
-import 'package:scaneat/assets/theme/colours.dart';
-import 'package:scaneat/core/animations/SlideBottomRoute.dart';
-import 'package:scaneat/core/widgets/loading_widget.dart';
-import 'package:scaneat/features/home_page/domain/entities/preference.dart';
-import 'package:scaneat/features/scanning/domain/entities/product.dart';
-import 'package:scaneat/features/scanning/presentation/bloc/bloc.dart';
-import 'package:scaneat/features/scanning/presentation/pages/product_page.dart';
-import 'package:scaneat/features/scanning/presentation/widgets/widgets.dart';
+
+import '../../../../assets/theme/app_theme.dart';
+import '../../../../assets/theme/colours.dart';
+import '../../../../core/animations/SlideBottomRoute.dart';
+import '../../../../core/widgets/loading_widget.dart';
+import '../../../home_page/domain/entities/allergen.dart';
+import '../../../home_page/domain/entities/diet.dart';
+import '../../../home_page/domain/entities/preference.dart';
+import '../../domain/entities/product.dart';
+import '../bloc/bloc.dart';
+import '../widgets/widgets.dart';
+import 'product_page.dart';
 
 class ScanningPageScreen extends StatefulWidget {
   const ScanningPageScreen({
     Key key,
     @required ScanningBloc scanningPageBloc,
     @required Preference preference,
+    @required List<Allergen> allergens,
+    @required List<Diet> diets,
   })  : _scanningPageBloc = scanningPageBloc,
         _preference = preference,
+        _allergens = allergens,
+        _diets = diets,
         super(key: key);
 
   final ScanningBloc _scanningPageBloc;
   final Preference _preference;
+  final List<Allergen> _allergens;
+  final List<Diet> _diets;
 
   @override
   ScanningPageScreenState createState() {
-    return ScanningPageScreenState(_scanningPageBloc, _preference);
+    return ScanningPageScreenState(
+        _scanningPageBloc, _preference, _allergens, _diets);
   }
 }
 
 class ScanningPageScreenState extends State<ScanningPageScreen> {
   final ScanningBloc _scanningPageBloc;
   final Preference _preference;
-  ScanningPageScreenState(this._scanningPageBloc, this._preference);
+  final List<Allergen> _allergens;
+  final List<Diet> _diets;
+  ScanningPageScreenState(
+      this._scanningPageBloc, this._preference, this._allergens, this._diets);
 
   @override
   void initState() {
@@ -88,6 +102,8 @@ class ScanningPageScreenState extends State<ScanningPageScreen> {
                           ProductDisplay(
                             product: state.product,
                             preference: _preference,
+                            allergens: _allergens,
+                            diets: _diets,
                           ),
                           Container(
                             height: 10,

@@ -5,7 +5,10 @@ class ProductModel extends Product {
   ProductModel(
       {@required String barcode,
       @required String name,
+      @required List<int> allergenIds,
+      @required List<int> dietIds,
       @required num weight_g,
+      @required num serving_g,
       @required num energy_100g,
       @required num carbohydrate_100g,
       @required num protein_100g,
@@ -18,7 +21,10 @@ class ProductModel extends Product {
       : super(
           barcode: barcode,
           name: name,
+          allergenIds: allergenIds,
+          dietIds: dietIds,
           weight_g: weight_g,
+          serving_g: serving_g,
           energy_100g: energy_100g,
           carbohydrate_100g: carbohydrate_100g,
           protein_100g: protein_100g,
@@ -34,7 +40,10 @@ class ProductModel extends Product {
     return ProductModel(
       barcode: json['barcode'],
       name: json['name'],
+      allergenIds: json['allergens'].cast<int>(),
+      dietIds: json['diets'].cast<int>(),
       weight_g: json['weight_g']?.toDouble(),
+      serving_g: json['serving_g']?.toDouble(),
       energy_100g: json['energy_100g']?.toDouble(),
       carbohydrate_100g: json['carbohydrate_100g']?.toDouble(),
       protein_100g: json['protein_100g']?.toDouble(),

@@ -15,35 +15,43 @@ import 'package:scaneat/features/scanning/domain/entities/product.dart';
 
 class Samples {
   static final Product tProduct = Product(
-      barcode: '0737628064502',
-      name: 'Stir-Fry Rice Noodles',
-      carbohydrate_100g: 70.5,
-      energy_100g: 1660.0,
-      fat_100g: 8.97,
-      fibre_100g: 0.0,
-      protein_100g: 8.97,
-      salt_100g: 2.05,
-      saturates_100g: 1.28,
-      sodium_100g: 0.82,
-      sugars_100g: 12.8,
-      weight_g: 155.0);
+    barcode: '0737628064502',
+    name: 'Stir-Fry Rice Noodles',
+    carbohydrate_100g: 70.5,
+    energy_100g: 1660.0,
+    fat_100g: 8.97,
+    fibre_100g: 0.0,
+    protein_100g: 8.97,
+    salt_100g: 2.05,
+    saturates_100g: 1.28,
+    sodium_100g: 0.82,
+    sugars_100g: 12.8,
+    weight_g: 155.0,
+    serving_g: 78.0,
+    allergenIds: [11],
+    dietIds: [],
+  );
 
   static final ProductModel tProductModel = ProductModel(
-      barcode: tProduct.barcode,
-      name: tProduct.name,
-      carbohydrate_100g: tProduct.carbohydrate_100g,
-      energy_100g: tProduct.energy_100g,
-      fat_100g: tProduct.fat_100g,
-      fibre_100g: tProduct.fibre_100g,
-      protein_100g: tProduct.protein_100g,
-      salt_100g: tProduct.salt_100g,
-      saturates_100g: tProduct.saturates_100g,
-      sodium_100g: tProduct.sodium_100g,
-      sugars_100g: tProduct.sugars_100g,
-      weight_g: tProduct.weight_g);
+    barcode: tProduct.barcode,
+    name: tProduct.name,
+    carbohydrate_100g: tProduct.carbohydrate_100g,
+    energy_100g: tProduct.energy_100g,
+    fat_100g: tProduct.fat_100g,
+    fibre_100g: tProduct.fibre_100g,
+    protein_100g: tProduct.protein_100g,
+    salt_100g: tProduct.salt_100g,
+    saturates_100g: tProduct.saturates_100g,
+    sodium_100g: tProduct.sodium_100g,
+    sugars_100g: tProduct.sugars_100g,
+    weight_g: tProduct.weight_g,
+    serving_g: tProduct.serving_g,
+    allergenIds: tProduct.allergenIds,
+    dietIds: tProduct.dietIds,
+  );
 
   static final String tProductJson =
-      "{\"id\":105,\"barcode\":\"0737628064502\",\"name\":\"Stir-Fry Rice Noodles\",\"weight_g\":155,\"energy_100g\":1660,\"carbohydrate_100g\":70.5,\"protein_100g\":8.97,\"fat_100g\":8.97,\"fibre_100g\":0,\"salt_100g\":2.05,\"sugar_100g\":12.8,\"saturated_100g\":1.28,\"sodium_100g\":0.819,\"created_at\":\"2019-11-10T18:22:51.000000Z\",\"updated_at\":\"2019-11-10T18:22:51.000000Z\"}";
+      "{\"id\":116,\"barcode\":\"0737628064502\",\"name\":\"Stir-Fry Rice Noodles\",\"weight_g\":155,\"serving_g\":78,\"energy_100g\":1660,\"carbohydrate_100g\":70.5,\"protein_100g\":8.97,\"fat_100g\":8.97,\"fiber_100g\":0,\"salt_100g\":2.05,\"sugar_100g\":12.8,\"saturated_100g\":1.28,\"sodium_100g\":0.819,\"created_at\":\"2020-04-01T15:52:50.000000Z\",\"updated_at\":\"2020-04-01T15:52:50.000000Z\",\"allergens\":[11],\"diets\":[]}";
 
   static final String tMissingJson = "{\"message\": \"No Information Found\"}";
 
