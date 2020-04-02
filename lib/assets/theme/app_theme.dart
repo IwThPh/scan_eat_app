@@ -21,7 +21,7 @@ class AppTheme {
       headline: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w400),
       title: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w700),
       subhead: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700),
-      body2: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500),
+      body2: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600),
       body1: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400),
       subtitle: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
       //headline1: TextStyle(fontSize: 112.0, fontWeight: FontWeight.w100),
