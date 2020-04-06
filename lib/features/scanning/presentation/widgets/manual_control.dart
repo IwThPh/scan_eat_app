@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../assets/theme/app_theme.dart';
 import '../bloc/bloc.dart';
 
 class ManualControls extends StatefulWidget {
-  final ScanningBloc scanningBloc;
-
   const ManualControls(
     ScanningBloc scanningBloc, {
     Key key,
   })  : scanningBloc = scanningBloc,
         super(key: key);
+
+  final ScanningBloc scanningBloc;
 
   @override
   _ManualControlsState createState() => _ManualControlsState();
@@ -19,6 +18,11 @@ class ManualControls extends StatefulWidget {
 
 class _ManualControlsState extends State<ManualControls> {
   String _barcode = "";
+
+  void _retrieveProduct() {
+    this.widget.scanningBloc.add(LoadingScanningEvent());
+    this.widget.scanningBloc.add(RetrieveProduct(_barcode));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +36,19 @@ class _ManualControlsState extends State<ManualControls> {
               textInputAction: TextInputAction.done,
               keyboardType: TextInputType.number,
               textAlign: TextAlign.center,
-              cursorColor: Colours.offWhite,
+              cursorColor: Colours.offBlack,
               style: Theme.of(context).textTheme.headline.apply(
-                    color: Colours.offWhite,
+                    color: Colours.offBlack,
                   ),
               decoration: new InputDecoration(
                 icon: Icon(Icons.edit),
                 labelText: 'Barcode',
-                focusColor: Colours.offWhite,
-                border: OutlineInputBorder(
+                focusColor: Colours.offBlack ,
+                border: UnderlineInputBorder(
                   borderRadius: BorderRadius.circular(16.0),
                   borderSide: BorderSide(
                     style: BorderStyle.solid,
-                    color: Colours.offWhite,
+                    color: Colours.primaryAccent,
                   ),
                 ),
               ),
@@ -70,10 +74,5 @@ class _ManualControlsState extends State<ManualControls> {
         ),
       ),
     );
-  }
-
-  void _retrieveProduct() {
-    this.widget.scanningBloc.add(LoadingScanningEvent());
-    this.widget.scanningBloc.add(RetrieveProduct(_barcode));
   }
 }

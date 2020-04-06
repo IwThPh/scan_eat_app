@@ -81,14 +81,12 @@ class ScanningPageScreenState extends State<ScanningPageScreen> {
   }
 
   Widget error(String message) {
-    return Center(
+    return Container(
+      padding: EdgeInsets.all(10.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(message ?? 'Error'),
-          Container(
-            height: 50,
-          )
         ],
       ),
     );
