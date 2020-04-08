@@ -23,8 +23,14 @@ class DietScreen extends StatefulWidget {
 }
 
 class DietScreenState extends State<DietScreen> {
-  final DietBloc _dietBloc;
   DietScreenState(this._dietBloc);
+
+  final DietBloc _dietBloc;
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -32,9 +38,23 @@ class DietScreenState extends State<DietScreen> {
     this._load();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  void _load([bool isError = false]) {
+    widget._dietBloc.add(UnDietEvent());
+    widget._dietBloc.add(LoadDietEvent());
+  }
+
+  void _edit(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => CustomDialog(
+        title: "Edit Diets",
+        content: DietSelection(
+          dietBloc: _dietBloc,
+        ),
+      ),
+    ).whenComplete(() {
+      widget._dietBloc.add(LoadDietEvent());
+    });
   }
 
   @override
@@ -94,20 +114,29 @@ class DietScreenState extends State<DietScreen> {
                 );
               }
               if (currentState is InDietState) {
+                var selected = currentState.diets.where((a) => a.selected);
+                if (selected.isEmpty)
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'No Diets Selected',
+                        style: AppTheme.theme.textTheme.body2
+                            .apply(color: Colors.white),
+                      ),
+                    ),
+                  );
                 return Wrap(
-                  children: currentState.diets.map((a) {
-                    return a.selected
-                        ? Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 2.0),
-                            child: Chip(
-                              label: Text(a.name),
-                              labelStyle: AppTheme.theme.textTheme.button
-                                  .apply(color: Colors.white),
-                              backgroundColor: Colours.green,
-                            ),
-                          )
-                        : Container(width: 0, height: 0);
+                  children: selected.map((a) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                      child: Chip(
+                        label: Text(a.name),
+                        labelStyle: AppTheme.theme.textTheme.button
+                            .apply(color: Colors.white),
+                        backgroundColor: Colours.green,
+                      ),
+                    );
                   }).toList(),
                   direction: Axis.horizontal,
                 );
@@ -118,24 +147,5 @@ class DietScreenState extends State<DietScreen> {
         ),
       ],
     );
-  }
-
-  void _load([bool isError = false]) {
-    widget._dietBloc.add(UnDietEvent());
-    widget._dietBloc.add(LoadDietEvent());
-  }
-
-  void _edit(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => CustomDialog(
-        title: "Edit Diets",
-        content: DietSelection(
-          dietBloc: _dietBloc,
-        ),
-      ),
-    ).whenComplete(() {
-      widget._dietBloc.add(LoadDietEvent());
-    });
   }
 }

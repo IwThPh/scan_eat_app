@@ -22,8 +22,14 @@ class AllergenScreen extends StatefulWidget {
 }
 
 class AllergenScreenState extends State<AllergenScreen> {
-  final AllergenBloc _allergenBloc;
   AllergenScreenState(this._allergenBloc);
+
+  final AllergenBloc _allergenBloc;
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -31,9 +37,23 @@ class AllergenScreenState extends State<AllergenScreen> {
     this._load();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  void _load([bool isError = false]) {
+    widget._allergenBloc.add(UnAllergenEvent());
+    widget._allergenBloc.add(LoadAllergenEvent());
+  }
+
+  void _edit(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => CustomDialog(
+        title: "Edit Allergens",
+        content: AllergenSelection(
+          allergenBloc: _allergenBloc,
+        ),
+      ),
+    ).whenComplete(() {
+      widget._allergenBloc.add(LoadAllergenEvent());
+    });
   }
 
   @override
@@ -93,20 +113,29 @@ class AllergenScreenState extends State<AllergenScreen> {
                 );
               }
               if (currentState is InAllergenState) {
+                var selected = currentState.allergens.where((a) => a.selected);
+                if (selected.isEmpty)
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'No Allergens Selected',
+                        style: AppTheme.theme.textTheme.body2
+                            .apply(color: Colors.white),
+                      ),
+                    ),
+                  );
                 return Wrap(
-                  children: currentState.allergens.map((a) {
-                    return a.selected
-                        ? Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 2.0),
-                            child: Chip(
-                              label: Text(a.name),
-                              labelStyle: AppTheme.theme.textTheme.button
-                                  .apply(color: Colors.white),
-                              backgroundColor: Colours.green,
-                            ),
-                          )
-                        : Container(width: 0, height: 0);
+                  children: selected.map((a) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                      child: Chip(
+                        label: Text(a.name),
+                        labelStyle: AppTheme.theme.textTheme.button
+                            .apply(color: Colors.white),
+                        backgroundColor: Colours.green,
+                      ),
+                    );
                   }).toList(),
                   direction: Axis.horizontal,
                 );
@@ -117,24 +146,5 @@ class AllergenScreenState extends State<AllergenScreen> {
         ),
       ],
     );
-  }
-
-  void _load([bool isError = false]) {
-    widget._allergenBloc.add(UnAllergenEvent());
-    widget._allergenBloc.add(LoadAllergenEvent());
-  }
-
-  void _edit(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => CustomDialog(
-        title: "Edit Allergens",
-        content: AllergenSelection(
-          allergenBloc: _allergenBloc,
-        ),
-      ),
-    ).whenComplete(() {
-      widget._allergenBloc.add(LoadAllergenEvent());
-    });
   }
 }
