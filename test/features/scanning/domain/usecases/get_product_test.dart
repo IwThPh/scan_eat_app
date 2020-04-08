@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:scaneat/features/scanning/domain/repositories/scanning_repository.dart';
-import 'package:scaneat/features/scanning/domain/entities/product.dart';
+import 'package:scaneat/features/product/domain/entities/product.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:scaneat/features/scanning/domain/usecases/get_product.dart';
 import 'package:mockito/mockito.dart';

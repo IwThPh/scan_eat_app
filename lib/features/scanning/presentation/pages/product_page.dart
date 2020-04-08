@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:scaneat/assets/theme/app_theme.dart';
-import 'package:scaneat/features/home_page/domain/entities/allergen.dart';
-import 'package:scaneat/features/home_page/domain/entities/diet.dart';
-import 'package:scaneat/features/home_page/domain/entities/nutrient.dart';
-import 'package:scaneat/features/home_page/domain/entities/preference.dart';
-import 'package:scaneat/features/scanning/domain/entities/product.dart';
-import 'package:scaneat/features/scanning/presentation/widgets/product_display.dart';
+
+import '../../../../assets/theme/app_theme.dart';
+import '../../../home_page/domain/entities/allergen.dart';
+import '../../../home_page/domain/entities/diet.dart';
+import '../../../home_page/domain/entities/nutrient.dart';
+import '../../../home_page/domain/entities/preference.dart';
+import '../../../product/domain/entities/product.dart';
+import '../widgets/product_display.dart';
 
 class ProductPage extends StatelessWidget {
   ProductPage({
@@ -187,7 +188,9 @@ class ProductPage extends StatelessWidget {
               ),
             ],
           ),
-          Container(height: 20,),
+          Container(
+            height: 20,
+          ),
           Divider(
             color: Colours.offBlack,
             height: 2,
@@ -198,7 +201,9 @@ class ProductPage extends StatelessWidget {
                 .apply(color: Colours.offBlack),
           ),
           allergenInfo(),
-          Container(height: 10,),
+          Container(
+            height: 10,
+          ),
           Divider(
             color: Colours.offBlack,
             height: 2,

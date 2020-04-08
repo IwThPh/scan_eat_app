@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../entities/product.dart';
+import '../../../product/domain/entities/product.dart';
 import '../repositories/scanning_repository.dart';
 
 class GetProduct implements UseCase<Product,Params>{

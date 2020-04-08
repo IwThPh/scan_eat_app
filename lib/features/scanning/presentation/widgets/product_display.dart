@@ -1,12 +1,11 @@
-import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/material.dart';
-import 'package:scaneat/features/home_page/domain/entities/allergen.dart';
-import 'package:scaneat/features/home_page/domain/entities/diet.dart';
-import 'package:scaneat/features/home_page/domain/entities/nutrient.dart';
 
 import '../../../../assets/theme/app_theme.dart';
+import '../../../home_page/domain/entities/allergen.dart';
+import '../../../home_page/domain/entities/diet.dart';
+import '../../../home_page/domain/entities/nutrient.dart';
 import '../../../home_page/domain/entities/preference.dart';
-import '../../domain/entities/product.dart';
+import '../../../product/domain/entities/product.dart';
 
 class ProductDisplay extends StatelessWidget {
   const ProductDisplay({

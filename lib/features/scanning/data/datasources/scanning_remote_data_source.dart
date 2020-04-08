@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'dart:developer';
+
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
-import 'package:scaneat/config.dart';
 
+import '../../../../config.dart';
 import '../../../../core/error/exception.dart';
-import '../models/product_model.dart';
+import '../../../product/data/models/product_model.dart';
 
 abstract class ScanningRemoteDataSource {
   Future<ProductModel> getProduct(String barcode, String token);

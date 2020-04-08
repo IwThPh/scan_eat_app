@@ -10,8 +10,10 @@ import 'package:scaneat/features/login/data/models/validator_model.dart';
 import 'package:scaneat/features/login/domain/entities/auth.dart';
 import 'package:scaneat/features/login/domain/entities/user.dart';
 import 'package:scaneat/features/login/domain/entities/validator.dart';
-import 'package:scaneat/features/scanning/data/models/product_model.dart';
-import 'package:scaneat/features/scanning/domain/entities/product.dart';
+// import 'package:scaneat/features/scanning/data/models/product_model.dart';
+// import 'package:scaneat/features/scanning/domain/entities/product.dart';
+import 'package:scaneat/features/product/data/models/product_model.dart';
+import 'package:scaneat/features/product/domain/entities/product.dart';
 
 class Samples {
   static final Product tProduct = Product(
@@ -26,8 +28,8 @@ class Samples {
     saturates_100g: 1.28,
     sodium_100g: 0.82,
     sugars_100g: 12.8,
-    weight_g: 155.0,
-    serving_g: 78.0,
+    weightG: 155.0,
+    servingG: 78.0,
     allergenIds: [11],
     dietIds: [],
   );
@@ -44,8 +46,8 @@ class Samples {
     saturates_100g: tProduct.saturates_100g,
     sodium_100g: tProduct.sodium_100g,
     sugars_100g: tProduct.sugars_100g,
-    weight_g: tProduct.weight_g,
-    serving_g: tProduct.serving_g,
+    weightG: tProduct.weightG,
+    servingG: tProduct.servingG,
     allergenIds: tProduct.allergenIds,
     dietIds: tProduct.dietIds,
   );

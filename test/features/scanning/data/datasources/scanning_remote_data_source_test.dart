@@ -6,7 +6,7 @@ import 'package:scaneat/config.dart';
 
 import 'package:scaneat/core/error/exception.dart';
 import 'package:scaneat/features/scanning/data/datasources/scanning_remote_data_source.dart';
-import 'package:scaneat/features/scanning/data/models/product_model.dart';
+import 'package:scaneat/features/product/data/models/product_model.dart';
 
 import '../../../../samples.dart';
 

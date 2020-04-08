@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:scaneat/features/scanning/domain/entities/product.dart';
+import 'package:scaneat/features/product/domain/entities/product.dart';
 
 import '../../../../samples.dart';
 

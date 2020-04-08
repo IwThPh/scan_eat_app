@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-import '../../domain/entities/product.dart';
+import '../../../product/domain/entities/product.dart';
 
 abstract class ScanningState extends Equatable {
   /// notify change state without deep clone state

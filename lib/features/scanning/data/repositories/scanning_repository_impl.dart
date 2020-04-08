@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
-import 'package:scaneat/features/login/data/datasources/login_local_data_source.dart';
-import 'package:scaneat/features/login/data/models/auth_model.dart';
 
 import '../../../../core/device/network_info.dart';
 import '../../../../core/error/exception.dart';
 import '../../../../core/error/failure.dart';
-import '../../domain/entities/product.dart';
+import '../../../login/data/datasources/login_local_data_source.dart';
+import '../../../login/data/models/auth_model.dart';
+import '../../../product/domain/entities/product.dart';
 import '../../domain/repositories/scanning_repository.dart';
 import '../datasources/scanning_remote_data_source.dart';
 

@@ -6,8 +6,8 @@ class Product extends Equatable {
   final String name;
   final List<int> allergenIds;
   final List<int> dietIds;
-  final num weight_g;
-  final num serving_g;
+  final num weightG;
+  final num servingG;
   final num energy_100g;
   final num carbohydrate_100g;
   final num protein_100g;
@@ -23,8 +23,8 @@ class Product extends Equatable {
       @required this.name,
       @required this.allergenIds,
       @required this.dietIds,
-      @required this.weight_g,
-      @required this.serving_g,
+      @required this.weightG,
+      @required this.servingG,
       @required this.energy_100g,
       @required this.carbohydrate_100g,
       @required this.protein_100g,

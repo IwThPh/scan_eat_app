@@ -10,7 +10,7 @@ import '../../../../core/widgets/loading_widget.dart';
 import '../../../home_page/domain/entities/allergen.dart';
 import '../../../home_page/domain/entities/diet.dart';
 import '../../../home_page/domain/entities/preference.dart';
-import '../../domain/entities/product.dart';
+import '../../../product/domain/entities/product.dart';
 import '../bloc/bloc.dart';
 import '../widgets/widgets.dart';
 import 'product_page.dart';
