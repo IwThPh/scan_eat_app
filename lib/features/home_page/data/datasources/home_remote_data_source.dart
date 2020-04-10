@@ -106,7 +106,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
   @override
   Future<List<ProductModel>> getHistory(String token) async {
-    final response = await client.get(
+    final response = await client.post(
       urlHistory,
       headers: {
         'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
   @override
   Future<List<ProductModel>> getSaved(String token) async {
-    final response = await client.get(
+    final response = await client.post(
       urlSaved,
       headers: {
         'Content-Type': 'application/json',

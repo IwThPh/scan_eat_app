@@ -190,14 +190,14 @@ void main() {
 
   group('getHistory', () {
     test(
-      'Should preform a GET request to History URL, Expect List of Product json response',
+      'Should preform a POST request to History URL, Expect List of Product json response',
       () {
-        when(mockHttpClient.get(any, headers: anyNamed('headers')))
+        when(mockHttpClient.post(any, headers: anyNamed('headers')))
             .thenAnswer((_) async => http.Response(tProductListJson, 200));
 
         dataSource.getHistory(token);
 
-        verify(mockHttpClient.get(
+        verify(mockHttpClient.post(
           urlHistory,
           headers: {
             'Content-Type': 'application/json',
@@ -211,14 +211,14 @@ void main() {
 
   group('getSaved', () {
     test(
-      'Should preform a GET request to Saved URL, Expect List of Product json response',
+      'Should preform a POST request to Saved URL, Expect List of Product json response',
       () {
-        when(mockHttpClient.get(any, headers: anyNamed('headers')))
+        when(mockHttpClient.post(any, headers: anyNamed('headers')))
             .thenAnswer((_) async => http.Response(tProductListJson, 200));
 
         dataSource.getSaved(token);
 
-        verify(mockHttpClient.get(
+        verify(mockHttpClient.post  (
           urlSaved,
           headers: {
             'Content-Type': 'application/json',
