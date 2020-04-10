@@ -17,6 +17,8 @@ void main() {
   final urlAllergen = Config.APP_URL_DEBUG + 'api/allergens';
   final urlDiet = Config.APP_URL_DEBUG + 'api/diets';
   final urlPref = Config.APP_URL_DEBUG + 'api/preferences';
+  final urlHistory = Config.APP_URL_DEBUG + 'api/user/history';
+  final urlSaved = Config.APP_URL_DEBUG + 'api/user/saved';
 
   final tAuthModel = Samples.tAuthModel;
   final String token = tAuthModel.accessToken;
@@ -27,6 +29,8 @@ void main() {
 
   final tPreferenceModel = Samples.tPreferenceModel;
   final tPreferenceJson = Samples.tPreferenceJson;
+
+  final tProductListJson = Samples.tProductListJson;
 
   setUp(() {
     mockHttpClient = MockHttpClient();
@@ -144,7 +148,8 @@ void main() {
     test(
       'Should preform a PATCH request to Preference URL, Expect success response',
       () {
-        when(mockHttpClient.patch(any, headers: anyNamed('headers'), body: anyNamed('body')))
+        when(mockHttpClient.patch(any,
+                headers: anyNamed('headers'), body: anyNamed('body')))
             .thenAnswer((_) async => http.Response(tPreferenceJson, 200));
 
         dataSource.updatePreference(token, tPreferenceModel);
@@ -173,6 +178,48 @@ void main() {
 
         verify(mockHttpClient.delete(
           urlPref,
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ));
+      },
+    );
+  });
+
+  group('getHistory', () {
+    test(
+      'Should preform a GET request to History URL, Expect List of Product json response',
+      () {
+        when(mockHttpClient.get(any, headers: anyNamed('headers')))
+            .thenAnswer((_) async => http.Response(tProductListJson, 200));
+
+        dataSource.getHistory(token);
+
+        verify(mockHttpClient.get(
+          urlHistory,
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ));
+      },
+    );
+  });
+
+  group('getSaved', () {
+    test(
+      'Should preform a GET request to Saved URL, Expect List of Product json response',
+      () {
+        when(mockHttpClient.get(any, headers: anyNamed('headers')))
+            .thenAnswer((_) async => http.Response(tProductListJson, 200));
+
+        dataSource.getSaved(token);
+
+        verify(mockHttpClient.get(
+          urlSaved,
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',

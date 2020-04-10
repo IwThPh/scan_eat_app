@@ -33,6 +33,8 @@ void main() {
   final tPreferenceModel = Samples.tPreferenceModel;
   final tPreference = tPreferenceModel;
 
+  final tProductList = Samples.tProductModelList;
+
   setUp(() {
     mockRemoteDataSource = MockRemoteDataSource();
     mockLocalDataSource = MockLocalDataSource();
@@ -112,6 +114,45 @@ void main() {
         );
       });
 
+      group(
+        'History',
+        () {
+          test(
+            'Should return list of product data when the call to remote data source is successful',
+            () async {
+              when(mockLocalDataSource.getAuth())
+                  .thenAnswer((_) async => tAuthModel);
+              when(mockRemoteDataSource.getHistory(any))
+                  .thenAnswer((_) async => tProductList);
+
+              final result = await repository.getHistory();
+
+              verify(mockRemoteDataSource.getHistory(tAuthModel.accessToken));
+              expect(result, equals(Right(tProductList)));
+            },
+          );
+        },
+      );
+
+      group(
+        'Saved',
+        () {
+          test(
+            'Should return list of saved product data when the call to remote data source is successful',
+            () async {
+              when(mockLocalDataSource.getAuth())
+                  .thenAnswer((_) async => tAuthModel);
+              when(mockRemoteDataSource.getSaved(any))
+                  .thenAnswer((_) async => tProductList);
+
+              final result = await repository.getSaved();
+
+              verify(mockRemoteDataSource.getSaved(tAuthModel.accessToken));
+              expect(result, equals(Right(tProductList)));
+            },
+          );
+        },
+      );
       group('Preference', () {
         test(
           'Should return preference data when the call to remote data source is successful',
@@ -138,7 +179,8 @@ void main() {
 
             final result = await repository.deletePreference();
 
-            verify(mockRemoteDataSource.deletePreference(tAuthModel.accessToken));
+            verify(
+                mockRemoteDataSource.deletePreference(tAuthModel.accessToken));
             expect(result, equals(Right(tPreference)));
           },
         );
@@ -153,7 +195,8 @@ void main() {
 
             final result = await repository.updatePreference(tPreference);
 
-            verify(mockRemoteDataSource.updatePreference(tAuthModel.accessToken, tPreferenceModel));
+            verify(mockRemoteDataSource.updatePreference(
+                tAuthModel.accessToken, tPreferenceModel));
             expect(result, equals(Right(tPreference)));
           },
         );
