@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:meta/meta.dart';
 import '../../domain/entities/product.dart';
 
@@ -17,7 +19,9 @@ class ProductModel extends Product {
       @required num salt_100g,
       @required num sugars_100g,
       @required num saturates_100g,
-      @required num sodium_100g})
+      @required num sodium_100g,
+      @required bool saved,
+      })
       : super(
           barcode: barcode,
           name: name,
@@ -34,6 +38,7 @@ class ProductModel extends Product {
           sugars_100g: sugars_100g,
           saturates_100g: saturates_100g,
           sodium_100g: sodium_100g,
+          saved: saved,
         );
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -53,6 +58,7 @@ class ProductModel extends Product {
       sugars_100g: json['sugar_100g']?.toDouble(),
       saturates_100g: json['saturated_100g']?.toDouble(),
       sodium_100g: json['sodium_100g']?.toDouble(),
+      saved: json['saved'],
     );
   }
 }

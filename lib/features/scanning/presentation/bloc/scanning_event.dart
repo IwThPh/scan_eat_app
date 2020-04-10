@@ -66,6 +66,7 @@ class RetrieveProduct extends ScanningEvent {
             sugars_100g: p.sugars_100g,
             saturates_100g: p.saturates_100g,
             sodium_100g: p.sodium_100g,
+            saved: p.saved,
           );
           return LoadedScanningState(1, product: product);
         },

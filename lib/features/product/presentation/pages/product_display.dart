@@ -58,27 +58,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Flex(
-                direction: Axis.horizontal,
-                children: <Widget>[
-                  Flexible(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Text(
-                        state.product.name,
-                        textAlign: TextAlign.left,
-                        style: AppTheme.theme.textTheme.title
-                            .apply(color: Colours.offBlack),
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.favorite_border),
-                    color: Colours.primary,
-                    onPressed: () {},
-                  ),
-                ],
-              ),
+              ProductTitle(productBloc: widget.productBloc),
               Divider(
                 color: Colours.offBlack,
                 height: 2,

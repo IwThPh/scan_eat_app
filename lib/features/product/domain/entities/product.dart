@@ -17,6 +17,7 @@ class Product extends Equatable {
   final num sugars_100g;
   final num saturates_100g;
   final num sodium_100g;
+  final bool saved;
 
   Product(
       {@required this.barcode,
@@ -33,7 +34,9 @@ class Product extends Equatable {
       @required this.salt_100g,
       @required this.sugars_100g,
       @required this.saturates_100g,
-      @required this.sodium_100g});
+      @required this.sodium_100g,
+      @required this.saved,
+      });
 
   @override
   List<Object> get props => [barcode];

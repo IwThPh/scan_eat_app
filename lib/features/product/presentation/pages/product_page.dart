@@ -82,11 +82,6 @@ class ProductPageState extends State<ProductPage> {
     }
   }
 
-  void _save(bool isSave) {
-    log("SEND IT!");
-    widget._productBloc.add(SaveProductEvent(isSave));
-  }
-
   Widget alertMessage(String message, Color color) {
     return Container(
       padding: EdgeInsets.all(5),
@@ -147,28 +142,7 @@ class ProductPageState extends State<ProductPage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Flex(
-                direction: Axis.horizontal,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Flexible(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Text(
-                        state.product.name,
-                        textAlign: TextAlign.left,
-                        style: AppTheme.theme.textTheme.title
-                            .apply(color: Colours.offBlack),
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.favorite_border),
-                    color: Colours.primary,
-                    onPressed: () => _save(state.product.selected),
-                  ),
-                ],
-              ),
+              ProductTitle(productBloc: widget._productBloc),
               Wrap(
                 spacing: 8,
                 runSpacing: 8,

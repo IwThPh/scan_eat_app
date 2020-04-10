@@ -32,6 +32,7 @@ class Samples {
     servingG: 78.0,
     allergenIds: [11],
     dietIds: [],
+    saved: false,
   );
 
   static final ProductModel tProductModel = ProductModel(
@@ -50,10 +51,11 @@ class Samples {
     servingG: tProduct.servingG,
     allergenIds: tProduct.allergenIds,
     dietIds: tProduct.dietIds,
+    saved: tProduct.saved
   );
 
   static final String tProductJson =
-      "{\"id\":116,\"barcode\":\"0737628064502\",\"name\":\"Stir-Fry Rice Noodles\",\"weight_g\":155,\"serving_g\":78,\"energy_100g\":1660,\"carbohydrate_100g\":70.5,\"protein_100g\":8.97,\"fat_100g\":8.97,\"fiber_100g\":0,\"salt_100g\":2.05,\"sugar_100g\":12.8,\"saturated_100g\":1.28,\"sodium_100g\":0.819,\"created_at\":\"2020-04-01T15:52:50.000000Z\",\"updated_at\":\"2020-04-01T15:52:50.000000Z\",\"allergens\":[11],\"diets\":[]}";
+      "{\"id\":116,\"barcode\":\"0737628064502\",\"name\":\"Stir-Fry Rice Noodles\",\"weight_g\":155,\"serving_g\":78,\"energy_100g\":1660,\"carbohydrate_100g\":70.5,\"protein_100g\":8.97,\"fat_100g\":8.97,\"fiber_100g\":0,\"salt_100g\":2.05,\"sugar_100g\":12.8,\"saturated_100g\":1.28,\"sodium_100g\":0.819,\"created_at\":\"2020-04-01T15:52:50.000000Z\",\"updated_at\":\"2020-04-01T15:52:50.000000Z\",\"allergens\":[11],\"diets\":[],\"saved\":false}";
 
   static final String tMissingJson = "{\"message\": \"No Information Found\"}";
 
