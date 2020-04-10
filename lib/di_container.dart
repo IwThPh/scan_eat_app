@@ -24,6 +24,13 @@ import 'package:scaneat/features/login/domain/usecases/login_request.dart';
 import 'package:scaneat/features/login/domain/usecases/register_request.dart';
 import 'package:scaneat/features/login/domain/usecases/retrieve_user.dart';
 import 'package:scaneat/features/login/presentation/bloc/login_page_bloc.dart';
+import 'package:scaneat/features/product/data/datasources/product_remote_data_source.dart';
+import 'package:scaneat/features/product/data/repositories/product_repository_impl.dart';
+import 'package:scaneat/features/product/domain/entities/product.dart';
+import 'package:scaneat/features/product/domain/repositories/product_repository.dart';
+import 'package:scaneat/features/product/domain/usecases/save_product.dart';
+import 'package:scaneat/features/product/domain/usecases/unsave_product.dart';
+import 'package:scaneat/features/product/presentation/bloc/product/product_bloc.dart';
 import 'package:scaneat/features/scanning/data/datasources/scanning_remote_data_source.dart';
 import 'package:scaneat/features/scanning/data/repositories/scanning_repository_impl.dart';
 import 'package:scaneat/features/scanning/domain/repositories/scanning_repository.dart';
@@ -37,6 +44,13 @@ final sl = GetIt.instance;
 Future<void> init() async {
   // | Features |
   // Bloc
+  sl.registerFactoryParam<ProductBloc, Product, void>(
+    (Product product, _) => ProductBloc(
+      product: product,
+      saveProduct: sl(),
+      unsaveProduct: sl(),
+    ),
+  );
   sl.registerFactory(() => ScanningBloc(product: sl()));
   sl.registerFactory(
     () => LoginPageBloc(
@@ -46,15 +60,15 @@ Future<void> init() async {
     ),
   );
   sl.registerFactory(() => HomePageBloc());
-  sl.registerFactory(() => AllergenBloc(
+  sl.registerLazySingleton(() => AllergenBloc(
         getAllergen: sl(),
         selectAllergen: sl(),
       ));
-  sl.registerFactory(() => DietBloc(
+  sl.registerLazySingleton(() => DietBloc(
         getDiet: sl(),
         selectDiet: sl(),
       ));
-  sl.registerFactory(() => PreferenceBloc(
+  sl.registerLazySingleton(() => PreferenceBloc(
         getPreference: sl(),
         updatePreference: sl(),
         deletePreference: sl(),
@@ -62,6 +76,8 @@ Future<void> init() async {
 
   // Use Cases
   sl.registerLazySingleton(() => GetProduct(sl()));
+  sl.registerLazySingleton(() => SaveProduct(sl()));
+  sl.registerLazySingleton(() => UnsaveProduct(sl()));
   sl.registerLazySingleton(() => LoginRequest(sl()));
   sl.registerLazySingleton(() => RegisterRequest(sl()));
   sl.registerLazySingleton(() => RetrieveUser(sl()));
@@ -74,6 +90,14 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DeletePreference(sl()));
 
   // Repositories
+  sl.registerLazySingleton<ProductRepository>(
+    () => ProductRepositoryImpl(
+      networkInfo: sl(),
+      remoteDataSource: sl(),
+      localDataSource: sl(),
+    ),
+  );
+
   sl.registerLazySingleton<ScanningRepository>(
     () => ScanningRepositoryImpl(
       networkInfo: sl(),
@@ -97,6 +121,9 @@ Future<void> init() async {
       localDataSource: sl(),
     ),
   );
+
+  sl.registerLazySingleton<ProductRemoteDataSource>(
+      () => ProductRemoteDataSourceImpl(client: sl()));
 
   sl.registerLazySingleton<ScanningRemoteDataSource>(
       () => ScanningRemoteDataSourceImpl(client: sl()));

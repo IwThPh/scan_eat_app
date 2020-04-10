@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:scaneat/features/product/domain/entities/product.dart';
 import 'dart:developer' as developer;
 import 'package:scaneat/features/scanning/domain/usecases/get_product.dart';
 import 'package:scaneat/features/scanning/presentation/bloc/bloc.dart';
@@ -31,6 +32,7 @@ class LoadingScanningEvent extends ScanningEvent {
   @override
   List<Object> get props => [];
 }
+
 class RetrieveProduct extends ScanningEvent {
   final String barcode;
 
@@ -46,8 +48,28 @@ class RetrieveProduct extends ScanningEvent {
       final failureOrProduct = await bloc.getProduct(Params(barcode: barcode));
 
       return failureOrProduct.fold(
-          (failure) => ErrorScanningState(1, "No Information Found"),
-          (product) => LoadedScanningState(1, product: product));
+        (f) => ErrorScanningState(1, "No Information Found"),
+        (p) {
+          Product product = Product(
+            barcode: p.barcode,
+            name: p.name,
+            allergenIds: p.allergenIds,
+            dietIds: p.dietIds,
+            weightG: p.weightG,
+            servingG: p.servingG,
+            energy_100g: p.energy_100g,
+            carbohydrate_100g: p.carbohydrate_100g,
+            protein_100g: p.protein_100g,
+            fat_100g: p.fat_100g,
+            fibre_100g: p.fibre_100g,
+            salt_100g: p.salt_100g,
+            sugars_100g: p.sugars_100g,
+            saturates_100g: p.saturates_100g,
+            sodium_100g: p.sodium_100g,
+          );
+          return LoadedScanningState(1, product: product);
+        },
+      );
     } catch (_, stackTrace) {
       developer.log('$_',
           name: 'LoadTestEvent', error: _, stackTrace: stackTrace);
