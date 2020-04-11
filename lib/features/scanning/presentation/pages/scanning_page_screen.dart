@@ -8,7 +8,6 @@ import '../../../../core/widgets/loading_widget.dart';
 import '../../../../di_container.dart';
 import '../../../home_page/domain/entities/allergen.dart';
 import '../../../home_page/domain/entities/diet.dart';
-import '../../../home_page/domain/entities/preference.dart';
 import '../../../product/domain/entities/product.dart';
 import '../../../product/presentation/bloc/product/bloc.dart';
 import '../../../product/presentation/pages/product_display.dart';
@@ -19,20 +18,14 @@ import '../widgets/widgets.dart';
 class ScanningPageScreen extends StatefulWidget {
   const ScanningPageScreen({
     Key key,
-    @required ScanningBloc scanningPageBloc,
-    @required Preference preference,
     @required List<Allergen> allergens,
     @required List<Diet> diets,
-  })  : _scanningPageBloc = scanningPageBloc,
-        _preference = preference,
-        _allergens = allergens,
+  })  : _allergens = allergens,
         _diets = diets,
         super(key: key);
 
   final List<Allergen> _allergens;
   final List<Diet> _diets;
-  final Preference _preference;
-  final ScanningBloc _scanningPageBloc;
 
   @override
   ScanningPageScreenState createState() {
@@ -43,20 +36,24 @@ class ScanningPageScreen extends StatefulWidget {
 class ScanningPageScreenState extends State<ScanningPageScreen> {
   ScanningPageScreenState();
 
+  ScanningBloc _scanningPageBloc;
+
   @override
   void dispose() {
+    _scanningPageBloc.close();
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
+    _scanningPageBloc = sl<ScanningBloc>();
     this._load();
   }
 
   void _load() {
-    widget._scanningPageBloc.add(UnScanningEvent());
-    widget._scanningPageBloc.add(ScanProduct());
+    _scanningPageBloc.add(UnScanningEvent());
+    _scanningPageBloc.add(ScanProduct());
   }
 
   productPage(ProductBloc product) {
@@ -129,15 +126,8 @@ class ScanningPageScreenState extends State<ScanningPageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //ShapeBorder fo BottomSheet
-    ShapeBorder sb = RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(
-        top: Radius.circular(32.0),
-      ),
-    );
-
     return BlocConsumer<ScanningBloc, ScanningState>(
-      bloc: widget._scanningPageBloc,
+      bloc: _scanningPageBloc,
       listenWhen: (
         ScanningState prev,
         ScanningState next,
@@ -155,7 +145,7 @@ class ScanningPageScreenState extends State<ScanningPageScreen> {
             content: Padding(
               padding: const EdgeInsets.all(16.0),
               child: BlocBuilder(
-                bloc: widget._scanningPageBloc,
+                bloc: _scanningPageBloc,
                 builder: (context, state) {
                   if (state is LoadingScaningState) {
                     return Center(child: LoadingWidget());
@@ -175,11 +165,12 @@ class ScanningPageScreenState extends State<ScanningPageScreen> {
                           allergenInfo(widget._allergens, state.product),
                           dietInfo(widget._diets, state.product),
                           RaisedButton(
-                            onPressed: () => productPage(productBloc),
-                            child: Text('Press Product Card for more info.',
-                            style: AppTheme.theme.textTheme.button
-                                .apply(color: Colours.offBlack),)
-                          )
+                              onPressed: () => productPage(productBloc),
+                              child: Text(
+                                'Press Product Card for more info.',
+                                style: AppTheme.theme.textTheme.button
+                                    .apply(color: Colours.offBlack),
+                              ))
                         ],
                       ),
                     );
@@ -188,14 +179,14 @@ class ScanningPageScreenState extends State<ScanningPageScreen> {
                     return error(state.message);
                   }
                   if (state is UserInputScanningState) {
-                    return ManualControls(widget._scanningPageBloc);
+                    return ManualControls(_scanningPageBloc);
                   }
                   return Container(width: 0, height: 0);
                 },
               ),
             ),
           ),
-        ).whenComplete(() => widget._scanningPageBloc.add(ScanProduct()));
+        ).whenComplete(() => _scanningPageBloc.add(ScanProduct()));
       },
       builder: (
         BuildContext context,
@@ -216,13 +207,13 @@ class ScanningPageScreenState extends State<ScanningPageScreen> {
               children: <Widget>[
                 Expanded(
                   child: Scanner(
-                    scanningBloc: widget._scanningPageBloc,
+                    scanningBloc: _scanningPageBloc,
                   ),
                 ),
                 MaterialButton(
                   child: Text('Manual Input'),
                   textColor: Colours.offWhite,
-                  onPressed: () => widget._scanningPageBloc.add(ManualInput()),
+                  onPressed: () => _scanningPageBloc.add(ManualInput()),
                 ),
               ],
             ),

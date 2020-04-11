@@ -1,8 +1,6 @@
-import 'dart:developer' as developer;
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scaneat/core/animations/SlideLeftRoute.dart';
 import 'package:scaneat/core/animations/SlideRightRoute.dart';
 import 'package:scaneat/features/home_page/domain/entities/allergen.dart';
@@ -21,15 +19,67 @@ import '../bloc/home_page/diet/bloc.dart';
 import '../bloc/home_page/preference/bloc.dart';
 import 'home_page_screen.dart';
 
-class HomePage extends StatelessWidget {
-  static const String routeName = '/homePage';
-  final _user;
-  final _homePageBloc = di.sl<HomePageBloc>();
-  final _allergenBloc = di.sl<AllergenBloc>();
-  final _dietBloc = di.sl<DietBloc>();
-  final _preferenceBloc = di.sl<PreferenceBloc>();
-
+class HomePage extends StatefulWidget {
   HomePage(this._user);
+  final _user;
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+    AllergenBloc _allergenBloc;
+    DietBloc _dietBloc;
+    HomePageBloc _homePageBloc;
+    PreferenceBloc _preferenceBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _allergenBloc = di.sl<AllergenBloc>();
+    _dietBloc = di.sl<DietBloc>();
+    _homePageBloc = di.sl<HomePageBloc>();
+    _preferenceBloc = di.sl<PreferenceBloc>();
+  }
+
+  @override
+  void dispose() {
+    _allergenBloc.close();
+    _dietBloc.close();
+    _homePageBloc.close();
+    _preferenceBloc.close();
+    super.dispose();
+  }
+
+  void _scan(BuildContext context, Preference pref, List<Allergen> allergens,
+      List<Diet> diets) {
+    Navigator.push(
+      context,
+      SlideBottomRoute(
+        page:
+            ScanningPage(allergens: allergens, diets: diets),
+      ),
+    );
+  }
+
+  void _saved(BuildContext context) {
+    Navigator.push(
+      context,
+      SlideLeftRoute(
+        page: SavedPage(),
+      ),
+    );
+  }
+
+  void _history(BuildContext context) {
+    Navigator.push(
+      context,
+      SlideRightRoute(
+        page: HistoryPage(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,39 +153,10 @@ class HomePage extends StatelessWidget {
               allergenBloc: _allergenBloc,
               dietBloc: _dietBloc,
               preferenceBloc: _preferenceBloc,
-              user: _user,
+              user: widget._user,
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  void _scan(BuildContext context, Preference pref, List<Allergen> allergens,
-      List<Diet> diets) {
-    Navigator.push(
-      context,
-      SlideBottomRoute(
-        page:
-            ScanningPage(preference: pref, allergens: allergens, diets: diets),
-      ),
-    );
-  }
-
-  void _saved(BuildContext context) {
-    Navigator.push(
-      context,
-      SlideLeftRoute(
-        page: SavedPage(),
-      ),
-    );
-  }
-
-  void _history(BuildContext context) {
-    Navigator.push(
-      context,
-      SlideRightRoute(
-        page: HistoryPage(),
       ),
     );
   }

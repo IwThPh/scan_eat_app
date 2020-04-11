@@ -3,23 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:scaneat/assets/theme/colours.dart';
 
 class CustomDialog extends StatelessWidget {
-  final Widget content;
-
   CustomDialog({
     @required this.content,
   });
 
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
-      elevation: 12,
-      backgroundColor: Colors.transparent,
-      child: dialogContent(context),
-    );
-  }
+  final Widget content;
 
   dialogContent(BuildContext context) {
     return Stack(
@@ -59,6 +47,20 @@ class CustomDialog extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      elevation: 12,
+      backgroundColor: Colors.transparent,
+      insetAnimationCurve: Curves.easeInOutSine,
+      insetAnimationDuration: Duration(milliseconds: 500),
+      child: dialogContent(context),
     );
   }
 }
