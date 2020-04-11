@@ -8,14 +8,18 @@ import 'package:scaneat/features/home_page/domain/repositories/home_repository.d
 import 'package:scaneat/features/home_page/domain/usecases/delete_preference.dart';
 import 'package:scaneat/features/home_page/domain/usecases/get_allergen.dart';
 import 'package:scaneat/features/home_page/domain/usecases/get_diet.dart';
+import 'package:scaneat/features/home_page/domain/usecases/get_history.dart';
 import 'package:scaneat/features/home_page/domain/usecases/get_preference.dart';
+import 'package:scaneat/features/home_page/domain/usecases/get_saved.dart';
 import 'package:scaneat/features/home_page/domain/usecases/select_allergen.dart';
 import 'package:scaneat/features/home_page/domain/usecases/select_diet.dart';
 import 'package:scaneat/features/home_page/domain/usecases/update_preference.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/allergen/allergen_bloc.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/bloc.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/diet/diet_bloc.dart';
+import 'package:scaneat/features/home_page/presentation/bloc/home_page/history/history_bloc.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/preference/bloc.dart';
+import 'package:scaneat/features/home_page/presentation/bloc/home_page/saved/bloc.dart';
 import 'package:scaneat/features/login/data/datasources/login_local_data_source.dart';
 import 'package:scaneat/features/login/data/datasources/login_remote_data_source.dart';
 import 'package:scaneat/features/login/data/repositories/login_repository_impl.dart';
@@ -73,6 +77,8 @@ Future<void> init() async {
         updatePreference: sl(),
         deletePreference: sl(),
       ));
+  sl.registerFactory(() => HistoryBloc(getHistory: sl()));
+  sl.registerFactory(() => SavedBloc(getSaved: sl()));
 
   // Use Cases
   sl.registerLazySingleton(() => GetProduct(sl()));
@@ -88,6 +94,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetPreference(sl()));
   sl.registerLazySingleton(() => UpdatePreference(sl()));
   sl.registerLazySingleton(() => DeletePreference(sl()));
+  sl.registerLazySingleton(() => GetHistory(sl()));
+  sl.registerLazySingleton(() => GetSaved(sl()));
 
   // Repositories
   sl.registerLazySingleton<ProductRepository>(

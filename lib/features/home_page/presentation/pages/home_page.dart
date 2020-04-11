@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scaneat/features/home_page/domain/entities/allergen.dart';
 import 'package:scaneat/features/home_page/domain/entities/diet.dart';
+import 'package:scaneat/features/home_page/presentation/pages/history_page.dart';
+import 'package:scaneat/features/home_page/presentation/pages/saved_page.dart';
 
 import '../../../../assets/theme/colours.dart';
 import '../../../../core/animations/SlideBottomRoute.dart';
@@ -50,7 +52,7 @@ class HomePage extends StatelessWidget {
                   icon: Icon(
                     Icons.favorite,
                   ),
-                  onPressed: () {},
+                  onPressed: () => _saved(context),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -75,7 +77,7 @@ class HomePage extends StatelessWidget {
                   icon: Icon(
                     Icons.restaurant,
                   ),
-                  onPressed: () {},
+                  onPressed: () => _history(context),
                 ),
               ],
             ),
@@ -107,11 +109,31 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  void _scan(BuildContext context, Preference pref, List<Allergen> allergens, List<Diet> diets) {
+  void _scan(BuildContext context, Preference pref, List<Allergen> allergens,
+      List<Diet> diets) {
     Navigator.push(
       context,
       SlideBottomRoute(
-        page: ScanningPage(preference: pref, allergens: allergens, diets: diets),
+        page:
+            ScanningPage(preference: pref, allergens: allergens, diets: diets),
+      ),
+    );
+  }
+
+  void _saved(BuildContext context) {
+    Navigator.push(
+      context,
+      SlideBottomRoute(
+        page: SavedPage(),
+      ),
+    );
+  }
+
+  void _history(BuildContext context) {
+    Navigator.push(
+      context,
+      SlideBottomRoute(
+        page: HistoryPage(),
       ),
     );
   }
