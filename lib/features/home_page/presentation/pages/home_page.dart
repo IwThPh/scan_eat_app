@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scaneat/core/animations/SlideLeftRoute.dart';
+import 'package:scaneat/core/animations/SlideRightRoute.dart';
 import 'package:scaneat/features/home_page/domain/entities/allergen.dart';
 import 'package:scaneat/features/home_page/domain/entities/diet.dart';
 import 'package:scaneat/features/home_page/presentation/pages/history_page.dart';
@@ -123,7 +125,7 @@ class HomePage extends StatelessWidget {
   void _saved(BuildContext context) {
     Navigator.push(
       context,
-      SlideBottomRoute(
+      SlideLeftRoute(
         page: SavedPage(),
       ),
     );
@@ -132,7 +134,7 @@ class HomePage extends StatelessWidget {
   void _history(BuildContext context) {
     Navigator.push(
       context,
-      SlideBottomRoute(
+      SlideRightRoute(
         page: HistoryPage(),
       ),
     );
