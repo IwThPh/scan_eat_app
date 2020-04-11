@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scaneat/assets/theme/app_theme.dart';
 import 'package:scaneat/assets/theme/colours.dart';
+import 'package:scaneat/core/widgets/custom_appbar.dart';
 import 'package:scaneat/di_container.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/history/bloc.dart';
 import 'package:scaneat/features/home_page/presentation/widgets/widgets.dart';
@@ -41,13 +43,15 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('History'),
+      appBar: CustomAppbar(
+        title: Text('Your Scan History',
+            style:
+                AppTheme.theme.textTheme.title.apply(color: Colours.offBlack)),
       ),
       body: BlocConsumer(
         bloc: bloc,
-        listener: (context, state){
-          if(state is InHistoryState){
+        listener: (context, state) {
+          if (state is InHistoryState) {
             _refreshCompleter?.complete();
             _refreshCompleter = Completer();
           }

@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scaneat/assets/theme/app_theme.dart';
 import 'package:scaneat/assets/theme/colours.dart';
+import 'package:scaneat/core/widgets/custom_appbar.dart';
 import 'package:scaneat/di_container.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/saved/bloc.dart';
 import 'package:scaneat/features/home_page/presentation/widgets/widgets.dart';
@@ -33,20 +35,23 @@ class _SavedPageState extends State<SavedPage> {
     _load();
   }
 
-  void _load(){
+  void _load() {
     bloc.add(LoadSavedEvent());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Saved'),
+      appBar: CustomAppbar(
+        title: Text(
+          'Your Saved Items',
+          style: AppTheme.theme.textTheme.title.apply(color: Colours.offBlack),
+        ),
       ),
       body: BlocConsumer(
         bloc: bloc,
         listener: (context, state) {
-          if(state is InSavedState){
+          if (state is InSavedState) {
             _refreshCompleter?.complete();
             _refreshCompleter = Completer();
           }
