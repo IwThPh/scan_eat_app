@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scaneat/assets/theme/app_theme.dart';
 import 'package:scaneat/assets/theme/colours.dart';
+import 'package:scaneat/core/widgets/custom_appbar.dart';
 import 'package:scaneat/di_container.dart';
 import 'package:scaneat/features/home_page/domain/entities/allergen.dart';
 import 'package:scaneat/features/home_page/domain/entities/diet.dart';
@@ -39,6 +40,12 @@ class ProductPageState extends State<ProductPage> {
   List<Allergen> allergens;
   List<Diet> diets;
 
+  PageController _pageController = PageController(
+    initialPage: 1,
+    viewportFraction: 0.9,
+    keepPage: true,
+  );
+
   @override
   void initState() {
     this._loadPref();
@@ -49,6 +56,7 @@ class ProductPageState extends State<ProductPage> {
 
   @override
   void dispose() {
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -80,6 +88,107 @@ class ProductPageState extends State<ProductPage> {
     } else {
       bloc.add(LoadDietEvent());
     }
+  }
+
+  Widget nutrientsPer(Product product, double per) {
+    return Column(
+      children: <Widget>[
+        Text(
+          'Information per $per g',
+          style: AppTheme.theme.textTheme.caption,
+        ),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          alignment: WrapAlignment.center,
+          runAlignment: WrapAlignment.center,
+          children: <Widget>[
+            ProductNutrient(
+              name: 'Energy',
+              value_100g: product.energy_100g ?? 0.0,
+              per: per,
+              unit: 'Kcal',
+              pref: Nutrient(
+                  nutrient_1: 0,
+                  nutrient_2: 0,
+                  nutrient_max: preference.energy_max),
+            ),
+            ProductNutrient(
+              name: 'Carbs',
+              value_100g: product.carbohydrate_100g ?? 0.0,
+              per: per,
+              pref: Nutrient(
+                  nutrient_1: preference.carbohydrate_1,
+                  nutrient_2: preference.carbohydrate_2,
+                  nutrient_max: preference.carbohydrate_max),
+            ),
+            ProductNutrient(
+              name: 'Protein',
+              value_100g: product.protein_100g ?? 0.0,
+              per: per,
+              pref: Nutrient(
+                  nutrient_1: preference.protein_1,
+                  nutrient_2: preference.protein_2,
+                  nutrient_max: preference.protein_max),
+            ),
+            ProductNutrient(
+              name: 'Fat',
+              value_100g: product.fat_100g ?? 0.0,
+              per: per,
+              pref: Nutrient(
+                  nutrient_1: preference.fat_1,
+                  nutrient_2: preference.fat_2,
+                  nutrient_max: preference.fat_max),
+            ),
+            ProductNutrient(
+              name: 'Saturates',
+              value_100g: product.saturates_100g ?? 0.0,
+              per: per,
+              pref: Nutrient(
+                  nutrient_1: preference.saturated_1,
+                  nutrient_2: preference.saturated_2,
+                  nutrient_max: preference.saturated_max),
+            ),
+            ProductNutrient(
+              name: 'Sugar',
+              value_100g: product.sugars_100g ?? 0.0,
+              per: per,
+              pref: Nutrient(
+                  nutrient_1: preference.sugar_1,
+                  nutrient_2: preference.sugar_2,
+                  nutrient_max: preference.sugar_max),
+            ),
+            ProductNutrient(
+              name: 'Salt',
+              value_100g: product.salt_100g ?? 0.0,
+              per: per,
+              pref: Nutrient(
+                  nutrient_1: preference.salt_1,
+                  nutrient_2: preference.salt_2,
+                  nutrient_max: preference.salt_max),
+            ),
+            ProductNutrient(
+              name: 'Fibre',
+              value_100g: product.fibre_100g ?? 0.0,
+              per: per,
+              pref: Nutrient(
+                  nutrient_1: preference.fibre_1,
+                  nutrient_2: preference.fibre_2,
+                  nutrient_max: preference.fibre_max),
+            ),
+            ProductNutrient(
+              name: 'Sodium',
+              value_100g: product.sodium_100g ?? 0.0,
+              per: per,
+              pref: Nutrient(
+                  nutrient_1: preference.sodium_1,
+                  nutrient_2: preference.sodium_2,
+                  nutrient_max: preference.sodium_max),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   Widget alertMessage(String message, Color color) {
@@ -143,95 +252,19 @@ class ProductPageState extends State<ProductPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               ProductTitle(productBloc: widget._productBloc),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                alignment: WrapAlignment.center,
-                runAlignment: WrapAlignment.center,
-                children: <Widget>[
-                  ProductNutrient(
-                    name: 'Energy',
-                    value_100g: state.product.energy_100g ?? 0.0,
-                    per: 100,
-                    unit: 'Kcal',
-                    pref: Nutrient(
-                        nutrient_1: 0,
-                        nutrient_2: 0,
-                        nutrient_max: preference.energy_max),
-                  ),
-                  ProductNutrient(
-                    name: 'Carbs',
-                    value_100g: state.product.carbohydrate_100g ?? 0.0,
-                    per: 100,
-                    pref: Nutrient(
-                        nutrient_1: preference.carbohydrate_1,
-                        nutrient_2: preference.carbohydrate_2,
-                        nutrient_max: preference.carbohydrate_max),
-                  ),
-                  ProductNutrient(
-                    name: 'Protein',
-                    value_100g: state.product.protein_100g ?? 0.0,
-                    per: 100,
-                    pref: Nutrient(
-                        nutrient_1: preference.protein_1,
-                        nutrient_2: preference.protein_2,
-                        nutrient_max: preference.protein_max),
-                  ),
-                  ProductNutrient(
-                    name: 'Fat',
-                    value_100g: state.product.fat_100g ?? 0.0,
-                    per: 100,
-                    pref: Nutrient(
-                        nutrient_1: preference.fat_1,
-                        nutrient_2: preference.fat_2,
-                        nutrient_max: preference.fat_max),
-                  ),
-                  ProductNutrient(
-                    name: 'Saturates',
-                    value_100g: state.product.saturates_100g ?? 0.0,
-                    per: 100,
-                    pref: Nutrient(
-                        nutrient_1: preference.saturated_1,
-                        nutrient_2: preference.saturated_2,
-                        nutrient_max: preference.saturated_max),
-                  ),
-                  ProductNutrient(
-                    name: 'Sugar',
-                    value_100g: state.product.sugars_100g ?? 0.0,
-                    per: 100,
-                    pref: Nutrient(
-                        nutrient_1: preference.sugar_1,
-                        nutrient_2: preference.sugar_2,
-                        nutrient_max: preference.sugar_max),
-                  ),
-                  ProductNutrient(
-                    name: 'Salt',
-                    value_100g: state.product.salt_100g ?? 0.0,
-                    per: 100,
-                    pref: Nutrient(
-                        nutrient_1: preference.salt_1,
-                        nutrient_2: preference.salt_2,
-                        nutrient_max: preference.salt_max),
-                  ),
-                  ProductNutrient(
-                    name: 'Fibre',
-                    value_100g: state.product.fibre_100g ?? 0.0,
-                    per: 100,
-                    pref: Nutrient(
-                        nutrient_1: preference.fibre_1,
-                        nutrient_2: preference.fibre_2,
-                        nutrient_max: preference.fibre_max),
-                  ),
-                  ProductNutrient(
-                    name: 'Sodium',
-                    value_100g: state.product.sodium_100g ?? 0.0,
-                    per: 100,
-                    pref: Nutrient(
-                        nutrient_1: preference.sodium_1,
-                        nutrient_2: preference.sodium_2,
-                        nutrient_max: preference.sodium_max),
-                  ),
-                ],
+              Container(
+                height: 200,
+                child: PageView(
+                  scrollDirection: Axis.horizontal,
+                  controller: _pageController,
+                  children: <Widget>[
+                    nutrientsPer(state.product, 100),
+                    if (state.product.servingG != 100)
+                      nutrientsPer(state.product, state.product.servingG),
+                    if (state.product.weightG != 100)
+                      nutrientsPer(state.product, state.product.weightG),
+                  ],
+                ),
               ),
               Container(
                 height: 20,
@@ -269,8 +302,11 @@ class ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Product Details'),
+      appBar: CustomAppbar(
+        title: Text(
+          'Product Details',
+          style: AppTheme.theme.textTheme.title.apply(color: Colours.offBlack),
+        ),
       ),
       body: SafeArea(child: buildBody(context)),
     );

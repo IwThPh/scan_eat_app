@@ -164,13 +164,6 @@ class ScanningPageScreenState extends State<ScanningPageScreen> {
                           ),
                           allergenInfo(widget._allergens, state.product),
                           dietInfo(widget._diets, state.product),
-                          RaisedButton(
-                              onPressed: () => productPage(productBloc),
-                              child: Text(
-                                'Press Product Card for more info.',
-                                style: AppTheme.theme.textTheme.button
-                                    .apply(color: Colours.offBlack),
-                              ))
                         ],
                       ),
                     );
