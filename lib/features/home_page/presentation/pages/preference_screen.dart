@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scaneat/assets/theme/app_theme.dart';
-import 'package:scaneat/core/animations/SlideBottomRoute.dart';
-import 'package:scaneat/features/home_page/presentation/bloc/home_page/preference/bloc.dart';
-import 'package:scaneat/features/home_page/presentation/pages/preference_selection.dart';
-import 'package:scaneat/features/home_page/presentation/widgets/widgets.dart';
+
+import '../../../../assets/theme/app_theme.dart';
+import '../../../../core/animations/SlideBottomRoute.dart';
+import '../bloc/home_page/preference/bloc.dart';
+import '../widgets/widgets.dart';
+import 'preference_page.dart';
 
 class PreferenceScreen extends StatefulWidget {
   const PreferenceScreen({
@@ -22,8 +23,14 @@ class PreferenceScreen extends StatefulWidget {
 }
 
 class PreferenceScreenState extends State<PreferenceScreen> {
-  final PreferenceBloc _preferenceBloc;
   PreferenceScreenState(this._preferenceBloc);
+
+  final PreferenceBloc _preferenceBloc;
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -31,9 +38,18 @@ class PreferenceScreenState extends State<PreferenceScreen> {
     this._load();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  void _load() {
+    widget._preferenceBloc.add(UnPreferenceEvent());
+    widget._preferenceBloc.add(LoadPreferenceEvent());
+  }
+
+  void _edit(BuildContext context) {
+    Navigator.push(
+      context,
+      SlideBottomRoute(
+        page: PreferencePage(preferenceBloc: _preferenceBloc),
+      ),
+    );
   }
 
   @override
@@ -176,35 +192,5 @@ class PreferenceScreenState extends State<PreferenceScreen> {
         ),
       ],
     );
-  }
-
-  void _load() {
-    widget._preferenceBloc.add(UnPreferenceEvent());
-    widget._preferenceBloc.add(LoadPreferenceEvent());
-  }
-
-  void _edit(BuildContext context) {
-    Navigator.push(
-      context,
-      SlideBottomRoute(
-        page: Scaffold(
-          appBar: AppBar(
-            title: Text('Edit Preferences'),
-          ),
-          body: PreferenceSelection(preferenceBloc: _preferenceBloc),
-        ),
-      ),
-    );
-    // showDialog(
-    //   context: context,
-    //   builder: (BuildContext context) => CustomDialog(
-    //     title: "Edit Preferences",
-    //     content: PreferenceSelection(
-    //       preferenceBloc: _preferenceBloc,
-    //     ),
-    //   ),
-    // ).whenComplete(() {
-    //   widget._preferenceBloc.add(LoadPreferenceEvent());
-    // });
   }
 }
