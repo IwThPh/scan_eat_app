@@ -45,8 +45,8 @@ class ProductModel extends Product {
     return ProductModel(
       barcode: json['barcode'],
       name: json['name'],
-      allergenIds: json['allergens'].cast<int>(),
-      dietIds: json['diets'].cast<int>(),
+      allergenIds: json['allergens_id'].cast<int>(),
+      dietIds: json['diets_id'].cast<int>(),
       weightG: json['weight_g']?.toDouble(),
       servingG: json['serving_g']?.toDouble(),
       energy_100g: json['energy_100g']?.toDouble(),
