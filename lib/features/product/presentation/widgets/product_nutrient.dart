@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:scaneat/assets/theme/colours.dart';
 import 'package:scaneat/features/home_page/domain/entities/nutrient.dart';
 
-class ProductNutrient extends StatelessWidget {
+class ProductNutrient extends StatefulWidget {
   const ProductNutrient({
     Key key,
     @required this.name,
@@ -19,17 +20,33 @@ class ProductNutrient extends StatelessWidget {
   final double value_100g;
 
   @override
-  Widget build(BuildContext context) {
-    Color fg = Colours.offWhite;
-    Color bg = Colours.offBlack;
-    final totalValue = (value_100g / 100) * per;
-    final percentageOfMax = totalValue / pref.nutrient_max;
+  _ProductNutrientState createState() => _ProductNutrientState();
+}
 
-    if (unit == 'g') {
-      if (percentageOfMax < pref.nutrient_1) {
+class _ProductNutrientState extends State<ProductNutrient> {
+  bool loaded = false;
+  double absValue;
+  Color bg = Colours.offBlack;
+  TextStyle bodyText;
+  Color fg = Colours.offWhite;
+  double percentageOfMax;
+
+  @override
+  void initState() {
+    super.initState();
+    calculate();
+  }
+
+  void calculate() {
+    absValue = (widget.value_100g / 100) * widget.per;
+    percentageOfMax =
+        (((widget.value_100g / 100) * widget.per) / widget.pref.nutrient_max);
+
+    if (widget.unit == 'g') {
+      if (percentageOfMax < widget.pref.nutrient_1) {
         fg = Colours.green;
         bg = Colours.greenAccent;
-      } else if (percentageOfMax < pref.nutrient_2) {
+      } else if (percentageOfMax < widget.pref.nutrient_2) {
         fg = Colours.orange;
         bg = Colours.orangeAccent;
       } else {
@@ -38,10 +55,17 @@ class ProductNutrient extends StatelessWidget {
       }
     }
 
-    TextStyle bodyText = (fg == Colours.offWhite)
+    bodyText = (fg == Colours.offWhite)
         ? TextStyle(color: Colours.offBlack)
         : TextStyle(color: Colours.offWhite);
 
+    setState(() {
+      loaded = true;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       child: Stack(
         overflow: Overflow.visible,
@@ -63,18 +87,41 @@ class ProductNutrient extends StatelessWidget {
               color: fg,
               borderRadius: BorderRadius.all(Radius.circular(18.0)),
             ),
-            child: Column(
-              children: <Widget>[
-                Text(
-                  name,
-                  style: Theme.of(context).textTheme.caption.merge(bodyText),
-                ),
-                Text(
-                  ((value_100g / 100) * per).round().toString().trim() + unit,
-                  style: Theme.of(context).textTheme.body2.merge(bodyText),
-                ),
-              ],
-            ),
+            child: (!loaded)
+                ? CircularProgressIndicator(
+                    backgroundColor: Colors.white,
+                    strokeWidth: 2,
+                  )
+                : Column(
+                    children: <Widget>[
+                      Text(
+                        widget.name,
+                        style:
+                            Theme.of(context).textTheme.caption.merge(bodyText),
+                      ),
+                      Text(
+                        absValue.round().toString().trim() + widget.unit,
+                        style:
+                            Theme.of(context).textTheme.body2.merge(bodyText),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 2.0, horizontal: 6.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(18.0)),
+                        ),
+                        child: Text(
+                          (percentageOfMax * 100).round().toString().trim() +
+                              '%',
+                          style: Theme.of(context)
+                              .textTheme
+                              .body2
+                              .apply(color: Colours.offBlack),
+                        ),
+                      ),
+                    ],
+                  ),
           ),
         ],
       ),
