@@ -44,8 +44,11 @@ class _AllergenSelectionState extends State<AllergenSelection> {
                     return ChoiceChip(
                       selected: a.selected,
                       label: Text(a.name),
-                      labelStyle: AppTheme.theme.textTheme.button
-                          .apply(color: Colours.offBlack),
+                      labelStyle: a.selected
+                          ? AppTheme.theme.textTheme.button
+                              .apply(color: Colors.white)
+                          : AppTheme.theme.textTheme.button
+                              .apply(color: Colours.offBlack),
                       backgroundColor: Colours.offWhite,
                       selectedColor: Colours.green,
                       onSelected: (value) {
@@ -64,8 +67,14 @@ class _AllergenSelectionState extends State<AllergenSelection> {
                   }).toList(),
                   direction: Axis.horizontal,
                 ),
-                FlatButton(
-                  child: Text('Save'),
+                FloatingActionButton(
+                  elevation: 2,
+                  mini: true,
+                  backgroundColor: Colours.primary,
+                  child: Icon(
+                    Icons.check,
+                    color: Colors.white,
+                  ),
                   onPressed: () {
                     widget._allergenBloc.add(UnAllergenEvent());
                     widget._allergenBloc.add(UpdateAllergenEvent(selections));

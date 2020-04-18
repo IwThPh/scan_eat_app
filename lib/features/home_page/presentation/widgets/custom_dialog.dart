@@ -28,10 +28,10 @@ class CustomDialog extends StatelessWidget {
       children: <Widget>[
         Container(
           padding: EdgeInsets.only(
-            top: 20 + 16.0,
-            bottom: 16.0,
-            left: 16.0,
-            right: 16.0,
+            top: 20 + 8.0,
+            bottom: 8.0,
+            left: 12.0,
+            right: 12.0,
           ),
           margin: EdgeInsets.only(top: 16.0),
           decoration: new BoxDecoration(
@@ -58,7 +58,6 @@ class CustomDialog extends StatelessWidget {
               ),
               SizedBox(height: 16.0),
               content,
-              SizedBox(height: 24.0),
             ],
           ),
         ),
