@@ -91,10 +91,7 @@ class HomePageScreenState extends State<HomePageScreen> {
             ),
           );
         }
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: _buildBody(),
-        );
+        return _buildBody();
       },
     );
   }
@@ -110,28 +107,42 @@ class HomePageScreenState extends State<HomePageScreen> {
   Widget _buildBody() {
     return CustomScrollView(
       slivers: <Widget>[
-        SliverToBoxAdapter(
-          child: Text(
-            'Hello ' + widget._user.name,
-            textAlign: TextAlign.left,
-            style: AppTheme.theme.textTheme.display1.apply(color: Colors.white),
+        SliverPadding(
+          padding: EdgeInsets.all(16),
+          sliver: SliverToBoxAdapter(
+            child: Text(
+              'Hello ' + widget._user.name,
+              textAlign: TextAlign.left,
+              style:
+                  AppTheme.theme.textTheme.display1.apply(color: Colors.white),
+            ),
           ),
         ),
-        SliverToBoxAdapter(
-          child: PreferenceScreen(
-            preferenceBloc: widget._preferenceBloc,
+        SliverPadding(
+          padding: EdgeInsets.all(8),
+          sliver: SliverToBoxAdapter(
+            child: PreferenceScreen(
+              preferenceBloc: widget._preferenceBloc,
+            ),
           ),
         ),
-        SliverToBoxAdapter(
-          child: AllergenScreen(
-            allergenBloc: widget._allergenBloc,
+        SliverPadding(
+          padding: EdgeInsets.all(8),
+          sliver: SliverToBoxAdapter(
+            child: AllergenScreen(
+              allergenBloc: widget._allergenBloc,
+            ),
           ),
         ),
-        SliverToBoxAdapter(
-          child: DietScreen(
-            dietBloc: widget._dietBloc,
+        SliverPadding(
+          padding: EdgeInsets.all(8),
+          sliver: SliverToBoxAdapter(
+            child: DietScreen(
+              dietBloc: widget._dietBloc,
+            ),
           ),
         ),
+        SliverPadding(padding: EdgeInsets.all(16.0)),
       ],
     );
   }
