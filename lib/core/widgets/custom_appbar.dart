@@ -16,7 +16,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
     return SafeArea(
       child: Padding(
         padding:
-            const EdgeInsets.only(top: 4.0, left: 4.0, right: 4.0, bottom: 0.0),
+            const EdgeInsets.only(top: 4.0, left: 0.0, right: 0.0, bottom: 0.0),
         child: Column(
           children: <Widget>[
             Row(
@@ -30,6 +30,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                   onPressed: () => Navigator.pop(context),
                 ),
                 Container(
+                  margin: EdgeInsets.only(right: 16),
                   decoration: BoxDecoration(),
                   child: title,
                 ),

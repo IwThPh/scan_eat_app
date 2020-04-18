@@ -15,6 +15,7 @@ import 'package:scaneat/features/home_page/presentation/bloc/home_page/preferenc
 import 'package:scaneat/features/product/domain/entities/product.dart';
 import 'package:scaneat/features/product/presentation/bloc/product/bloc.dart';
 import 'package:scaneat/features/product/presentation/widgets/widgets.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({
@@ -88,103 +89,117 @@ class ProductPageState extends State<ProductPage> {
   }
 
   Widget nutrientsPer(Product product, double per) {
-    return Column(
-      children: <Widget>[
-        Text(
-          'Information per $per g',
-          style: AppTheme.theme.textTheme.caption,
-        ),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          alignment: WrapAlignment.center,
-          runAlignment: WrapAlignment.center,
-          children: <Widget>[
-            ProductNutrient(
-              name: 'Energy',
-              value_100g: product.energy_100g ?? 0.0,
-              per: per,
-              unit: 'Kcal',
-              pref: Nutrient(
-                  nutrient_1: 0,
-                  nutrient_2: 0,
-                  nutrientMax: preference.energyMax),
+    //ShapeBorder for Panel
+    ShapeBorder sb = RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(16),
+    );
+
+    return Card(
+      margin: EdgeInsets.all(16),
+      shape: sb,
+      elevation: 8,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            'Information per ${per}g',
+            style: AppTheme.theme.textTheme.caption,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              alignment: WrapAlignment.center,
+              runAlignment: WrapAlignment.center,
+              children: <Widget>[
+                ProductNutrient(
+                  name: 'Energy',
+                  value_100g: product.energy_100g ?? 0.0,
+                  per: per,
+                  unit: 'Kcal',
+                  pref: Nutrient(
+                      nutrient_1: 0,
+                      nutrient_2: 0,
+                      nutrientMax: preference.energyMax),
+                ),
+                ProductNutrient(
+                  name: 'Carbs',
+                  value_100g: product.carbohydrate_100g ?? 0.0,
+                  per: per,
+                  pref: Nutrient(
+                      nutrient_1: preference.carbohydrate_1,
+                      nutrient_2: preference.carbohydrate_2,
+                      nutrientMax: preference.carbohydrateMax),
+                ),
+                ProductNutrient(
+                  name: 'Protein',
+                  value_100g: product.protein_100g ?? 0.0,
+                  per: per,
+                  pref: Nutrient(
+                      nutrient_1: preference.protein_1,
+                      nutrient_2: preference.protein_2,
+                      nutrientMax: preference.proteinMax),
+                ),
+                ProductNutrient(
+                  name: 'Fat',
+                  value_100g: product.fat_100g ?? 0.0,
+                  per: per,
+                  pref: Nutrient(
+                      nutrient_1: preference.fat_1,
+                      nutrient_2: preference.fat_2,
+                      nutrientMax: preference.fatMax),
+                ),
+                ProductNutrient(
+                  name: 'Saturates',
+                  value_100g: product.saturates_100g ?? 0.0,
+                  per: per,
+                  pref: Nutrient(
+                      nutrient_1: preference.saturated_1,
+                      nutrient_2: preference.saturated_2,
+                      nutrientMax: preference.saturatedMax),
+                ),
+                ProductNutrient(
+                  name: 'Sugar',
+                  value_100g: product.sugars_100g ?? 0.0,
+                  per: per,
+                  pref: Nutrient(
+                      nutrient_1: preference.sugar_1,
+                      nutrient_2: preference.sugar_2,
+                      nutrientMax: preference.sugarMax),
+                ),
+                ProductNutrient(
+                  name: 'Salt',
+                  value_100g: product.salt_100g ?? 0.0,
+                  per: per,
+                  pref: Nutrient(
+                      nutrient_1: preference.salt_1,
+                      nutrient_2: preference.salt_2,
+                      nutrientMax: preference.saltMax),
+                ),
+                ProductNutrient(
+                  name: 'Fibre',
+                  value_100g: product.fibre_100g ?? 0.0,
+                  per: per,
+                  pref: Nutrient(
+                      nutrient_1: preference.fibre_1,
+                      nutrient_2: preference.fibre_2,
+                      nutrientMax: preference.fibreMax),
+                ),
+                ProductNutrient(
+                  name: 'Sodium',
+                  value_100g: product.sodium_100g ?? 0.0,
+                  per: per,
+                  pref: Nutrient(
+                      nutrient_1: preference.sodium_1,
+                      nutrient_2: preference.sodium_2,
+                      nutrientMax: preference.sodiumMax),
+                ),
+              ],
             ),
-            ProductNutrient(
-              name: 'Carbs',
-              value_100g: product.carbohydrate_100g ?? 0.0,
-              per: per,
-              pref: Nutrient(
-                  nutrient_1: preference.carbohydrate_1,
-                  nutrient_2: preference.carbohydrate_2,
-                  nutrientMax: preference.carbohydrateMax),
-            ),
-            ProductNutrient(
-              name: 'Protein',
-              value_100g: product.protein_100g ?? 0.0,
-              per: per,
-              pref: Nutrient(
-                  nutrient_1: preference.protein_1,
-                  nutrient_2: preference.protein_2,
-                  nutrientMax: preference.proteinMax),
-            ),
-            ProductNutrient(
-              name: 'Fat',
-              value_100g: product.fat_100g ?? 0.0,
-              per: per,
-              pref: Nutrient(
-                  nutrient_1: preference.fat_1,
-                  nutrient_2: preference.fat_2,
-                  nutrientMax: preference.fatMax),
-            ),
-            ProductNutrient(
-              name: 'Saturates',
-              value_100g: product.saturates_100g ?? 0.0,
-              per: per,
-              pref: Nutrient(
-                  nutrient_1: preference.saturated_1,
-                  nutrient_2: preference.saturated_2,
-                  nutrientMax: preference.saturatedMax),
-            ),
-            ProductNutrient(
-              name: 'Sugar',
-              value_100g: product.sugars_100g ?? 0.0,
-              per: per,
-              pref: Nutrient(
-                  nutrient_1: preference.sugar_1,
-                  nutrient_2: preference.sugar_2,
-                  nutrientMax: preference.sugarMax),
-            ),
-            ProductNutrient(
-              name: 'Salt',
-              value_100g: product.salt_100g ?? 0.0,
-              per: per,
-              pref: Nutrient(
-                  nutrient_1: preference.salt_1,
-                  nutrient_2: preference.salt_2,
-                  nutrientMax: preference.saltMax),
-            ),
-            ProductNutrient(
-              name: 'Fibre',
-              value_100g: product.fibre_100g ?? 0.0,
-              per: per,
-              pref: Nutrient(
-                  nutrient_1: preference.fibre_1,
-                  nutrient_2: preference.fibre_2,
-                  nutrientMax: preference.fibreMax),
-            ),
-            ProductNutrient(
-              name: 'Sodium',
-              value_100g: product.sodium_100g ?? 0.0,
-              per: per,
-              pref: Nutrient(
-                  nutrient_1: preference.sodium_1,
-                  nutrient_2: preference.sodium_2,
-                  nutrientMax: preference.sodiumMax),
-            ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -243,56 +258,86 @@ class ProductPageState extends State<ProductPage> {
         }
         return SingleChildScrollView(
           child: Container(
+            color: Colours.primaryAccent,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ProductTitle(productBloc: widget._productBloc),
-                ),
                 Container(
-                  height: 200,
-                  child: PageView(
-                    scrollDirection: Axis.horizontal,
-                    controller: _pageController,
-                    children: <Widget>[
-                      nutrientsPer(state.product, 100),
-                      if (state.product.servingG != 100)
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  child: Center(
+                    child: PageView(
+                      scrollDirection: Axis.horizontal,
+                      controller: _pageController,
+                      children: <Widget>[
+                        nutrientsPer(state.product, 100),
                         nutrientsPer(state.product, state.product.servingG),
-                      if (state.product.weightG != 100)
                         nutrientsPer(state.product, state.product.weightG),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-                Divider(
-                  color: Colours.offBlack,
-                  height: 2,
-                ),
-                Column(
-                  children: <Widget>[
-                    Text(
-                      'Allergens',
-                      style: AppTheme.theme.textTheme.subtitle
-                          .apply(color: Colours.offBlack),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: SmoothPageIndicator(
+                      controller: _pageController,
+                      effect: WormEffect(
+                        activeDotColor: Colours.primary,
+                        dotColor: Colours.offWhite,
+                        spacing: 20,
+                        radius: 4,
+                      ),
+                      count: 3,
                     ),
-                    allergenInfo(state.product),
-                  ],
+                  ),
                 ),
-                Divider(
-                  color: Colours.offBlack,
-                  height: 2,
-                ),
-                Column(
-                  children: <Widget>[
-                    Text(
-                      'Diets',
-                      style: AppTheme.theme.textTheme.subtitle
-                          .apply(color: Colours.offBlack),
-                    ),
-                    dietInfo(state.product),
-                  ],
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(32)),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ProductTitle(productBloc: widget._productBloc),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Divider(
+                        color: Colours.offBlack,
+                        height: 2,
+                      ),
+                      Column(
+                        children: <Widget>[
+                          Text(
+                            'Allergens',
+                            style: AppTheme.theme.textTheme.subtitle
+                                .apply(color: Colours.offBlack),
+                          ),
+                          allergenInfo(state.product),
+                        ],
+                      ),
+                      Divider(
+                        color: Colours.offBlack,
+                        height: 2,
+                      ),
+                      Column(
+                        children: <Widget>[
+                          Text(
+                            'Diets',
+                            style: AppTheme.theme.textTheme.subtitle
+                                .apply(color: Colours.offBlack),
+                          ),
+                          dietInfo(state.product),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
