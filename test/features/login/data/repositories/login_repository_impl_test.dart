@@ -37,7 +37,6 @@ void main() {
   final tAuth = tAuthModel;
 
   final tValidatorModel = Samples.tValidatorModel;
-  final tValidator = tAuthModel;
 
   final tUserModel = Samples.tUserModel;
   final tUser = tUserModel;

@@ -36,23 +36,12 @@ class HomePageScreen extends StatefulWidget {
 
   @override
   HomePageScreenState createState() {
-    return HomePageScreenState(_homePageBloc, _allergenBloc, _dietBloc, _preferenceBloc, _user);
+    return HomePageScreenState();
   }
 }
 
 class HomePageScreenState extends State<HomePageScreen> {
-  final HomePageBloc _homePageBloc;
-  final AllergenBloc _allergenBloc;
-  final DietBloc _dietBloc;
-  final PreferenceBloc _preferenceBloc;
-  final User _user;
-  HomePageScreenState(
-    this._homePageBloc,
-    this._allergenBloc,
-    this._dietBloc,
-    this._preferenceBloc,
-    this._user,
-  );
+  HomePageScreenState();
 
   @override
   void initState() {
@@ -123,24 +112,24 @@ class HomePageScreenState extends State<HomePageScreen> {
       slivers: <Widget>[
         SliverToBoxAdapter(
           child: Text(
-            'Hello ' + _user.name,
+            'Hello ' + widget._user.name,
             textAlign: TextAlign.left,
             style: AppTheme.theme.textTheme.display1.apply(color: Colors.white),
           ),
         ),
         SliverToBoxAdapter(
           child: PreferenceScreen(
-            preferenceBloc: _preferenceBloc,
+            preferenceBloc: widget._preferenceBloc,
           ),
         ),
         SliverToBoxAdapter(
           child: AllergenScreen(
-            allergenBloc: _allergenBloc,
+            allergenBloc: widget._allergenBloc,
           ),
         ),
         SliverToBoxAdapter(
           child: DietScreen(
-            dietBloc: _dietBloc,
+            dietBloc: widget._dietBloc,
           ),
         ),
       ],

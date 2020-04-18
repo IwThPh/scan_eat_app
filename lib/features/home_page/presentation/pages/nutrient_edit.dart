@@ -44,9 +44,9 @@ class _NutrientEditState extends State<NutrientEdit> {
     return Container(
       child: Column(
         children: <Widget>[
-          Text('Daily Max: ${_nutrient.nutrient_max}$_unit'),
+          Text('Daily Max: ${_nutrient.nutrientMax}$_unit'),
           Slider(
-            value: _nutrient.nutrient_max,
+            value: _nutrient.nutrientMax,
             min: _min,
             max: _max,
             onChanged: (newValue) {
@@ -63,10 +63,10 @@ class _NutrientEditState extends State<NutrientEdit> {
                   }
                   updateRatio();
                 }
-                _nutrient.nutrient_max = newValue;
+                _nutrient.nutrientMax = newValue;
               });
             },
-            label: "${_nutrient.nutrient_max}" + _unit,
+            label: "${_nutrient.nutrientMax}" + _unit,
             inactiveColor: Colours.offWhite,
             activeColor: Colours.primary,
           ),
@@ -131,7 +131,7 @@ class _NutrientEditState extends State<NutrientEdit> {
               RangeSlider(
                 values: _nutrient.range,
                 min: _min,
-                max: _nutrient.nutrient_max,
+                max: _nutrient.nutrientMax,
                 divisions: 100,
                 onChanged: (RangeValues newValue) {
                   setState(() {
@@ -154,8 +154,8 @@ class _NutrientEditState extends State<NutrientEdit> {
   }
 
   void updateRatio() {
-    _nutrient.nutrient_1 = _nutrient.range.start / _nutrient.nutrient_max;
-    _nutrient.nutrient_2 = _nutrient.range.end / _nutrient.nutrient_max;
+    _nutrient.nutrient_1 = _nutrient.range.start / _nutrient.nutrientMax;
+    _nutrient.nutrient_2 = _nutrient.range.end / _nutrient.nutrientMax;
   }
 }
 

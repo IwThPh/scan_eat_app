@@ -2,16 +2,16 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 class Preference extends Equatable {
-  final int user_id;
-  final double energy_max;
-  final double carbohydrate_max;
-  final double protein_max;
-  final double fat_max;
-  final double fibre_max;
-  final double salt_max;
-  final double sugar_max;
-  final double saturated_max;
-  final double sodium_max;
+  final int userId;
+  final double energyMax;
+  final double carbohydrateMax;
+  final double proteinMax;
+  final double fatMax;
+  final double fibreMax;
+  final double saltMax;
+  final double sugarMax;
+  final double saturatedMax;
+  final double sodiumMax;
   final double carbohydrate_1;
   final double carbohydrate_2;
   final double protein_1;
@@ -30,16 +30,16 @@ class Preference extends Equatable {
   final double sodium_2;
 
   Preference({
-    @required this.user_id,
-    @required this.energy_max,
-    @required this.carbohydrate_max,
-    @required this.protein_max,
-    @required this.fat_max,
-    @required this.fibre_max,
-    @required this.salt_max,
-    @required this.sugar_max,
-    @required this.saturated_max,
-    @required this.sodium_max,
+    @required this.userId,
+    @required this.energyMax,
+    @required this.carbohydrateMax,
+    @required this.proteinMax,
+    @required this.fatMax,
+    @required this.fibreMax,
+    @required this.saltMax,
+    @required this.sugarMax,
+    @required this.saturatedMax,
+    @required this.sodiumMax,
     @required this.carbohydrate_1,
     @required this.carbohydrate_2,
     @required this.protein_1,
@@ -59,5 +59,5 @@ class Preference extends Equatable {
   });
 
   @override
-  List<Object> get props => [user_id];
+  List<Object> get props => [userId];
 }

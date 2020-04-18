@@ -4,7 +4,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:scaneat/core/error/exception.dart';
 import 'package:scaneat/features/login/data/datasources/login_local_data_source.dart';
-import 'package:scaneat/features/login/data/models/auth_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../samples.dart';

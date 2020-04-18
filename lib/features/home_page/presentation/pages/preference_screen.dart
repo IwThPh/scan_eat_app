@@ -125,7 +125,7 @@ class PreferenceScreenState extends State<PreferenceScreen> {
                               .apply(color: Colors.white),
                         ),
                         Text(
-                          'Daily Max : ' + p.energy_max.toString() + 'Kcal',
+                          'Daily Max : ' + p.energyMax.toString() + 'Kcal',
                           style: AppTheme.theme.textTheme.subtitle
                               .apply(color: Colors.white),
                         ),
@@ -142,42 +142,42 @@ class PreferenceScreenState extends State<PreferenceScreen> {
                         children: <Widget>[
                           NutrientDisplay(
                               name: 'Carbohyrates',
-                              max: p.carbohydrate_max.toString(),
+                              max: p.carbohydrateMax.toString(),
                               s1: p.carbohydrate_1,
                               s2: p.carbohydrate_2),
                           NutrientDisplay(
                               name: 'Protein',
-                              max: p.protein_max.toString(),
+                              max: p.proteinMax.toString(),
                               s1: p.protein_1,
                               s2: p.protein_2),
                           NutrientDisplay(
                               name: 'Fat',
-                              max: p.fat_max.toString(),
+                              max: p.fatMax.toString(),
                               s1: p.fat_1,
                               s2: p.fat_2),
                           NutrientDisplay(
                               name: 'Fibre',
-                              max: p.fibre_max.toString(),
+                              max: p.fibreMax.toString(),
                               s1: p.fibre_1,
                               s2: p.fibre_2),
                           NutrientDisplay(
                               name: 'Salt',
-                              max: p.salt_max.toString(),
+                              max: p.saltMax.toString(),
                               s1: p.salt_1,
                               s2: p.salt_2),
                           NutrientDisplay(
                               name: 'Sodium',
-                              max: p.sodium_max.toString(),
+                              max: p.sodiumMax.toString(),
                               s1: p.sodium_1,
                               s2: p.sodium_2),
                           NutrientDisplay(
                               name: 'Saturated',
-                              max: p.saturated_max.toString(),
+                              max: p.saturatedMax.toString(),
                               s1: p.saturated_1,
                               s2: p.saturated_2),
                           NutrientDisplay(
                               name: 'Sugar',
-                              max: p.sugar_max.toString(),
+                              max: p.sugarMax.toString(),
                               s1: p.sugar_1,
                               s2: p.sugar_2)
                         ],

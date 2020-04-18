@@ -14,7 +14,7 @@ class RegisterRequest implements UseCase<Either<Validator, Auth>, Params> {
 
   @override
   Future<Either<Failure, Either<Validator, Auth>>> call(Params params) async {
-    return await repo.attemptRegister(params.name, params.email, params.password, params.c_password);
+    return await repo.attemptRegister(params.name, params.email, params.password, params.cPassword);
   }
 }
 
@@ -22,15 +22,15 @@ class Params extends Equatable {
   final String name;
   final String email;
   final String password;
-  final String c_password;
+  final String cPassword;
 
   Params({
     @required this.name,
     @required this.email,
     @required this.password,
-    @required this.c_password,
+    @required this.cPassword,
     });
 
   @override
-  List<Object> get props => [name, email, password, c_password];
+  List<Object> get props => [name, email, password, cPassword];
 }

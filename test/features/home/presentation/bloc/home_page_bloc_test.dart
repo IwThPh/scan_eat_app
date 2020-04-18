@@ -1,13 +1,8 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:scaneat/features/home_page/domain/usecases/get_allergen.dart';
 import 'package:scaneat/features/home_page/domain/usecases/get_diet.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/bloc.dart';
-import 'package:scaneat/features/login/presentation/bloc/bloc.dart';
-import 'package:scaneat/features/login/presentation/bloc/login_page_state.dart';
-
-import '../../../../samples.dart';
 
 class MockGetAllergen extends Mock implements GetAllergen {}
 

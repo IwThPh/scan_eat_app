@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
-import 'dart:developer' as developer;
 import 'package:meta/meta.dart';
 import 'package:scaneat/config.dart';
 import 'package:scaneat/core/error/failure.dart';
@@ -16,7 +15,7 @@ abstract class LoginRemoteDataSource {
   Future<UserModel> retrieveUser(String token);
   Future<AuthModel> attemptLogin(String email, String password);
   Future<Either<ValidatorModel, AuthModel>> attemptRegister(
-      String name, String email, String password, String c_password);
+      String name, String email, String password, String cPassword);
 }
 
 class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
@@ -46,7 +45,7 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
 
   @override
   Future<Either<ValidatorModel, AuthModel>> attemptRegister(
-      String name, String email, String password, String c_password) async {
+      String name, String email, String password, String cPassword) async {
     var map = new Map<String, dynamic>();
     map['name'] = name;
     map['email'] = email;

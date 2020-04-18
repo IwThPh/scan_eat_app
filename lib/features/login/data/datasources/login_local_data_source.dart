@@ -1,6 +1,5 @@
 
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/widgets.dart';
 import 'package:scaneat/core/error/exception.dart';

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scaneat/assets/theme/app_theme.dart';
@@ -111,7 +109,7 @@ class ProductPageState extends State<ProductPage> {
               pref: Nutrient(
                   nutrient_1: 0,
                   nutrient_2: 0,
-                  nutrient_max: preference.energy_max),
+                  nutrientMax: preference.energyMax),
             ),
             ProductNutrient(
               name: 'Carbs',
@@ -120,7 +118,7 @@ class ProductPageState extends State<ProductPage> {
               pref: Nutrient(
                   nutrient_1: preference.carbohydrate_1,
                   nutrient_2: preference.carbohydrate_2,
-                  nutrient_max: preference.carbohydrate_max),
+                  nutrientMax: preference.carbohydrateMax),
             ),
             ProductNutrient(
               name: 'Protein',
@@ -129,7 +127,7 @@ class ProductPageState extends State<ProductPage> {
               pref: Nutrient(
                   nutrient_1: preference.protein_1,
                   nutrient_2: preference.protein_2,
-                  nutrient_max: preference.protein_max),
+                  nutrientMax: preference.proteinMax),
             ),
             ProductNutrient(
               name: 'Fat',
@@ -138,7 +136,7 @@ class ProductPageState extends State<ProductPage> {
               pref: Nutrient(
                   nutrient_1: preference.fat_1,
                   nutrient_2: preference.fat_2,
-                  nutrient_max: preference.fat_max),
+                  nutrientMax: preference.fatMax),
             ),
             ProductNutrient(
               name: 'Saturates',
@@ -147,7 +145,7 @@ class ProductPageState extends State<ProductPage> {
               pref: Nutrient(
                   nutrient_1: preference.saturated_1,
                   nutrient_2: preference.saturated_2,
-                  nutrient_max: preference.saturated_max),
+                  nutrientMax: preference.saturatedMax),
             ),
             ProductNutrient(
               name: 'Sugar',
@@ -156,7 +154,7 @@ class ProductPageState extends State<ProductPage> {
               pref: Nutrient(
                   nutrient_1: preference.sugar_1,
                   nutrient_2: preference.sugar_2,
-                  nutrient_max: preference.sugar_max),
+                  nutrientMax: preference.sugarMax),
             ),
             ProductNutrient(
               name: 'Salt',
@@ -165,7 +163,7 @@ class ProductPageState extends State<ProductPage> {
               pref: Nutrient(
                   nutrient_1: preference.salt_1,
                   nutrient_2: preference.salt_2,
-                  nutrient_max: preference.salt_max),
+                  nutrientMax: preference.saltMax),
             ),
             ProductNutrient(
               name: 'Fibre',
@@ -174,7 +172,7 @@ class ProductPageState extends State<ProductPage> {
               pref: Nutrient(
                   nutrient_1: preference.fibre_1,
                   nutrient_2: preference.fibre_2,
-                  nutrient_max: preference.fibre_max),
+                  nutrientMax: preference.fibreMax),
             ),
             ProductNutrient(
               name: 'Sodium',
@@ -183,7 +181,7 @@ class ProductPageState extends State<ProductPage> {
               pref: Nutrient(
                   nutrient_1: preference.sodium_1,
                   nutrient_2: preference.sodium_2,
-                  nutrient_max: preference.sodium_max),
+                  nutrientMax: preference.sodiumMax),
             ),
           ],
         ),

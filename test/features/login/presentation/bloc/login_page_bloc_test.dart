@@ -33,15 +33,9 @@ main() {
     );
   });
 
-  final tAuthModel = Samples.tAuthModel;
-  final tAuth = tAuthModel;
 
   final tUserModel = Samples.tUserModel;
   final tUser = tUserModel;
-
-  final tName = Samples.tName;
-  final tEmail = Samples.tEmail;
-  final tPassword = Samples.tPassword;
 
   test('Initial state should be UnLoginPageState, version: 0', () {
     expect(bloc.initialState, equals(UnLoginPageState(0)));

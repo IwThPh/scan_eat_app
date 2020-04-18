@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:scaneat/assets/theme/colours.dart';
 import 'package:scaneat/features/login/domain/entities/validator.dart';
 import 'package:scaneat/features/login/presentation/bloc/bloc.dart';

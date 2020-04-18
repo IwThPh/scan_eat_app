@@ -1,19 +1,14 @@
 import 'dart:async';
 import 'dart:developer' as developer;
 
-import 'package:dartz/dartz.dart';
 import 'package:scaneat/core/error/exception.dart';
 import 'package:scaneat/core/usecases/usecase.dart';
-import 'package:scaneat/features/login/domain/entities/auth.dart';
-import 'package:scaneat/features/login/domain/entities/validator.dart';
 import 'package:scaneat/features/login/presentation/bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:scaneat/features/login/domain/usecases/login_request.dart'
     as login;
 import 'package:scaneat/features/login/domain/usecases/register_request.dart'
     as register;
-import 'package:scaneat/features/login/domain/usecases/retrieve_user.dart'
-    as user;
 
 abstract class LoginPageEvent extends Equatable {
   Future<LoginPageState> applyAsync(
@@ -103,12 +98,12 @@ class RegLoginPageEvent extends LoginPageEvent {
   final String name;
   final String email;
   final String password;
-  final String c_password;
+  final String cPassword;
 
   @override
   String toString() => 'RegLoginPageEvent';
 
-  RegLoginPageEvent(this.name, this.email, this.password, this.c_password);
+  RegLoginPageEvent(this.name, this.email, this.password, this.cPassword);
 
   @override
   Future<LoginPageState> applyAsync(
@@ -118,7 +113,7 @@ class RegLoginPageEvent extends LoginPageEvent {
         name: name,
         email: email,
         password: password,
-        c_password: c_password,
+        cPassword: cPassword,
       ));
 
       return failureOrSuccess.fold(

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer' as developer;
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter/widgets.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/bloc.dart';
 
 class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {

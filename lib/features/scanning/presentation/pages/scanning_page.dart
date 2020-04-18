@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../assets/theme/app_theme.dart';
-import '../../../../di_container.dart' as di;
 import '../../../home_page/domain/entities/allergen.dart';
 import '../../../home_page/domain/entities/diet.dart';
-import '../../../home_page/domain/entities/preference.dart';
-import '../bloc/bloc.dart';
 import 'scanning_page_screen.dart';
 
 class ScanningPage extends StatelessWidget {

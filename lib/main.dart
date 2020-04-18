@@ -2,7 +2,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scaneat/features/login/presentation/pages/login_page.dart';
 import 'package:scaneat/features/scanning/presentation/bloc/bloc.dart';
-import 'package:scaneat/features/scanning/presentation/pages/scanning_page.dart';
 
 import 'assets/theme/app_theme.dart';
 import 'di_container.dart' as di;

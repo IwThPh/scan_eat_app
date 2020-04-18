@@ -40,7 +40,7 @@ class _ProductNutrientState extends State<ProductNutrient> {
   void calculate() {
     absValue = (widget.value_100g / 100) * widget.per;
     percentageOfMax =
-        (((widget.value_100g / 100) * widget.per) / widget.pref.nutrient_max);
+        (((widget.value_100g / 100) * widget.per) / widget.pref.nutrientMax);
 
     if (widget.unit == 'g') {
       if (percentageOfMax < widget.pref.nutrient_1) {

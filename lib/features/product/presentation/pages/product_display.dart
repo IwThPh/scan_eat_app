@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scaneat/core/animations/SlideBottomRoute.dart';
@@ -98,7 +96,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
                         pref: Nutrient(
                             nutrient_1: 0,
                             nutrient_2: 0,
-                            nutrient_max: preference.energy_max),
+                            nutrientMax: preference.energyMax),
                       ),
                       ProductNutrient(
                         name: 'Fat',
@@ -107,7 +105,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
                         pref: Nutrient(
                             nutrient_1: preference.fat_1,
                             nutrient_2: preference.fat_2,
-                            nutrient_max: preference.fat_max),
+                            nutrientMax: preference.fatMax),
                       ),
                       ProductNutrient(
                         name: 'Saturates',
@@ -116,7 +114,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
                         pref: Nutrient(
                             nutrient_1: preference.saturated_1,
                             nutrient_2: preference.saturated_2,
-                            nutrient_max: preference.saturated_max),
+                            nutrientMax: preference.saturatedMax),
                       ),
                       ProductNutrient(
                         name: 'Sugar',
@@ -125,7 +123,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
                         pref: Nutrient(
                             nutrient_1: preference.sugar_1,
                             nutrient_2: preference.sugar_2,
-                            nutrient_max: preference.sugar_max),
+                            nutrientMax: preference.sugarMax),
                       ),
                       ProductNutrient(
                         name: 'Salt',
@@ -134,7 +132,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
                         pref: Nutrient(
                             nutrient_1: preference.salt_1,
                             nutrient_2: preference.salt_2,
-                            nutrient_max: preference.salt_max),
+                            nutrientMax: preference.saltMax),
                       ),
                     ],
                   ),

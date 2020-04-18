@@ -1,12 +1,9 @@
-import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:scaneat/config.dart';
 import 'package:scaneat/core/error/exception.dart';
 import 'package:scaneat/features/login/data/datasources/login_remote_data_source.dart';
-import 'package:scaneat/features/login/data/models/auth_model.dart';
-import 'package:scaneat/features/login/data/models/validator_model.dart';
 
 import '../../../../samples.dart';
 
@@ -21,7 +18,6 @@ void main() {
   final tUserJson = Samples.tUserJson;
   final tUserModel = Samples.tUserModel;
   final tValidatorJson = Samples.tValidatorJson;
-  final tValidatorModel = Samples.tValidatorModel;
   final tName = Samples.tName;
   final tEmail = Samples.tEmail;
   final tPassword = Samples.tPassword;

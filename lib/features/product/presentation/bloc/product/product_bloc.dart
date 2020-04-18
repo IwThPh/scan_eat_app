@@ -32,7 +32,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     ProductEvent event,
   ) async* {
     try {
-      yield* await event.applyAsync(currentState: state, bloc: this);
+      yield* event.applyAsync(currentState: state, bloc: this);
     } catch (_, stackTrace) {
       developer.log('$_',
           name: 'ProductBloc', error: _, stackTrace: stackTrace);

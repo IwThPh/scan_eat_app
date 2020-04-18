@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:scaneat/assets/theme/colours.dart';
 import 'package:scaneat/features/login/presentation/bloc/bloc.dart';
 
@@ -11,12 +10,11 @@ class LoginForm extends StatefulWidget {
   LoginForm(this._bloc);
 
   @override
-  _LoginFormState createState() => _LoginFormState(_bloc);
+  _LoginFormState createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final LoginPageBloc _bloc;
-  _LoginFormState(this._bloc);
+  _LoginFormState();
 
   final _formKey = GlobalKey<FormState>();
 

@@ -39,11 +39,11 @@ class LoginRepositoryImpl implements LoginRepository {
 
   @override
   Future<Either<Failure, Either<Validator, Auth>>> attemptRegister(
-      String name, String email, String password, String c_password) async {
+      String name, String email, String password, String cPassword) async {
     networkInfo.isConnected;
     try {
       Either<ValidatorModel, AuthModel> eitherValidatorOrAuth = await remoteDataSource
-          .attemptRegister(name, email, password, c_password);
+          .attemptRegister(name, email, password, cPassword);
       return eitherValidatorOrAuth.fold(
         (validator) {
           return Right(Left(validator));

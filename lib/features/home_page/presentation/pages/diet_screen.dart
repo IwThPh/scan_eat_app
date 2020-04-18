@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scaneat/assets/theme/app_theme.dart';
-import 'package:scaneat/core/animations/SlideBottomRoute.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/diet/bloc.dart';
 import 'package:scaneat/features/home_page/presentation/pages/diet_selection.dart';
-import 'package:scaneat/features/home_page/presentation/widgets/name_desc_display.dart';
 import 'package:scaneat/features/home_page/presentation/widgets/widgets.dart';
 
 class DietScreen extends StatefulWidget {
