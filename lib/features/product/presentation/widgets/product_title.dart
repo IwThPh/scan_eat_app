@@ -16,7 +16,6 @@ class ProductTitle extends StatefulWidget {
 }
 
 class _ProductTitleState extends State<ProductTitle> {
-
   bool localSave;
 
   @override
@@ -24,7 +23,6 @@ class _ProductTitleState extends State<ProductTitle> {
     super.initState();
     localSave = widget.productBloc.state.product.saved;
   }
-
 
   void _save(bool isSave) {
     setState(() {
@@ -39,7 +37,7 @@ class _ProductTitleState extends State<ProductTitle> {
       direction: Axis.horizontal,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        Flexible(
+        Expanded(
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Text(
@@ -52,19 +50,13 @@ class _ProductTitleState extends State<ProductTitle> {
         ),
         BlocConsumer(
           bloc: widget.productBloc,
-          listener: (context, state){
-            setState(() {
-              localSave = state.product.saved;
-            });
-          },
-          builder: (context, state) {
-            return IconButton(
-              icon:
-                  Icon(localSave ? Icons.favorite : Icons.favorite_border),
-              color: Colours.primary,
-              onPressed: () => _save(!localSave),
-            );
-          },
+          listener: (context, state) =>
+              setState(() => localSave = state.product.saved),
+          builder: (context, state) => IconButton(
+            icon: Icon(localSave ? Icons.favorite : Icons.favorite_border),
+            color: Colours.primary,
+            onPressed: () => _save(!localSave),
+          ),
         )
       ],
     );

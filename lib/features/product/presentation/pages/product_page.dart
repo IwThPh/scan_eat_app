@@ -34,15 +34,20 @@ class ProductPage extends StatefulWidget {
 class ProductPageState extends State<ProductPage> {
   ProductPageState();
 
-  Preference preference;
   List<Allergen> allergens;
   List<Diet> diets;
+  Preference preference;
 
   PageController _pageController = PageController(
-    initialPage: 1,
-    viewportFraction: 0.9,
-    keepPage: true,
+    initialPage: 0,
+    viewportFraction: 0.85,
   );
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -50,12 +55,6 @@ class ProductPageState extends State<ProductPage> {
     this._loadAllergens();
     this._loadDiets();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
   }
 
   void _loadPref() {
@@ -242,55 +241,61 @@ class ProductPageState extends State<ProductPage> {
         if (state is ErrorProductState) {
           return LoadingWidget();
         }
-        return Container(
-          margin: EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              ProductTitle(productBloc: widget._productBloc),
-              Container(
-                height: 200,
-                child: PageView(
-                  scrollDirection: Axis.horizontal,
-                  controller: _pageController,
+        return SingleChildScrollView(
+          child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ProductTitle(productBloc: widget._productBloc),
+                ),
+                Container(
+                  height: 200,
+                  child: PageView(
+                    scrollDirection: Axis.horizontal,
+                    controller: _pageController,
+                    children: <Widget>[
+                      nutrientsPer(state.product, 100),
+                      if (state.product.servingG != 100)
+                        nutrientsPer(state.product, state.product.servingG),
+                      if (state.product.weightG != 100)
+                        nutrientsPer(state.product, state.product.weightG),
+                    ],
+                  ),
+                ),
+                Divider(
+                  color: Colours.offBlack,
+                  height: 2,
+                ),
+                Column(
                   children: <Widget>[
-                    nutrientsPer(state.product, 100),
-                    if (state.product.servingG != 100)
-                      nutrientsPer(state.product, state.product.servingG),
-                    if (state.product.weightG != 100)
-                      nutrientsPer(state.product, state.product.weightG),
+                    Text(
+                      'Allergens',
+                      style: AppTheme.theme.textTheme.subtitle
+                          .apply(color: Colours.offBlack),
+                    ),
+                    allergenInfo(state.product),
                   ],
                 ),
-              ),
-              Container(
-                height: 20,
-              ),
-              Divider(
-                color: Colours.offBlack,
-                height: 2,
-              ),
-              Text(
-                'Allergens',
-                style: AppTheme.theme.textTheme.subtitle
-                    .apply(color: Colours.offBlack),
-              ),
-              allergenInfo(state.product),
-              Container(
-                height: 10,
-              ),
-              Divider(
-                color: Colours.offBlack,
-                height: 2,
-              ),
-              Text(
-                'Diets',
-                style: AppTheme.theme.textTheme.subtitle
-                    .apply(color: Colours.offBlack),
-              ),
-              dietInfo(state.product),
-            ],
+                Divider(
+                  color: Colours.offBlack,
+                  height: 2,
+                ),
+                Column(
+                  children: <Widget>[
+                    Text(
+                      'Diets',
+                      style: AppTheme.theme.textTheme.subtitle
+                          .apply(color: Colours.offBlack),
+                    ),
+                    dietInfo(state.product),
+                  ],
+                ),
+              ],
+            ),
           ),
         );
       },
