@@ -37,6 +37,7 @@ class _DietSelectionState extends State<DietSelection> {
               children: <Widget>[
                 Wrap(
                   spacing: 5,
+                  alignment: WrapAlignment.center,
                   children: selections.map((a) {
                     return ChoiceChip(
                       selected: a.selected,
