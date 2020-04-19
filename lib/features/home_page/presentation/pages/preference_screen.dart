@@ -18,14 +18,12 @@ class PreferenceScreen extends StatefulWidget {
 
   @override
   PreferenceScreenState createState() {
-    return PreferenceScreenState(_preferenceBloc);
+    return PreferenceScreenState();
   }
 }
 
 class PreferenceScreenState extends State<PreferenceScreen> {
-  PreferenceScreenState(this._preferenceBloc);
-
-  final PreferenceBloc _preferenceBloc;
+  PreferenceScreenState();
 
   @override
   void dispose() {
@@ -47,7 +45,7 @@ class PreferenceScreenState extends State<PreferenceScreen> {
     Navigator.push(
       context,
       SlideBottomRoute(
-        page: PreferencePage(preferenceBloc: _preferenceBloc),
+        page: PreferencePage(preferenceBloc: widget._preferenceBloc),
       ),
     );
   }
@@ -58,27 +56,34 @@ class PreferenceScreenState extends State<PreferenceScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              'Your Preferences',
-              style:
-                  AppTheme.theme.textTheme.subhead.apply(color: Colors.white),
-            ),
-            OutlineButton(
-              borderSide: BorderSide(color: Colours.offWhite),
-              highlightColor: Colours.green,
-              highlightedBorderColor: Colours.greenAccent,
-              textColor: Colours.offWhite,
-              onPressed: () => _edit(context),
-              child: Text('Edit'),
-            ),
-          ],
-        ),
-        Divider(
-          color: Colours.offWhite,
-          thickness: 2,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'Preferences',
+                    style: AppTheme.theme.textTheme.headline
+                        .apply(color: Colors.white),
+                  ),
+                  OutlineButton(
+                    borderSide: BorderSide(color: Colours.offWhite),
+                    highlightColor: Colours.green,
+                    highlightedBorderColor: Colours.greenAccent,
+                    textColor: Colours.offWhite,
+                    onPressed: () => _edit(context),
+                    child: Text('Edit'),
+                  ),
+                ],
+              ),
+              Divider(
+                color: Colours.offWhite,
+                thickness: 2,
+              ),
+            ],
+          ),
         ),
         Container(
           child: BlocBuilder<PreferenceBloc, PreferenceState>(
@@ -115,25 +120,32 @@ class PreferenceScreenState extends State<PreferenceScreen> {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          'Calories',
-                          style: AppTheme.theme.textTheme.subtitle
-                              .apply(color: Colors.white),
-                        ),
-                        Text(
-                          'Daily Max : ' + p.energyMax.toString() + 'Kcal',
-                          style: AppTheme.theme.textTheme.subtitle
-                              .apply(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: Colours.offWhite,
-                      thickness: 1,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                'Calories',
+                                style: AppTheme.theme.textTheme.subtitle
+                                    .apply(color: Colors.white),
+                              ),
+                              Text(
+                                'Daily Max : ' + p.energyMax.toString() + 'Kcal',
+                                style: AppTheme.theme.textTheme.subtitle
+                                    .apply(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            color: Colours.offWhite,
+                            thickness: 1,
+                          ),
+                        ],
+                      ),
                     ),
                     Container(
                       height: 120,

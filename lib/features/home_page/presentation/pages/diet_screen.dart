@@ -16,14 +16,12 @@ class DietScreen extends StatefulWidget {
 
   @override
   DietScreenState createState() {
-    return DietScreenState(_dietBloc);
+    return DietScreenState();
   }
 }
 
 class DietScreenState extends State<DietScreen> {
-  DietScreenState(this._dietBloc);
-
-  final DietBloc _dietBloc;
+  DietScreenState();
 
   @override
   void dispose() {
@@ -47,7 +45,7 @@ class DietScreenState extends State<DietScreen> {
       builder: (BuildContext context) => CustomDialog(
         title: "Edit Diets",
         content: DietSelection(
-          dietBloc: _dietBloc,
+          dietBloc: widget._dietBloc,
         ),
       ),
     ).whenComplete(() {
@@ -62,27 +60,34 @@ class DietScreenState extends State<DietScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              'Diets',
-              style:
-                  AppTheme.theme.textTheme.subhead.apply(color: Colors.white),
-            ),
-            OutlineButton(
-              borderSide: BorderSide(color: Colours.offWhite),
-              highlightColor: Colours.green,
-              highlightedBorderColor: Colours.greenAccent,
-              textColor: Colours.offWhite,
-              onPressed: () => _edit(context),
-              child: Text('Edit'),
-            ),
-          ],
-        ),
-        Divider(
-          color: Colours.offWhite,
-          thickness: 2,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'Diets',
+                    style: AppTheme.theme.textTheme.headline
+                        .apply(color: Colors.white),
+                  ),
+                  OutlineButton(
+                    borderSide: BorderSide(color: Colours.offWhite),
+                    highlightColor: Colours.green,
+                    highlightedBorderColor: Colours.greenAccent,
+                    textColor: Colours.offWhite,
+                    onPressed: () => _edit(context),
+                    child: Text('Edit'),
+                  ),
+                ],
+              ),
+              Divider(
+                color: Colours.offWhite,
+                thickness: 2,
+              ),
+            ],
+          ),
         ),
         Container(
           child: BlocBuilder<DietBloc, DietState>(
@@ -124,19 +129,21 @@ class DietScreenState extends State<DietScreen> {
                       ),
                     ),
                   );
-                return Wrap(
-                  children: selected.map((a) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                      child: Chip(
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Wrap(
+                    spacing: 4,
+                    alignment: WrapAlignment.spaceEvenly,
+                    children: selected.map((a) {
+                      return Chip(
                         label: Text(a.name),
                         labelStyle: AppTheme.theme.textTheme.button
                             .apply(color: Colors.white),
                         backgroundColor: Colours.green,
-                      ),
-                    );
-                  }).toList(),
-                  direction: Axis.horizontal,
+                      );
+                    }).toList(),
+                    direction: Axis.horizontal,
+                  ),
                 );
               }
               return Container();

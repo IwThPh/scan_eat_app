@@ -25,9 +25,9 @@ class NutrientDisplay extends StatelessWidget {
           verticalDirection: VerticalDirection.up,
           children: <Widget>[
             Text(
-              'Max : ' + max + 'g',
+              'Max : ${max}g',
               style:
-                  AppTheme.theme.textTheme.body2.apply(color: Colours.offBlack),
+                  AppTheme.theme.textTheme.caption.apply(color: Colours.offBlack),
             ),
             Flexible(
               flex: (s1 * 100).round(),
@@ -52,7 +52,7 @@ class NutrientDisplay extends StatelessWidget {
             ),
             Text(
               name,
-              style: AppTheme.theme.textTheme.subtitle
+              style: AppTheme.theme.textTheme.body2
                   .apply(color: Colours.offBlack),
             ),
           ],

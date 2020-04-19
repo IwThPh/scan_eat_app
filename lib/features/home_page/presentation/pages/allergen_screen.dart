@@ -17,14 +17,12 @@ class AllergenScreen extends StatefulWidget {
 
   @override
   AllergenScreenState createState() {
-    return AllergenScreenState(_allergenBloc);
+    return AllergenScreenState();
   }
 }
 
 class AllergenScreenState extends State<AllergenScreen> {
-  AllergenScreenState(this._allergenBloc);
-
-  final AllergenBloc _allergenBloc;
+  AllergenScreenState();
 
   @override
   void dispose() {
@@ -48,7 +46,7 @@ class AllergenScreenState extends State<AllergenScreen> {
       builder: (BuildContext context) => CustomDialog(
         title: "Edit Allergens",
         content: AllergenSelection(
-          allergenBloc: _allergenBloc,
+          allergenBloc: widget._allergenBloc,
         ),
       ),
     ).whenComplete(() {
@@ -63,27 +61,34 @@ class AllergenScreenState extends State<AllergenScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              'Allergens',
-              style:
-                  AppTheme.theme.textTheme.subhead.apply(color: Colors.white),
-            ),
-            OutlineButton(
-              borderSide: BorderSide(color: Colours.offWhite),
-              highlightColor: Colours.green,
-              highlightedBorderColor: Colours.greenAccent,
-              textColor: Colours.offWhite,
-              onPressed: () => _edit(context),
-              child: Text('Edit'),
-            ),
-          ],
-        ),
-        Divider(
-          color: Colours.offWhite,
-          thickness: 2,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'Allergens',
+                    style: AppTheme.theme.textTheme.headline
+                        .apply(color: Colors.white),
+                  ),
+                  OutlineButton(
+                    borderSide: BorderSide(color: Colours.offWhite),
+                    highlightColor: Colours.green,
+                    highlightedBorderColor: Colours.greenAccent,
+                    textColor: Colours.offWhite,
+                    onPressed: () => _edit(context),
+                    child: Text('Edit'),
+                  ),
+                ],
+              ),
+              Divider(
+                color: Colours.offWhite,
+                thickness: 2,
+              ),
+            ],
+          ),
         ),
         Container(
           child: BlocBuilder<AllergenBloc, AllergenState>(
@@ -125,19 +130,21 @@ class AllergenScreenState extends State<AllergenScreen> {
                       ),
                     ),
                   );
-                return Wrap(
-                  children: selected.map((a) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                      child: Chip(
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Wrap(
+                    spacing: 4,
+                    alignment: WrapAlignment.spaceEvenly,
+                    children: selected.map((a) {
+                      return Chip(
                         label: Text(a.name),
                         labelStyle: AppTheme.theme.textTheme.button
                             .apply(color: Colors.white),
                         backgroundColor: Colours.green,
-                      ),
-                    );
-                  }).toList(),
-                  direction: Axis.horizontal,
+                      );
+                    }).toList(),
+                    direction: Axis.horizontal,
+                  ),
                 );
               }
               return Container();
