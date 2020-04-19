@@ -46,13 +46,13 @@ class LoginPage extends StatelessWidget {
                     backgroundColor: Colors.transparent,
                     expandedHeight: constraints.maxHeight / 2.8,
                     bottom: PreferredSize(
-                      preferredSize: Size(174, 72),
+                      preferredSize: Size(174, 52),
                       child: Material(
                         color: Colors.transparent,
-                        elevation: 16,
+                        elevation: 8,
                         child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 30),
+                          padding:
+                              EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
                             color: Colors.white,
@@ -62,19 +62,16 @@ class LoginPage extends StatelessWidget {
                             height: 52,
                             width: 154,
                             semanticLabel: 'ScanEat Logo',
-                            fit: BoxFit.none,
+                            fit: BoxFit.scaleDown,
                           ),
                         ),
                       ),
                     ),
                     flexibleSpace: ClipPath.shape(
                       shape: sb,
-                      child: RotatedBox(
-                        quarterTurns: 1,
-                        child: Image.asset(
-                          'lib/assets/icon/test.jpg',
-                          fit: BoxFit.fitHeight,
-                        ),
+                      child: Image.asset(
+                        'lib/assets/icon/test.jpg',
+                        fit: BoxFit.fitWidth,
                       ),
                     ),
                   ),

@@ -71,68 +71,90 @@ class HomePageScreenState extends State<HomePageScreen> {
 
   Widget _buildBody() {
     ShapeBorder sb = RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(16)),
+      borderRadius: BorderRadius.vertical(bottom: Radius.circular(16)),
     );
 
     return CustomScrollView(
       slivers: <Widget>[
-        SliverToBoxAdapter(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              RawMaterialButton(
-                shape: sb,
-                highlightColor: Colours.primary,
-                child: Row(
-                  children: <Widget>[
-                    Text('Logout ',
-                        style: AppTheme.theme.textTheme.button
-                            .apply(color: Colors.white)),
-                    Icon(
-                      Icons.exit_to_app,
-                      color: Colors.white,
-                      size: 18,
-                    ),
-                  ],
-                ),
-                onPressed: () => _loginPageBloc.add(LogoutLoginPageEvent()),
+        SliverAppBar(
+          actions: <Widget>[
+            RawMaterialButton(
+              shape: (RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.only(bottomLeft: Radius.circular(16)))),
+              highlightColor: Colours.primary,
+              fillColor: Colours.primaryAccent,
+              child: Row(
+                children: <Widget>[
+                  Text('Logout ',
+                      style: AppTheme.theme.textTheme.button
+                          .apply(color: Colors.white)),
+                  Icon(
+                    Icons.exit_to_app,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                ],
               ),
-            ],
+              onPressed: () => _loginPageBloc.add(LogoutLoginPageEvent()),
+            ),
+          ],
+          elevation: 0,
+          pinned: true,
+          backgroundColor: Colors.transparent,
+          bottom: PreferredSize(
+            preferredSize: Size(200, 42),
+            child: Material(
+              color: Colors.transparent,
+              elevation: 8,
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: Colors.white,
+                ),
+                child: Image.asset(
+                  'lib/assets/icon/logo.png',
+                  height: 52,
+                  width: 154,
+                  semanticLabel: 'ScanEat Logo',
+                  fit: BoxFit.scaleDown,
+                ),
+              ),
+            ),
+          ),
+          flexibleSpace: ClipPath.shape(
+            shape: sb,
+            child: Image.asset(
+              'lib/assets/icon/test.jpg',
+              fit: BoxFit.fitWidth,
+            ),
           ),
         ),
         SliverPadding(
           padding: EdgeInsets.all(16),
           sliver: SliverToBoxAdapter(
             child: Text(
-              'Hello ' + widget._user.name,
-              textAlign: TextAlign.left,
+              'Hello, ${widget._user.name}!',
+              textAlign: TextAlign.center,
               style:
-                  AppTheme.theme.textTheme.display1.apply(color: Colors.white),
+                  AppTheme.theme.textTheme.headline.apply(color: Colors.white),
             ),
           ),
         ),
-        SliverPadding(
-          padding: EdgeInsets.all(8),
-          sliver: SliverToBoxAdapter(
-            child: PreferenceScreen(
-              preferenceBloc: widget._preferenceBloc,
-            ),
+        SliverToBoxAdapter(
+          child: PreferenceScreen(
+            preferenceBloc: widget._preferenceBloc,
           ),
         ),
-        SliverPadding(
-          padding: EdgeInsets.all(8),
-          sliver: SliverToBoxAdapter(
-            child: AllergenScreen(
-              allergenBloc: widget._allergenBloc,
-            ),
+        SliverToBoxAdapter(
+          child: AllergenScreen(
+            allergenBloc: widget._allergenBloc,
           ),
         ),
-        SliverPadding(
-          padding: EdgeInsets.all(8),
-          sliver: SliverToBoxAdapter(
-            child: DietScreen(
-              dietBloc: widget._dietBloc,
-            ),
+        SliverToBoxAdapter(
+          child: DietScreen(
+            dietBloc: widget._dietBloc,
           ),
         ),
         SliverPadding(padding: EdgeInsets.all(16.0)),
