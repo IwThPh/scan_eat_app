@@ -25,6 +25,7 @@ import 'package:scaneat/features/login/data/datasources/login_remote_data_source
 import 'package:scaneat/features/login/data/repositories/login_repository_impl.dart';
 import 'package:scaneat/features/login/domain/repositories/login_repository.dart';
 import 'package:scaneat/features/login/domain/usecases/login_request.dart';
+import 'package:scaneat/features/login/domain/usecases/logout_request.dart';
 import 'package:scaneat/features/login/domain/usecases/register_request.dart';
 import 'package:scaneat/features/login/domain/usecases/retrieve_user.dart';
 import 'package:scaneat/features/login/presentation/bloc/login_page_bloc.dart';
@@ -56,9 +57,10 @@ Future<void> init() async {
     ),
   );
   sl.registerFactory(() => ScanningBloc(product: sl()));
-  sl.registerFactory(
+  sl.registerLazySingleton(
     () => LoginPageBloc(
       loginRequest: sl(),
+      logoutRequest: sl(),
       registerRequest: sl(),
       retrieveUser: sl(),
     ),
@@ -85,6 +87,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SaveProduct(sl()));
   sl.registerLazySingleton(() => UnsaveProduct(sl()));
   sl.registerLazySingleton(() => LoginRequest(sl()));
+  sl.registerLazySingleton(() => LogoutRequest(sl()));
   sl.registerLazySingleton(() => RegisterRequest(sl()));
   sl.registerLazySingleton(() => RetrieveUser(sl()));
   sl.registerLazySingleton(() => GetDiet(sl()));

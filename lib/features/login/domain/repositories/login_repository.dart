@@ -9,6 +9,7 @@ abstract class LoginRepository {
   Future<Either<Failure, Auth>> attemptLogin(String email, String password);
   Future<Either<Failure, Either<Validator, Auth>>> attemptRegister(String name, String email, String password, String cPassword);
   Future<Either<Failure, bool>> cacheAuth(Auth auth);
+  Future<Either<Failure, bool>> attemptLogout();
   Future<Either<Failure, Auth>> getAuth();
   Future<Either<Failure, User>> getUser();
 }

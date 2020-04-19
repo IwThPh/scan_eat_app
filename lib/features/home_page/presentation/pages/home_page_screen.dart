@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scaneat/assets/theme/app_theme.dart';
+import 'package:scaneat/core/animations/SlideTopRoute.dart';
+import 'package:scaneat/di_container.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/allergen/allergen_bloc.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/allergen/allergen_event.dart';
 import 'package:scaneat/features/home_page/presentation/bloc/home_page/bloc.dart';
@@ -10,6 +12,8 @@ import 'package:scaneat/features/home_page/presentation/pages/allergen_screen.da
 import 'package:scaneat/features/home_page/presentation/pages/diet_screen.dart';
 import 'package:scaneat/features/home_page/presentation/pages/preference_screen.dart';
 import 'package:scaneat/features/login/domain/entities/user.dart';
+import 'package:scaneat/features/login/presentation/bloc/bloc.dart';
+import 'package:scaneat/features/login/presentation/pages/login_page.dart';
 
 import '../widgets/widgets.dart';
 
@@ -28,11 +32,11 @@ class HomePageScreen extends StatefulWidget {
         _user = user,
         super(key: key);
 
-  final User _user;
-  final HomePageBloc _homePageBloc;
   final AllergenBloc _allergenBloc;
   final DietBloc _dietBloc;
+  final HomePageBloc _homePageBloc;
   final PreferenceBloc _preferenceBloc;
+  final User _user;
 
   @override
   HomePageScreenState createState() {
@@ -43,11 +47,7 @@ class HomePageScreen extends StatefulWidget {
 class HomePageScreenState extends State<HomePageScreen> {
   HomePageScreenState();
 
-  @override
-  void initState() {
-    super.initState();
-    this._load();
-  }
+  LoginPageBloc _loginPageBloc;
 
   @override
   void dispose() {
@@ -55,45 +55,10 @@ class HomePageScreenState extends State<HomePageScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<HomePageBloc, HomePageState>(
-      bloc: widget._homePageBloc,
-      builder: (
-        BuildContext context,
-        HomePageState currentState,
-      ) {
-        if (currentState is UnHomePageState) {
-          return Center(
-            child: Container(
-              child: LoadingWidget(),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: Colors.white,
-              ),
-            ),
-          );
-        }
-        if (currentState is ErrorHomePageState) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(currentState.errorMessage ?? 'Error'),
-                Padding(
-                  padding: const EdgeInsets.only(top: 32.0),
-                  child: RaisedButton(
-                    color: Colours.green,
-                    child: Text('reload'),
-                    onPressed: () => this._load(),
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
-        return _buildBody();
-      },
-    );
+  void initState() {
+    super.initState();
+    _loginPageBloc = sl<LoginPageBloc>();
+    this._load();
   }
 
   void _load() {
@@ -105,8 +70,36 @@ class HomePageScreenState extends State<HomePageScreen> {
   }
 
   Widget _buildBody() {
+    ShapeBorder sb = RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(16)),
+    );
+
     return CustomScrollView(
       slivers: <Widget>[
+        SliverToBoxAdapter(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              RawMaterialButton(
+                shape: sb,
+                highlightColor: Colours.primary,
+                child: Row(
+                  children: <Widget>[
+                    Text('Logout ',
+                        style: AppTheme.theme.textTheme.button
+                            .apply(color: Colors.white)),
+                    Icon(
+                      Icons.exit_to_app,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                  ],
+                ),
+                onPressed: () => _loginPageBloc.add(LogoutLoginPageEvent()),
+              ),
+            ],
+          ),
+        ),
         SliverPadding(
           padding: EdgeInsets.all(16),
           sliver: SliverToBoxAdapter(
@@ -144,6 +137,58 @@ class HomePageScreenState extends State<HomePageScreen> {
         ),
         SliverPadding(padding: EdgeInsets.all(16.0)),
       ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener(
+      bloc: _loginPageBloc,
+      listener: (context, state) {
+        if (state is UnLoginPageState)
+          Navigator.pushReplacement(
+            context,
+            SlideTopRoute(page: LoginPage()),
+          );
+      },
+      child: BlocBuilder<HomePageBloc, HomePageState>(
+        bloc: widget._homePageBloc,
+        builder: (
+          BuildContext context,
+          HomePageState currentState,
+        ) {
+          if (currentState is UnHomePageState) {
+            return Center(
+              child: Container(
+                child: LoadingWidget(),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: Colors.white,
+                ),
+              ),
+            );
+          }
+          if (currentState is ErrorHomePageState) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(currentState.errorMessage ?? 'Error'),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 32.0),
+                    child: RaisedButton(
+                      color: Colours.green,
+                      child: Text('reload'),
+                      onPressed: () => this._load(),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+          return _buildBody();
+        },
+      ),
     );
   }
 }

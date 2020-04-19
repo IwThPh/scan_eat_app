@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
@@ -14,6 +13,7 @@ abstract class LoginLocalDataSource {
   Future<AuthModel> getAuth();
 
   Future<bool> cacheAuth(AuthModel auth);
+  Future<bool> removeAuth();
 }
 
 const CACHED_AUTH = 'CACHED_AUTH';
@@ -39,5 +39,10 @@ class LoginLocalDataSourceImpl implements LoginLocalDataSource {
       CACHED_AUTH,
       json.encode(auth.toJson()),
     );
+  }
+
+  @override
+  Future<bool> removeAuth() {
+    return sharedPreferences.clear();
   }
 }

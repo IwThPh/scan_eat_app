@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:scaneat/features/login/domain/usecases/login_request.dart';
+import 'package:scaneat/features/login/domain/usecases/logout_request.dart';
 import 'package:scaneat/features/login/domain/usecases/register_request.dart';
 import 'package:scaneat/features/login/domain/usecases/retrieve_user.dart';
 import 'package:scaneat/features/login/presentation/bloc/bloc.dart';
@@ -12,6 +13,8 @@ import '../../../../samples.dart';
 
 class MockLoginRequest extends Mock implements LoginRequest {}
 
+class MockLogoutRequest extends Mock implements LogoutRequest {}
+
 class MockRegisterRequest extends Mock implements RegisterRequest {}
 
 class MockRetrieveUser extends Mock implements RetrieveUser {}
@@ -19,15 +22,18 @@ class MockRetrieveUser extends Mock implements RetrieveUser {}
 main() {
   LoginPageBloc bloc;
   MockLoginRequest mockLoginRequest;
+  MockLogoutRequest mockLogoutRequest;
   MockRegisterRequest mockRegisterRequest;
   MockRetrieveUser mockRetrieveUser;
 
   setUp(() {
     mockLoginRequest = MockLoginRequest();
+    mockLogoutRequest = MockLogoutRequest();
     mockRegisterRequest = MockRegisterRequest();
     mockRetrieveUser = MockRetrieveUser();
     bloc = LoginPageBloc(
       loginRequest: mockLoginRequest,
+      logoutRequest: mockLogoutRequest,
       registerRequest: mockRegisterRequest,
       retrieveUser: mockRetrieveUser,
     );

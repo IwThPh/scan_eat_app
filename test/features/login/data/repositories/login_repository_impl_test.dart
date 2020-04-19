@@ -229,6 +229,21 @@ void main() {
     );
   });
 
+  group('attemptLogout', () {
+    test(
+      'Should return true when cache cleared successfully',
+      () async {
+        when(mockLocalDataSource.removeAuth())
+            .thenAnswer((_) async => true);
+
+        final result = await repository.attemptLogout();
+
+        verify(mockLocalDataSource.removeAuth());
+        expect(result, equals(Right(true)));
+      },
+    );
+  });
+
   group('retrieveUser', () {
     test(
       'Should return remote data when the call to remote data source is successful',

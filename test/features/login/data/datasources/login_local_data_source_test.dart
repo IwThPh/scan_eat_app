@@ -64,4 +64,13 @@ void main() {
       ));
     });
   });
+
+  group('removeAuth', () {
+    test('should call SharedPreferences to remove all data', () {
+      // act
+      dataSource.removeAuth();
+      // assert
+      verify(mockSharedPreferences.clear());
+    });
+  });
 }

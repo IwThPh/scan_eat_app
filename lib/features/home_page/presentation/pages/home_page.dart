@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:scaneat/assets/theme/app_theme.dart';
+import 'package:scaneat/di_container.dart';
 
 import '../../../../assets/theme/colours.dart';
 import '../../../../core/animations/SlideBottomRoute.dart';
 import '../../../../core/animations/SlideLeftRoute.dart';
 import '../../../../core/animations/SlideRightRoute.dart';
-import '../../../../di_container.dart' as di;
 import '../../../scanning/presentation/pages/scanning_page.dart';
 import '../../domain/entities/allergen.dart';
 import '../../domain/entities/diet.dart';
@@ -35,20 +35,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    _allergenBloc.close();
-    _dietBloc.close();
-    _homePageBloc.close();
-    _preferenceBloc.close();
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    _allergenBloc = di.sl<AllergenBloc>();
-    _dietBloc = di.sl<DietBloc>();
-    _homePageBloc = di.sl<HomePageBloc>();
-    _preferenceBloc = di.sl<PreferenceBloc>();
+    _allergenBloc = sl<AllergenBloc>();
+    _dietBloc = sl<DietBloc>();
+    _homePageBloc = sl<HomePageBloc>();
+    _preferenceBloc = sl<PreferenceBloc>();
   }
 
   void _scan(BuildContext context, Preference pref, List<Allergen> allergens,
@@ -81,7 +77,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //ShapeBorder for Panel
     ShapeBorder sb = RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(16)),
     );

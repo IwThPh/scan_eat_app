@@ -139,3 +139,28 @@ class RegLoginPageEvent extends LoginPageEvent {
   @override
   List<Object> get props => [];
 }
+
+class LogoutLoginPageEvent extends LoginPageEvent {
+  @override
+  String toString() => 'LogoutLoginPageEvent';
+
+  LogoutLoginPageEvent();
+
+  @override
+  Future<LoginPageState> applyAsync(
+      {LoginPageState currentState, LoginPageBloc bloc}) async {
+    try {
+      final failureOrPass = await bloc.logoutRequest(NoParams());
+      return failureOrPass.fold(
+        (failure) => ErrorLoginPageState(0, "Error Logging Out"),
+        (pass) => UnLoginPageState(0),);
+    } catch (_, stackTrace) {
+      developer.log('$_',
+          name: 'LoadTestEvent', error: _, stackTrace: stackTrace);
+      return ErrorLoginPageState(0, _?.toString());
+    }
+  }
+
+  @override
+  List<Object> get props => [];
+}

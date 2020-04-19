@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scaneat/assets/theme/colours.dart';
-import 'package:scaneat/features/login/presentation/bloc/bloc.dart';
 import 'package:scaneat/features/login/presentation/pages/login_page_screen.dart';
-import 'package:scaneat/di_container.dart' as di;
 
 class LoginPage extends StatelessWidget {
-  static const String routeName = '/loginPage';
-  final LoginPageBloc _loginPageBloc = di.sl<LoginPageBloc>();
-
   @override
   Widget build(BuildContext context) {
     //ShapeBorder for Panel
@@ -56,7 +51,8 @@ class LoginPage extends StatelessWidget {
                         color: Colors.transparent,
                         elevation: 16,
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 30),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
                             color: Colors.white,
@@ -76,7 +72,6 @@ class LoginPage extends StatelessWidget {
                       child: RotatedBox(
                         quarterTurns: 1,
                         child: Image.asset(
-                          //TODO: Dynamic BG would be cool to add.
                           'lib/assets/icon/test.jpg',
                           fit: BoxFit.fitHeight,
                         ),
@@ -88,9 +83,7 @@ class LoginPage extends StatelessWidget {
                       elevation: 8.0,
                       shape: cb,
                       child: Center(
-                        child: LoginPageScreen(
-                          loginPageBloc: _loginPageBloc,
-                        ),
+                        child: LoginPageScreen(),
                       ),
                       margin: EdgeInsets.all(30),
                     ),

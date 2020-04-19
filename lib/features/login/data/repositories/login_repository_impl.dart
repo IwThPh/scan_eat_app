@@ -38,12 +38,23 @@ class LoginRepositoryImpl implements LoginRepository {
   }
 
   @override
+  Future<Either<Failure, bool>> attemptLogout() async {
+    try {
+      var result = await localDataSource.removeAuth();
+      return Right(result);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
   Future<Either<Failure, Either<Validator, Auth>>> attemptRegister(
       String name, String email, String password, String cPassword) async {
     networkInfo.isConnected;
     try {
-      Either<ValidatorModel, AuthModel> eitherValidatorOrAuth = await remoteDataSource
-          .attemptRegister(name, email, password, cPassword);
+      Either<ValidatorModel, AuthModel> eitherValidatorOrAuth =
+          await remoteDataSource.attemptRegister(
+              name, email, password, cPassword);
       return eitherValidatorOrAuth.fold(
         (validator) {
           return Right(Left(validator));
