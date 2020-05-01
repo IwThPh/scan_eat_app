@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
+///Represents Auth entity.
 class Auth extends Equatable {
   final String tokenType;
   final String accessToken;

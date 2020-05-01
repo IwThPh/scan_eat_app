@@ -25,6 +25,12 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
     @required this.client,
   });
 
+  ///Sends a Post request to remote data source.
+  ///
+  ///Sends post request to token api url.
+  ///[email] and [password] for user authentication.
+  ///Returns [AuthModel] on status code, 200.
+  ///Else, throws a [ServerException].
   @override
   Future<AuthModel> attemptLogin(String email, String password) async {
     var map = new Map<String, dynamic>();
@@ -43,6 +49,13 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
     }
   }
 
+  ///Sends a Post request to remote data source.
+  ///
+  ///Sends post request to register api url.
+  ///[name], [email] and [password] for user registration.
+  ///Returns either [AuthModel] on status code, 200.
+  ///Else [ValidatorModel] on other status codes.
+  ///On Server Error, throws a [ServerException].
   @override
   Future<Either<ValidatorModel, AuthModel>> attemptRegister(
       String name, String email, String password, String cPassword) async {
@@ -63,12 +76,17 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
       try {
         return Left(ValidatorModel.fromJson(jsonDecode(response.body)));
       } catch (ServerException) {
-        debugPrint(response.body);
         throw ServerFailure();
       }
     }
   }
 
+  ///Sends a Post request to remote data source.
+  ///
+  ///Sends post request to user api url.
+  ///[token] for user authentication.
+  ///Returns [UserModel] on status code, 200.
+  ///Else, throws a [ServerException].
   @override
   Future<UserModel> retrieveUser(String token) async {
     final response = await client.post(

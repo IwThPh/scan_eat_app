@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 import '../../domain/entities/validator.dart';
 
+///Extends [Validator] to provide additional json funcationality.
 class ValidatorModel extends Validator {
   ValidatorModel({
     @required String nameError,
@@ -12,6 +13,7 @@ class ValidatorModel extends Validator {
           passwordError: passwordError,
         );
         
+  ///Generates [ValidatorModel] from Json map.
   factory ValidatorModel.fromJson(Map<String, dynamic> json) {
     List<dynamic> nameErrors = json.containsKey('name') ? json['name'] : [];
     List<dynamic> emailErrors = json.containsKey('email') ? json['email'] : [];

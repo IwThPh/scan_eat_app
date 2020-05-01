@@ -24,6 +24,10 @@ class HomeRepositoryImpl implements HomeRepository {
     @required this.networkInfo,
   });
 
+  /// Attempts to retrive Allergens from [HomeRemoteDataSource].
+  /// 
+  /// On Success, List of [Allergen].
+  /// On Failure, [ServerFailure].
   @override
   Future<Either<Failure, List<Allergen>>> getAllergens() async {
     networkInfo.isConnected;
@@ -36,6 +40,10 @@ class HomeRepositoryImpl implements HomeRepository {
     }
   }
 
+  /// Attempts to retrive Diets from [HomeRemoteDataSource].
+  /// 
+  /// On Success, List of [Diet].
+  /// On Failure, [ServerFailure].
   @override
   Future<Either<Failure, List<Diet>>> getDiets() async {
     networkInfo.isConnected;
@@ -47,6 +55,12 @@ class HomeRepositoryImpl implements HomeRepository {
       return Left(ServerFailure()); }
   }
 
+  /// Attempts to select Allergens using [HomeRemoteDataSource].
+  /// 
+  /// [allergens], List of allergen ids to select.
+  /// 
+  /// On Success, [String] message.
+  /// On Failure, [ServerFailure].
   @override
   Future<Either<Failure, String>> selectAllergens(List<Allergen> allergens) async {
     networkInfo.isConnected;
@@ -60,6 +74,12 @@ class HomeRepositoryImpl implements HomeRepository {
     }
   }
 
+  /// Attempts to select Diets using [HomeRemoteDataSource].
+  /// 
+  /// [diets], List of diet ids to select.
+  /// 
+  /// On Success, [String] message.
+  /// On Failure, [ServerFailure].
   @override
   Future<Either<Failure, String>> selectDiets(List<Diet> diets) async {
     networkInfo.isConnected;
@@ -73,6 +93,10 @@ class HomeRepositoryImpl implements HomeRepository {
     }
   }
 
+  /// Attempts to delete user Preference using [HomeRemoteDataSource].
+  /// 
+  /// On Success, [Preference].
+  /// On Failure, [ServerFailure].
   @override
   Future<Either<Failure, Preference>> deletePreference() async {
     networkInfo.isConnected;
@@ -85,6 +109,10 @@ class HomeRepositoryImpl implements HomeRepository {
     }
   }
 
+  /// Attempts to retrieve user Preference using [HomeRemoteDataSource].
+  /// 
+  /// On Success, [Preference].
+  /// On Failure, [ServerFailure].
   @override
   Future<Either<Failure, Preference>> getPreference() async {
     networkInfo.isConnected;
@@ -97,6 +125,12 @@ class HomeRepositoryImpl implements HomeRepository {
     }
   }
 
+  /// Attempts to update user Preference using [HomeRemoteDataSource].
+  /// 
+  /// [preference], the updated values to be sent.
+  /// 
+  /// On Success, [Preference].
+  /// On Failure, [ServerFailure].
   @override
   Future<Either<Failure, Preference>> updatePreference(preference) async {
     networkInfo.isConnected;
@@ -109,6 +143,10 @@ class HomeRepositoryImpl implements HomeRepository {
     }
   }
 
+  /// Attempts to retrieve user scan history using [HomeRemoteDataSource].
+  /// 
+  /// On Success, list of [Product].
+  /// On Failure, [ServerFailure].
   @override
   Future<Either<Failure, List<Product>>> getHistory() async {
     networkInfo.isConnected;
@@ -121,6 +159,10 @@ class HomeRepositoryImpl implements HomeRepository {
     }
   }
 
+  /// Attempts to retrieve user saved products using [HomeRemoteDataSource].
+  /// 
+  /// On Success, list of [Product].
+  /// On Failure, [ServerFailure].
   @override
   Future<Either<Failure, List<Product>>> getSaved() async {
     networkInfo.isConnected;

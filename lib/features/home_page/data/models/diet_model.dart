@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:scaneat/features/home_page/domain/entities/diet.dart';
 
+///Extends [Diet] to provide additional json funcationality.
 class DietModel extends Diet{
   DietModel({
     @required int id,
@@ -14,6 +15,7 @@ class DietModel extends Diet{
           selected: selected,
         );
         
+  ///Generates [DietModel] from Json map.
   factory DietModel.fromJson(Map<String, dynamic> json) {
     return DietModel(
       id: json['id'],

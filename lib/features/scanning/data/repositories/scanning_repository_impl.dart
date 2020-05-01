@@ -21,6 +21,12 @@ class ScanningRepositoryImpl implements ScanningRepository{
     @required this.networkInfo,
   });
 
+  /// Attempts to search product using [ScanningRemoteDataSource].
+  /// 
+  /// [barcode], product to search.
+  /// 
+  /// On Success, [Product].
+  /// On Failure, [ServerFailure].
   @override
   Future<Either<Failure, Product>> getProduct(String barcode) async {
     networkInfo.isConnected;

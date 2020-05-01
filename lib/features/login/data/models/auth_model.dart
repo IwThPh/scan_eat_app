@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 import '../../domain/entities/auth.dart';
 
+///Extends [Auth] to provide additional json funcationality.
 class AuthModel extends Auth {
   AuthModel({
   @required String tokenType,
@@ -12,6 +13,7 @@ class AuthModel extends Auth {
           refreshToken: refreshToken,
         );
         
+  ///Generates [AuthModel] from Json map.
   factory AuthModel.fromJson(Map<String, dynamic> json) {
     return AuthModel(
       tokenType: json['token_type'],
@@ -20,6 +22,7 @@ class AuthModel extends Auth {
     );
   }
 
+  ///Generates Json map.
   Map<String, dynamic> toJson() {
     return {
       'token_type': tokenType,

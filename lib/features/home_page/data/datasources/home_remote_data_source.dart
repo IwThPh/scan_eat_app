@@ -44,6 +44,12 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
   final http.Client client;
 
+  ///Sends a Delete request to remote data source.
+  ///
+  ///Sends delete request to [urlPreference].
+  ///[token] is required to verify user authentication.
+  ///Returns [PreferenceModel] on status code, 200.
+  ///Else, throws a [ServerException].
   @override
   Future<PreferenceModel> deletePreference(String token) async {
     final response = await client.delete(
@@ -62,6 +68,12 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     }
   }
 
+  ///Sends a Post request to remote data source.
+  ///
+  ///Sends post request to [urlAllergen].
+  ///[token] is required to verify user authentication.
+  ///Returns list of [AllergenModel] on status code, 200.
+  ///Else, throws a [ServerException].
   @override
   Future<List<AllergenModel>> getAllergens(String token) async {
     final response = await client.post(
@@ -83,6 +95,12 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     }
   }
 
+  ///Sends a Post request to remote data source.
+  ///
+  ///Sends post request to [urlDiet].
+  ///[token] is required to verify user authentication.
+  ///Returns list of [DietModel] on status code, 200.
+  ///Else, throws a [ServerException].
   @override
   Future<List<DietModel>> getDiets(String token) async {
     final response = await client.post(
@@ -104,6 +122,12 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     }
   }
 
+  ///Sends a Post request to remote data source.
+  ///
+  ///Sends post request to [urlHistory].
+  ///[token] is required to verify user authentication.
+  ///Returns list of [ProductModel] on status code, 200.
+  ///Else, throws a [ServerException].
   @override
   Future<List<ProductModel>> getHistory(String token) async {
     final response = await client.post(
@@ -125,6 +149,12 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     }
   }
 
+  ///Sends a Get request to remote data source.
+  ///
+  ///Sends get request to [urlPreference].
+  ///[token] is required to verify user authentication.
+  ///Returns [PreferenceModel] on status code, 200.
+  ///Else, throws a [ServerException].
   @override
   Future<PreferenceModel> getPreference(String token) async {
     final response = await client.get(
@@ -143,6 +173,12 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     }
   }
 
+  ///Sends a Post request to remote data source.
+  ///
+  ///Sends post request to [urlSaved].
+  ///[token] is required to verify user authentication.
+  ///Returns list of [ProductModel] on status code, 200.
+  ///Else, throws a [ServerException].
   @override
   Future<List<ProductModel>> getSaved(String token) async {
     final response = await client.post(
@@ -164,6 +200,13 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     }
   }
 
+  ///Sends a Patch request to remote data source.
+  ///
+  ///Sends patch request to [urlAllergen].
+  ///[token] is required to verify user authentication.
+  ///[allergenIds] is required to provide the allergen ids to select.
+  ///Returns [String] message on status code, 200.
+  ///Else, throws a [ServerException].
   @override
   Future<String> selectAllergens(String token, List<int> allergenIds) async {
     final response = await client.patch(
@@ -183,6 +226,13 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     }
   }
 
+  ///Sends a Patch request to remote data source.
+  ///
+  ///Sends patch request to [urlDiet].
+  ///[token] is required to verify user authentication.
+  ///[dietIds] is required to provide the diet ids to select.
+  ///Returns [String] message on status code, 200.
+  ///Else, throws a [ServerException].
   @override
   Future<String> selectDiets(String token, List<int> dietIds) async {
     final response = await client.patch(
@@ -202,6 +252,13 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     }
   }
 
+  ///Sends a Patch request to remote data source.
+  ///
+  ///Sends patch request to [urlPreference].
+  ///[token] is required to verify user authentication.
+  ///[pref] is required to update the user's preferences.
+  ///Returns [PreferenceModel] on status code, 200.
+  ///Else, throws a [ServerException].
   @override
   Future<PreferenceModel> updatePreference(
       String token, PreferenceModel pref) async {

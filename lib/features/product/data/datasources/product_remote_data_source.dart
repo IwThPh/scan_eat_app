@@ -19,6 +19,13 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
     @required this.client,
   });
 
+  ///Sends a Patch request to remote data source.
+  ///
+  ///[token] is required to verify user authentication.
+  ///[barcode] is the product to save.
+  ///
+  ///Returns [ProductModel] on status code, 200.
+  ///Else, throws a [ServerException].
   @override
   Future<ProductModel> saveProduct(String barcode, String token) async {
     final response = await client.patch(
@@ -37,6 +44,13 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
     }
   }
 
+  ///Sends a Delete request to remote data source.
+  ///
+  ///[token] is required to verify user authentication.
+  ///[barcode] is the product to unsave.
+  ///
+  ///Returns [ProductModel] on status code, 200.
+  ///Else, throws a [ServerException].
   @override
   Future<ProductModel> unsaveProduct(String barcode, String token) async {
     final response = await client.delete(

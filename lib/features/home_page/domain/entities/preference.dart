@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
+///Represents Preference entity.
 class Preference extends Equatable {
   final int userId;
   final double energyMax;

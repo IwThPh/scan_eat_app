@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
+///Represents Product entity.
 class Product extends Equatable {
   final String barcode;
   final String name;

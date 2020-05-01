@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:scaneat/features/home_page/domain/entities/preference.dart';
 
+///Extends [Preference] to provide additional json funcationality.
 class PreferenceModel extends Preference {
   PreferenceModel({
     @required int userId,
@@ -58,6 +59,7 @@ class PreferenceModel extends Preference {
           sodium_2: sodium_2,
         );
 
+  ///Generates [PreferenceModel] from Json map.
   factory PreferenceModel.fromJson(Map<String, dynamic> json) {
     return PreferenceModel(
       userId: json['user_id'],
@@ -89,6 +91,7 @@ class PreferenceModel extends Preference {
     );
   }
 
+  ///Generates Json map.
   Map<String, dynamic> toJson() {
     return {
       'user_id': userId,

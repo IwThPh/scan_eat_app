@@ -18,6 +18,13 @@ class ScanningRemoteDataSourceImpl implements ScanningRemoteDataSource {
     @required this.client,
   });
 
+  ///Sends a Get request to remote data source.
+  ///
+  ///[token] is required to verify user authentication.
+  ///[barcode] is the product to save.
+  ///
+  ///Returns [ProductModel] on status code, 200.
+  ///Else, throws a [ServerException].
   @override
   Future<ProductModel> getProduct(String barcode, String token) async {
     final response = await client.get(

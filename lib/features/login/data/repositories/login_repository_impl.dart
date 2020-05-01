@@ -24,6 +24,12 @@ class LoginRepositoryImpl implements LoginRepository {
     @required this.networkInfo,
   });
 
+  /// Attempts to Login using [LoginRemoteDataSource].
+  /// 
+  /// [email] and [password] User credentials.
+  /// 
+  /// On Success, [Auth].
+  /// On Failure, [ServerFailure].
   @override
   Future<Either<Failure, Auth>> attemptLogin(
       String email, String password) async {
@@ -37,6 +43,10 @@ class LoginRepositoryImpl implements LoginRepository {
     }
   }
 
+  /// Attempts to Loggout using [LoginRemoteDataSource].
+  /// 
+  /// On Success, [bool].
+  /// On Failure, [ServerFailure].
   @override
   Future<Either<Failure, bool>> attemptLogout() async {
     try {
@@ -47,6 +57,13 @@ class LoginRepositoryImpl implements LoginRepository {
     }
   }
 
+  /// Attempts to register using [LoginRemoteDataSource].
+  /// 
+  /// [name], [email], and [password] to register.
+  /// 
+  /// On Successful server response, [Auth].
+  /// On Unseccessful server response, [Validator].
+  /// On Failure, [ServerFailure].
   @override
   Future<Either<Failure, Either<Validator, Auth>>> attemptRegister(
       String name, String email, String password, String cPassword) async {
@@ -69,6 +86,12 @@ class LoginRepositoryImpl implements LoginRepository {
     }
   }
 
+  /// Attempts to cache auth details using [LoginLocalDataSource].
+  /// 
+  /// [auth], to cache.
+  /// 
+  /// On Successful, [bool] response from local data source.
+  /// On Failure, [CacheFailure].
   @override
   Future<Either<Failure, bool>> cacheAuth(Auth auth) async {
     try {
@@ -78,6 +101,10 @@ class LoginRepositoryImpl implements LoginRepository {
     }
   }
 
+  /// Attempts to retrieve cached auth details from [LoginLocalDataSource].
+  /// 
+  /// On Successful, [bool] response from local data source.
+  /// On Failure, [CacheFailure].
   @override
   Future<Either<Failure, Auth>> getAuth() async {
     try {
@@ -87,6 +114,10 @@ class LoginRepositoryImpl implements LoginRepository {
     }
   }
 
+  /// Attempts to retrieve user details from [LoginRemoteDataSource].
+  /// 
+  /// On Successful, [User] response from remote data source.
+  /// On Failure, [ServerFailure].
   @override
   Future<Either<Failure, User>> getUser() async {
     networkInfo.isConnected;

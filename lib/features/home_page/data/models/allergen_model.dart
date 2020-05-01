@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:scaneat/features/home_page/domain/entities/allergen.dart';
 
+///Extends [Allergen] to provide additional json funcationality.
 class AllergenModel extends Allergen {
   AllergenModel({
     @required int id,
@@ -14,6 +15,7 @@ class AllergenModel extends Allergen {
           selected:selected,
         );
         
+  ///Generates [AllergenModel] from Json map.
   factory AllergenModel.fromJson(Map<String, dynamic> json) {
     return AllergenModel(
       id: json['id'],

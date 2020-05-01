@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:scaneat/features/login/domain/entities/user.dart';
 
+///Extends [User] to provide additional json funcationality.
 class UserModel extends User {
   UserModel({
   @required String name,
@@ -10,6 +11,7 @@ class UserModel extends User {
           email: email,
         );
         
+  ///Generates [UserModel] from Json map.
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       name: json['name'],

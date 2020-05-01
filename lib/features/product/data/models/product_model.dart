@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 import '../../domain/entities/product.dart';
 
+///Extends [Product] to provide additional json funcationality.
 class ProductModel extends Product {
   ProductModel(
       {@required String barcode,
@@ -39,6 +40,8 @@ class ProductModel extends Product {
           saved: saved,
         );
 
+
+  ///Generates [ProductModel] from Json map.
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
       barcode: json['barcode'],

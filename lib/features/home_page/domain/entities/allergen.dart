@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
+///Represents Allergen entity.
 class Allergen extends Equatable {
   final int id;
   final String name;

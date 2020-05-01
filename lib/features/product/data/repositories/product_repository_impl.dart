@@ -21,6 +21,12 @@ class ProductRepositoryImpl implements ProductRepository{
     @required this.networkInfo,
   });
 
+  /// Attempts to save product using [HomeRemoteDataSource].
+  /// 
+  /// [barcode], product to save.
+  /// 
+  /// On Success, [Product].
+  /// On Failure, [ServerFailure].
   @override
   Future<Either<Failure, Product>> saveProduct(String barcode) async {
     networkInfo.isConnected;
@@ -33,6 +39,12 @@ class ProductRepositoryImpl implements ProductRepository{
     }
   }
 
+  /// Attempts to unsave product using [HomeRemoteDataSource].
+  /// 
+  /// [barcode], product to unsave.
+  /// 
+  /// On Success, [Product].
+  /// On Failure, [ServerFailure].
   @override
   Future<Either<Failure, Product>> unsaveProduct(String barcode) async {
     networkInfo.isConnected;

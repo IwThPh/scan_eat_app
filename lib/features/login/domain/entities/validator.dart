@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
+///Represents User entity.
 class Validator extends Equatable {
   final String nameError;
   final String emailError;

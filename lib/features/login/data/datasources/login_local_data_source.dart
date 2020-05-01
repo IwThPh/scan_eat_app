@@ -12,7 +12,11 @@ abstract class LoginLocalDataSource {
   /// Throws [CacheException] if no cached data is present.
   Future<AuthModel> getAuth();
 
+
+  /// Caches [auth].
   Future<bool> cacheAuth(AuthModel auth);
+
+  /// Clears cache of auth values.
   Future<bool> removeAuth();
 }
 
